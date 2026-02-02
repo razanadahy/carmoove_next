@@ -5,7 +5,7 @@ let refreshingPromise: Promise<string | null> | null = null;
 
 const createApiClient = (): AxiosInstance => {
     const client = axios.create({
-        baseURL: process.env.NEXT_PUBLIC_CAR_SHARING_URL,
+        baseURL: process.env.REACT_APP_CAR_SHARING_URL,
         headers: {
             'Content-Type': 'application/json',
         },
@@ -40,10 +40,10 @@ const createApiClient = (): AxiosInstance => {
                 if (!refreshingPromise) {
                     const params = new URLSearchParams();
                     params.append('grant_type', 'refresh_token');
-                    params.append('client_id', process.env.NEXT_PUBLIC_KEYCLOAK_CLIENT_ID!);
+                    params.append('client_id', process.env.REACT_APP_KEYCLOAK_CLIENT_ID!);
                     params.append('refresh_token', token.refresh_token);
 
-                    refreshingPromise = fetch(process.env.NEXT_PUBLIC_KEYCLOAK_URL!, {
+                    refreshingPromise = fetch(process.env.REACT_APP_KEYCLOAK_URL!, {
                         method: 'POST',
                         body: params,
                     })
