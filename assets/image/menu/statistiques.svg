@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="36px" height="36px" viewBox="0 0 36 36" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>icones/Menu/Statistiques</title>
+    <defs>
+        <filter color-interpolation-filters="auto" id="filter-1">
+            <feColorMatrix in="SourceGraphic" type="matrix" values="0 0 0 0 0.301961 0 0 0 0 0.301961 0 0 0 0 0.301961 0 0 0 1.000000 0"></feColorMatrix>
+        </filter>
+    </defs>
+    <g id="icones/Menu/Statistiques" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" stroke-linejoin="round">
+        <g filter="url(#filter-1)" id="stats-chart-outline">
+            <g transform="translate(5.000000, 2.000000)">
+                <rect id="Rectangle" stroke="#4D4D4D" stroke-width="1.8" x="0" y="20.5714286" width="3.375" height="11.4285714" rx="0.571428571"></rect>
+                <rect id="Rectangle" stroke="#4D4D4D" stroke-width="1.8" x="15.75" y="13.7142857" width="3.375" height="18.2857143" rx="0.571428571"></rect>
+                <rect id="Rectangle" stroke="#4D4D4D" stroke-width="1.8" x="23.625" y="5.71428571" width="3.375" height="26.2857143" rx="0.571428571"></rect>
+                <rect id="Rectangle" stroke="#4D4D4D" stroke-width="1.8" x="7.875" y="0" width="3.375" height="32" rx="0.571428571"></rect>
+            </g>
+        </g>
+    </g>
+</svg>

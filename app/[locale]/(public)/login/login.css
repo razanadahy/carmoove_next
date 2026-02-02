@@ -1,0 +1,169 @@
+.login-box {
+    position: relative;
+}
+
+.input-login-form {
+    margin: 20px 0;
+}
+
+.login-form {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 370px;
+    height: 443px;
+    opacity: 1
+}
+
+.login-title {
+    font-weight: 700;
+    word-spacing: -1px;
+    color: #4D4D4D;
+    font-family: 'Open Sans', cursive;
+}
+
+.login-label,
+.password-label {
+    font-family: 'Open Sans', cursive;
+    font-size: 14px;
+    font-weight: 600;
+    color: #4D4D4D;
+    line-height: 16px;
+}
+
+.login-btn {
+    width: 140px !important;
+    height: 40px;
+    opacity: 100%;
+    color: #FFFFFF;
+    background-color: #3AA1D8;
+    font-family: 'Open Sans', serif;
+    font-weight: 700;
+    font-size: 14px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    line-height: 20px;
+}
+
+.reset-password-btn {
+    height: 40px;
+    opacity: 100%;
+    color: #FFFFFF;
+    background-color: #3AA1D8;
+    font-family: 'Open Sans', serif;
+    font-weight: 700;
+    font-size: 14px;
+    text-transform: uppercase;
+    letter-spacing: 5px;
+    line-height: 20px;
+}
+
+.login-form-actions {
+    display: flex;
+    justify-content: space-between;
+    align-content: center;
+    border-bottom: #cacaca solid 1px;
+}
+
+.reset-password-form-actions {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    margin: 25px 0 30px 0;
+}
+
+.recover-password-btn {
+    display: inline-block;
+    font-size: 12px;
+    font-weight: 500;
+    color: #39A1D8;
+    line-height: 22px;
+    text-underline-offset: 4px;
+}
+
+.alert-recover-password {
+    color: #4D4D4D;
+}
+
+.contact-us-box {
+    margin-top: 10px;
+}
+
+.contact-us {
+    color: #4D4D4D;
+    font-family: 'Open Sans', serif;
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 22px;
+    margin-right: 5px;
+}
+
+.contact-us-link {
+    color: #39A1D8;
+    font-family: 'Open Sans', serif;
+    font-size: 12px;
+    font-weight: 700;
+    line-height: 22px;
+    text-underline-offset: 4px;
+}
+
+/*.recover-password-box {*/
+/*    margin-top: 20px;*/
+/*}*/
+
+.mascotte-box {
+    height: 100vh;
+    position: relative;
+    opacity: 1;
+    background-image: linear-gradient(170deg, rgba(58, 161, 216, 1) 0%, rgba(1, 97, 153, 1) 100%);
+    max-height: 100vh !important;
+    overflow: hidden;
+}
+
+.mascotte {
+    height: 70%;
+    width: 50%;
+}
+
+@media (max-width: 576px) {
+    .login-form {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .input-mail,
+    .input-password,
+    .login-btn,
+    .reset-password-btn {
+        width: 293px;
+        height: 50px;
+    }
+
+    .login-form-actions,
+    .contact-us-box {
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        text-underline-offset: 4px;
+    }
+
+    .login-form-actions {
+        border: none;
+    }
+
+    .login-form-actions>.ant-space-item {
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .contact-us-link {
+        text-align: center;
+        /*margin: 7px;*/
+    }
+}

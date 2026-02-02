@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="18px" height="22px" viewBox="0 0 18 22" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>17358835-E94A-4584-8AD1-ED932878675A</title>
+    <defs>
+        <path d="M9,0 L9,10 L17,4.5 L9,0 Z M9,4 C4.02943725,4 0,8.02943725 0,13 C0,17.9705627 4.02943725,22 9,22 C13.9705627,22 18,17.9705627 18,13 L16,13 C16,16.8659932 12.8659932,20 9,20 C5.13400675,20 2,16.8659932 2,13 C2,9.13400675 5.13400675,6 9,6 L9,4 L9,4 Z" id="path-1"></path>
+    </defs>
+    <g id="Map&amp;journey" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Web-Flotte/tracking/Fleet" transform="translate(-798.000000, -104.000000)">
+            <g id="Components/Nav/refresh" transform="translate(785.000000, 95.000000)">
+                <g id="Icon" transform="translate(13.000000, 9.000000)">
+                    <mask id="mask-2" fill="white">
+                        <use xlink:href="#path-1"></use>
+                    </mask>
+                    <use id="Refresh" fill="#39A1D8" xlink:href="#path-1"></use>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

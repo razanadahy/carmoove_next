@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="21px" height="14px" viewBox="0 0 21 14" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>A5178F15-BA75-4F1C-A8BA-81AAC1F30984</title>
+    <defs>
+        <path d="M2,6 L23,6 L23,8.3515625 L2,8.3515625 L2,6 Z M2,14.1484375 L2,11.8515625 L23,11.8515625 L23,14.1484375 L2,14.1484375 Z M2,20 L2,17.6484375 L23,17.6484375 L23,20 L2,20 Z" id="path-1"></path>
+    </defs>
+    <g id="Home" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Web-Flotte/Home/Fleet" transform="translate(-15.000000, -20.000000)">
+            <g id="-System/Navigation/Primary/Desktop-Simple" transform="translate(0.000000, -32.000000)">
+                <g id="Icon/content/menu" transform="translate(13.000000, 46.000000)">
+                    <mask id="mask-2" fill="white">
+                        <use xlink:href="#path-1"></use>
+                    </mask>
+                    <use id="🎨-icon-fill" fill="#39A1D8" xlink:href="#path-1"></use>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

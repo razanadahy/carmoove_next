@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="26px" height="26px" viewBox="0 0 26 26" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>icones/Menu/log-out</title>
+    <g id="Symbols" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" stroke-linecap="square">
+        <g id="-System/Navigation/Primary/Mobile-right-Opened" transform="translate(-30, -284)" stroke="#4D4D4D">
+            <g id="Primary-Nav-Icons" transform="translate(0, 65)">
+                <g id="icones/Menu/log-out" transform="translate(30, 219)">
+                    <g id="log-out" transform="translate(2.2096, 3.0828)">
+                        <path d="M18.644581,13.8507817 L21.2554143,10.4870317 C21.5691621,10.0829755 21.5655807,9.51667081 21.2467476,9.11661508 L18.7171643,5.94678174 M21.0614976,9.79803174 L7.66824764,9.81536508 M14.273331,18.2523651 C10.2013336,20.4301976 5.15854542,19.4351709 2.21898139,15.8738396 C-0.720582645,12.3125084 -0.741696041,7.17253314 2.16851164,3.58717286 C5.07871931,0.00181257804 10.113163,-1.03460824 14.2029143,1.10969841" id="Shape" stroke-width="1.26388889"></path>
+                    </g>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

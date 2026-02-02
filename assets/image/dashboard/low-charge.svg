@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="28px" height="28px" viewBox="0 0 28 28" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>icones/status-icons/Charge-low-2</title>
+    <defs>
+        <rect id="path-1" x="0" y="0" width="20.35" height="12" rx="1.10000002"></rect>
+        <filter x="-17.2%" y="-20.8%" width="134.4%" height="158.3%" filterUnits="objectBoundingBox" id="filter-2">
+            <feOffset dx="0" dy="1" in="SourceAlpha" result="shadowOffsetOuter1"></feOffset>
+            <feGaussianBlur stdDeviation="1" in="shadowOffsetOuter1" result="shadowBlurOuter1"></feGaussianBlur>
+            <feComposite in="shadowBlurOuter1" in2="SourceAlpha" operator="out" result="shadowBlurOuter1"></feComposite>
+            <feColorMatrix values="0 0 0 0 0   0 0 0 0 0   0 0 0 0 0  0 0 0 0.25 0" type="matrix" in="shadowBlurOuter1"></feColorMatrix>
+        </filter>
+    </defs>
+    <g id="icones/battery/1-4" stroke="none" fill="none" transform="translate(3, 8)">
+        <g id="Rectangle">
+            <use fill="black" fill-opacity="1" filter="url(#filter-2)" xlink:href="#path-1"></use>
+            <rect stroke="#F5F5F5" stroke-width="0.55" stroke-linejoin="square" fill="#FFFFFF" fill-rule="evenodd" x="0.275" y="0.275" width="19.8" height="11.45" rx="1.10000002"></rect>
+        </g>
+        <g id="Battery" stroke-width="1" fill-rule="evenodd" fill="#E9445A">
+            <path d="M21.0434783,3.46153846 L20.326087,3.46153846 L20.326087,0.923076923 C20.326087,0.415384615 19.9195652,0 19.3695652,0 L0.956521739,0 C0.430434783,0 0,0.415384615 0,0.923076923 L0,11.0769231 C0,11.5846154 0.430434783,12 0.956521739,12 L19.3695652,12 C19.8956522,12 20.326087,11.5846154 20.326087,11.0769231 L20.326087,8.53846154 L21.0434783,8.53846154 C21.5695652,8.53846154 22,8.21538462 22,7.70769231 L22,4.29230769 C22,3.78461538 21.5695652,3.46153846 21.0434783,3.46153846 Z M18.4130435,10.1538462 L1.91304348,10.1538462 L1.91304348,1.84615385 L18.4130435,1.84615385 L18.4130435,10.1538462 Z M6.0995,7.84615385 C6.0995,8.35384615 5.7035,8.76923077 5.2195,8.76923077 L3.6795,8.76923077 C3.1955,8.76923077 2.7995,8.35384615 2.7995,7.84615385 L2.7995,4.15384615 C2.7995,3.64615385 3.1955,3.23076923 3.6795,3.23076923 L5.2195,3.23076923 C5.7035,3.23076923 6.0995,3.64615385 6.0995,4.15384615 L6.0995,7.84615385 Z" id="Shape"></path>
+        </g>
+    </g>
+</svg>

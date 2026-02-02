@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="25px" height="25px" viewBox="0 0 25 25" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>icones/content/location-off-ionic</title>
+    <g id="Symbols" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" stroke-linecap="round" stroke-linejoin="round">
+        <g id="icones/status-icons/geoloc-off" transform="translate(-1, -2)">
+            <g id="icones/content/location-off-ionic" transform="translate(6.3571, 3.2419)">
+                <g id="location-outline" transform="translate(0, 0.5438)" stroke="#01426A" stroke-width="1.66133333">
+                    <path d="M7.58928571,0 C3.39936756,0 0,3.16241657 0,7.05735576 C0,11.5390342 5.05952381,18.6412068 6.91731771,21.0942818 C7.07373551,21.3043214 7.32349511,21.4285714 7.58928571,21.4285714 C7.85507632,21.4285714 8.10483592,21.3043214 8.26125372,21.0942818 C10.1190476,18.642237 15.1785714,11.5426402 15.1785714,7.05735576 C15.1785714,3.16241657 11.7792039,0 7.58928571,0 Z" id="Path"></path>
+                    <ellipse id="Oval" cx="7.58928571" cy="7.41795058" rx="2.5297619" ry="2.47265019"></ellipse>
+                </g>
+                <line x1="0.0736777772" y1="22.4188289" x2="14.7321429" y2="4.4408921e-16" id="Path-2" stroke="#E9445A" stroke-width="1.78" transform="translate(7.4029, 11.2094) scale(-1, 1) translate(-7.4029, -11.2094)"></line>
+            </g>
+        </g>
+    </g>
+</svg>
