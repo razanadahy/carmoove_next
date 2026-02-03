@@ -9,6 +9,8 @@ export default async function ClientLayout({ children }: { children: React.React
     if (!token) redirect("/login");
 
     return (
-        <Providers>{children}</Providers>
+        <Providers>
+            {children}
+        </Providers>
     );
 }

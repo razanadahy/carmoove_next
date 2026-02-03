@@ -1,13 +1,11 @@
 "use client"
 import { Alert, Button, Form, Input, Space, Row, Col, Grid, Spin } from "antd";
 import {useState} from "react";
-// import useBreakpoint from "antd/es/grid/hooks/useBreakpoint";
 import {useRouter} from "next/navigation";
 import Image from "next/image";
 import logo from '@/assets/image/logo.svg';
 import mascotte from '@/assets/image/mascotte_v2.png';
 import './login.css'
-import {NextResponse} from "next/server";
 const { useBreakpoint } = Grid;
 export default function Login() {
 
