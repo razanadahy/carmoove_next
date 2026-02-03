@@ -1,0 +1,37 @@
+.carmoove-button {
+    font-family: Roboto, sans-serif;
+    font-weight: 700;
+    font-size: small;
+    height: 40px;
+    color: #ffffff !important;
+    background-color: rgba(1, 66, 106, 1) !important;
+
+    margin-right: 5px;
+}
+
+.carmoove-button.red {
+    opacity: 1;
+    background-color: rgba(233, 68, 90, 1) !important;
+}
+
+.carmoove-button:hover,
+.carmoove-button:focus {
+    color: #ffffff;
+    background-color: #39a1d8 !important;
+    border: 1px solid #39a1d8;
+}
+
+.carmoove-button.red:hover,
+.carmoove-button.red:focus {
+    color: #ffffff;
+    background-color: rgba(233, 68, 90, 1) !important;
+    border: 1px solid rgba(233, 68, 90, 1) !important;
+}
+
+.carmoove-button-disabled {
+    font-family: Roboto, sans-serif;
+    height: 40px;
+    color: #ffffff !important;
+    border-radius: 8px;
+    background: #817e7e !important;
+}

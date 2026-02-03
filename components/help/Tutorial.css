@@ -1,0 +1,10 @@
+.tutorial-box {
+    display: flex;
+    flex-direction: column;
+    align-items: baseline;
+    gap: 18px;
+}
+
+.tutorial-box>h2 {
+    margin: 0;
+}

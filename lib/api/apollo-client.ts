@@ -3,10 +3,6 @@
 import { ApolloClient, createHttpLink, from, InMemoryCache, Operation } from '@apollo/client';
 import { RetryLink } from '@apollo/client/link/retry';
 
-// Nous utilisons maintenant un Proxy Next.js (/api/graphql) qui gère :
-// 1. L'ajout du token via le cookie HttpOnly
-// 2. Le rafraîchissement du token en cas de réponse 401
-
 const httpLink = createHttpLink({
     uri: '/api/graphql',
 });
@@ -74,23 +70,6 @@ const client = new ApolloClient({
     link: directionalLink,
     cache: cache,
     ssrMode: typeof window === 'undefined',
-    // defaultOptions: {
-    //     watchQuery: {
-    //         context: {
-    //             version: "php",
-    //         }
-    //     },
-    //     query: {
-    //         context: {
-    //             version: "php",
-    //         },
-    //     },
-    //     mutate: {
-    //         context: {
-    //             version: "php",
-    //         },
-    //     },
-    // }
 });
 
 export default client;
