@@ -1,6 +1,7 @@
 import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
 import {Providers} from "@/app/providers";
+import MainLayout from "@/components/MainLayout";
 
 export default async function ClientLayout({ children }: { children: React.ReactNode }) {
     const cookieStore = await cookies()
@@ -10,7 +11,9 @@ export default async function ClientLayout({ children }: { children: React.React
 
     return (
         <Providers>
-            {children}
+            <MainLayout>
+                {children}
+            </MainLayout>
         </Providers>
     );
 }

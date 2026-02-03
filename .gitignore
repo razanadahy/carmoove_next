@@ -39,3 +39,17 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+# IDEs
+.idea/
+.vscode/
+*.swp
+*.swo
+*.iml
+# Claude Code
+.claude/
+planner-log.txt
+nul
+# System
+Thumbs.db
+ehthumbs.db
+Desktop.ini

@@ -2,9 +2,12 @@
 
 import { ApolloProvider } from '@apollo/client/react';
 import { QueryClientProvider } from '@tanstack/react-query';
+import { App } from 'antd';
 
 import apolloClient from '@/lib/api/apollo-client';
 import queryClient from '@/lib/api/react-query-client';
+import AntdRegistry from '@/lib/AntdRegistry';
+import AntdProvider from '@/app/components/AntdProvider';
 
 export function Providers({ children }: { children: React.ReactNode }) {
     // Supprimer l'avertissement console.error pour defaultProps
@@ -20,10 +23,16 @@ export function Providers({ children }: { children: React.ReactNode }) {
     }
 
     return (
-        <ApolloProvider client={apolloClient}>
-            <QueryClientProvider client={queryClient}>
-                {children}
-            </QueryClientProvider>
-        </ApolloProvider>
+        <AntdRegistry>
+            <AntdProvider>
+                <App>
+                    <ApolloProvider client={apolloClient}>
+                        <QueryClientProvider client={queryClient}>
+                            {children}
+                        </QueryClientProvider>
+                    </ApolloProvider>
+                </App>
+            </AntdProvider>
+        </AntdRegistry>
     );
 }
