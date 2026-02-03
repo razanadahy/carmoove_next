@@ -1,5 +1,6 @@
 import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
+import {Providers} from "@/app/providers";
 
 export default async function ClientLayout({ children }: { children: React.ReactNode }) {
     const cookieStore = await cookies()
@@ -8,9 +9,6 @@ export default async function ClientLayout({ children }: { children: React.React
     if (!token) redirect("/login");
 
     return (
-        <div>
-            <nav>Menu Admin</nav>
-            <main>{children}</main>
-        </div>
+        <Providers>{children}</Providers>
     );
 }

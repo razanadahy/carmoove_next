@@ -22,8 +22,7 @@ export function Providers({ children }: { children: React.ReactNode }) {
     return (
         <ApolloProvider client={apolloClient}>
             <QueryClientProvider client={queryClient}>
-
-                    {children}
+                {children}
             </QueryClientProvider>
         </ApolloProvider>
     );

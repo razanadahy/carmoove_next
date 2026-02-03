@@ -17,7 +17,6 @@ export async function POST(request: NextRequest) {
         });
 
         const tokenJson = await response.json();
-        console.log(tokenJson);
         if (tokenJson.error) {
             return NextResponse.json(
                 { error: 'Invalid credentials' },
