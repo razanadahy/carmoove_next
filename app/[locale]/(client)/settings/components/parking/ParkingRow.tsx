@@ -107,6 +107,7 @@ export default function ParkingRow({ parking, index }: ParkingRowProps) {
                 layout="vertical"
                 onFinish={handleUpdateParking}
                 initialValues={parking}
+                className="parking-form"
             >
                 <Form.Item name="id" hidden>
                     <Input />

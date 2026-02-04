@@ -1,15 +1,16 @@
 "use client"
 
+import { useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { getParkings } from "@/app/actions/parkingServices";
 import { IParking } from "@/lib/hooks/Interfaces";
 import { Button, Spin } from "antd";
 import { PlusOutlined } from "@ant-design/icons";
-import { useRouter } from "next/navigation";
 import ParkingRow from "./ParkingRow";
+import AddParkingModal from "./AddParkingModal";
 
 export default function ParkingList() {
-    const router = useRouter();
+    const [modalOpen, setModalOpen] = useState(false);
 
     const qParkings = useQuery({
         queryKey: ['parkings'],
@@ -52,11 +53,16 @@ export default function ParkingList() {
             </div>
             <Button
                 icon={<PlusOutlined />}
-                onClick={() => router.push('/parking/add')}
+                onClick={() => setModalOpen(true)}
                 style={{ textTransform: 'uppercase',  backgroundColor: 'rgba(1, 66, 106, 1)', color: 'white' }}
             >
                 Ajouter un emplacement
             </Button>
+
+            <AddParkingModal
+                open={modalOpen}
+                onCancel={() => setModalOpen(false)}
+            />
         </div>
     );
 }

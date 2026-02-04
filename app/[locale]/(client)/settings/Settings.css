@@ -91,3 +91,21 @@
     color: #3AA1D8 !important;
     border-radius: 12px !important;
 }
+.parking-form {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 8px;
+}
+
+.parking-form .ant-input-disabled {
+    color: #4D4D4D;
+    background-color: white;
+}
+
+@media screen and (max-width: 512px) {
+    .parking-form {
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 8px;
+    }
+}
