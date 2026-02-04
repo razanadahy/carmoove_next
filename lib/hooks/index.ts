@@ -5,7 +5,9 @@ import { useQuery, useMutation } from "@apollo/client";
 import { App } from "antd";
 import { VEHICLES_QUERY, DRIVERS_QUERY, DRIVER_QUERY, DRIVER_STATISTICS_QUERY, DRIVER_PATH_QUERY } from "../graphql/queries";
 import { TECHNICAL_SUPPORT, REGISTER_DRIVER } from "../graphql/mutation";
-import {IVehicle} from "@/lib/hooks/Interfaces";
+import {IVehicle, IVehicleStatusCS} from "@/lib/hooks/Interfaces";
+import {useQueries} from "@tanstack/react-query";
+import createApiClientBrowser from "@/lib/api/axios-client-browser";
 
 
 export const useGetVehicles = (pollInterval?: number) => {
@@ -21,6 +23,65 @@ export const useGetVehicles = (pollInterval?: number) => {
     }, [data?.vehicles]);
 
     return { vehicles, loading, error, refetch };
+};
+interface IGetVehicleStatusCS {
+    vehicleId: string;
+    plate: string;
+}
+
+export const getVehicleStatus = async (field: IGetVehicleStatusCS) => {
+    try {
+        const apiClient = createApiClientBrowser();
+        const { data } = await apiClient.get<IVehicleStatusCS>(`/v1/vehicle/status`, {
+            params: field
+        });
+        return data
+    } catch (error) {
+        throw error;
+    }
+}
+
+export const useVehiclesWithStatus = (vehicles: IVehicle[]) => {
+    return useQueries({
+        queries: vehicles.map(vehicle => ({
+            queryKey: ['vehicleStatus', vehicle.id],
+            queryFn: () => getVehicleStatus({
+                vehicleId: vehicle.id,
+                plate: vehicle.information.registration,
+            }),
+            enabled: !!vehicle.id,
+        })),
+        combine: (results) => {
+            const statusRecord: Record<string, IVehicleStatusCS> = {};
+            const vehiclesStatusWithLoading: IVehicle[] = [];
+
+            results.forEach((query, index) => {
+                const vehicle = vehicles[index];
+
+                if (query.data) {
+                    statusRecord[vehicle.id] = query.data;
+                }
+
+                vehiclesStatusWithLoading.push({
+                    ...vehicle,
+                    stateCS: query.data,
+                    statusLoading: query.isLoading ,
+                    statusError: query.isError,
+                });
+            });
+            const refetchAll = () => {
+                return Promise.all(results.map(query => query.refetch()));
+            };
+
+            return {
+                data: statusRecord,
+                vehiclesStatusWithLoading,
+                isFetching: results.some(q => q.isFetching),
+                isLoading: results.some(q => q.isLoading),
+                refetch: refetchAll,
+            };
+        }
+    });
 };
 
 export const useTechnicalSupport = () => {

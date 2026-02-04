@@ -4,12 +4,14 @@ import createApiClient from "@/lib/api/axios-client";
 const apiClient = createApiClient();
 
 export interface IReservation {
-    id: string;
-    vehicleId: string;
-    startDate: number;
-    endDate: number;
-    status: string;
-    driverId?: string;
+    id: string
+    from: number
+    until: number
+    vehicleId: string
+    userId: string
+    authorizationId: string
+    bookingType: string
+    stopDate?: number
 }
 
 interface FetchReservationsParams {

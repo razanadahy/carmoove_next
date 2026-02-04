@@ -44,6 +44,8 @@ export default function MainLayout({ children }: MainLayoutProps) {
         if (path.includes('/planning')) return 'Planning des véhicules';
         if (path.includes('/maps')) return 'Suivi temps réel';
         if (path.includes('/statistics')) return 'Statistiques';
+        if (path.includes('/account')) return 'Profil';
+        if (path.includes('/notification')) return 'Notifications';
         // Ajoute d'autres mappings ici
         return 'CarMoove';
     };
@@ -77,13 +79,20 @@ export default function MainLayout({ children }: MainLayoutProps) {
     const handleHelp = () => {
         router.push('/help');
     }
+    const handleNotification = () => {
+        router.push('/notification');
+    }
 
     const handleSettings = () => {
         router.push('/settings/global');
     };
 
+    const handleProfile = () => {
+        router.push('/account');
+    };
+
     const userMenuItems = [
-        { key: '1', icon: <UserOutlined />, label: 'Profil' },
+        { key: '1', icon: <UserOutlined />, label: 'Profil', onClick: handleProfile },
         { key: '2', icon: <SettingOutlined />, label: 'Paramètres', onClick: handleSettings },
         { key: '3', icon: <QuestionCircleOutlined />, label: 'Aide', onClick: handleHelp },
         { type: 'divider' as const },
@@ -129,9 +138,8 @@ export default function MainLayout({ children }: MainLayoutProps) {
 
     const getSelectedMenuKey = (path: string): string => {
         if (path.includes('/dashboard')) return '/dashboard';
-        if (path.includes('/apollo-test')) return '/apollo-test';
         if (path.includes('/driver')) return '/drivers';
-        if (path.includes('/settings')) return '/settings';
+        if (path.includes('/planning')) return '/planning';
         return path;
     };
 
@@ -167,7 +175,7 @@ export default function MainLayout({ children }: MainLayoutProps) {
                 <Menu
                     theme="light"
                     mode="inline"
-                    style={{ fontSize: '16px', fontWeight: '650' }}
+                    style={{ fontSize: '14px', fontWeight: '600' }}
                     selectedKeys={[getSelectedMenuKey(pathname)]}
                     items={menuItems}
                     className="bg-transparent"
@@ -215,7 +223,7 @@ export default function MainLayout({ children }: MainLayoutProps) {
 
                     <div className="d-flex align-items-center">
                         <Space size="middle">
-                            <Button type="text" style={{ fontSize: "18px" }} icon={<BellOutlined />} />
+                            <Button onClick={handleNotification} type="text" style={{ fontSize: "18px" }} icon={<BellOutlined />} />
                             <Dropdown menu={{ items: userMenuItems }} className="py-2" placement="bottomRight">
                                 <Button type="text" className="d-flex align-items-center py-0 px-1" style={{ height: 'auto' }}>
                                     <Avatar icon={<UserOutlined />} className="bg-primary" />
