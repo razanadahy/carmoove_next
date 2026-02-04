@@ -1,7 +1,8 @@
 'use client';
 
-import { ApolloClient, createHttpLink, from, InMemoryCache, Operation } from '@apollo/client';
+import {ApolloClient, ApolloLink, createHttpLink, from, InMemoryCache, Operation} from '@apollo/client';
 import { RetryLink } from '@apollo/client/link/retry';
+import { onError } from '@apollo/client/link/error';
 
 const httpLink = createHttpLink({
     uri: '/api/graphql',
@@ -60,7 +61,32 @@ const cache = new InMemoryCache({
     },
 });
 
-const directionalLink = new RetryLink().split(
+// Link pour gérer les erreurs d'authentification et les erreurs réseau
+const errorLink = onError(({ graphQLErrors, networkError, operation, forward }) => {
+    if (graphQLErrors) {
+        const hasAuthError = graphQLErrors.some(
+            error => error.extensions?.code === 'UNAUTHENTICATED' ||
+                     error.message?.includes('Token refresh failed')
+        );
+
+        if (hasAuthError && typeof window !== 'undefined') {
+            console.error('Authentication error, redirecting to login');
+            // window.location.href = '/login';
+        }
+    }
+
+    // Gérer les erreurs réseau (401 non capturés par GraphQL)
+    if (networkError && 'statusCode' in networkError) {
+        if (networkError.statusCode === 401 && typeof window !== 'undefined') {
+            console.error('401 Unauthorized, redirecting to login');
+            // window.location.href = '/login';
+        }
+    }
+});
+
+const directionalLink = from([
+    errorLink,
+]).split(
     (operation: Operation) => operation.getContext().version === 'php',
     httpLinkLocal,
     httpLink,

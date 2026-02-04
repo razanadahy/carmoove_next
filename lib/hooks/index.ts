@@ -1,7 +1,7 @@
 'use client';
 
 import { useMemo } from "react";
-import { useQuery, useMutation } from "@apollo/client/react";
+import { useQuery, useMutation } from "@apollo/client";
 import { App } from "antd";
 import { VEHICLES_QUERY } from "../graphql/queries";
 import { TECHNICAL_SUPPORT } from "../graphql/mutation";
@@ -32,9 +32,6 @@ export const useTechnicalSupport = () => {
         },
         onCompleted: () => {
             notification.success({ message: "Le message a bien été envoyé" });
-        },
-        context: {
-            version: "php", // S'assurer que ça part au bon endroit
         }
     });
 

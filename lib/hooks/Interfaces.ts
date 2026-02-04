@@ -1,5 +1,30 @@
 import { Dispatch, JSX, SetStateAction } from "react";
 
+export interface IUser {
+    id: string;
+    email: string;
+    firstName?: string;
+    lastName?: string;
+    company: {
+        id: string;
+        name: string;
+        fiscal_year: {
+            month: number;
+        };
+    };
+}
+
+export interface IParking {
+    id: string;
+    shortId: string;
+    name: string;
+    address: string;
+    address2?: string;
+    zipcode: string;
+    city: string;
+    country: string;
+}
+
 interface IInformation {
     make: string,
     model: string,

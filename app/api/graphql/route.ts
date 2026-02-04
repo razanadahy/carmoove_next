@@ -1,9 +1,11 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { cookies } from 'next/headers';
-import {useRouter} from "next/navigation";
+
+// Variable globale pour gérer les refreshs concurrents
+let refreshingPromise: Promise<any> | null = null;
 
 export async function POST(request: NextRequest) {
-    const router = useRouter();
+
     const cookieStore = await cookies();
     const tokenCookie = cookieStore.get('token');
 
@@ -39,6 +41,28 @@ export async function POST(request: NextRequest) {
         headers['Authorization'] = `Bearer ${accessToken}`;
     }
 
+    // Si un refresh est déjà en cours, attendre son résultat
+    if (refreshingPromise) {
+        console.log("Refresh already in progress, waiting...");
+        const newTokenJson = await refreshingPromise;
+
+        if (newTokenJson) {
+            headers['Authorization'] = `Bearer ${newTokenJson.access_token}`;
+
+            const response = await fetch(targetUrl, {
+                method: 'POST',
+                headers: headers,
+                body: body,
+            });
+
+            const data = await response.json();
+            return NextResponse.json(data, {
+                status: response.status,
+                statusText: response.statusText
+            });
+        }
+    }
+
     try {
         let response = await fetch(targetUrl, {
             method: 'POST',
@@ -50,22 +74,36 @@ export async function POST(request: NextRequest) {
         if (response.status === 401 && refreshToken) {
             console.log("401 detected, attempting token refresh...");
 
-            cookieStore.delete('token')
+            // On ne crée le refreshingPromise qu'une seule fois
+            if (!refreshingPromise) {
+                const refreshParams = new URLSearchParams();
+                refreshParams.append('grant_type', 'refresh_token');
+                refreshParams.append('client_id', process.env.REACT_APP_KEYCLOAK_CLIENT_ID!);
+                refreshParams.append('refresh_token', refreshToken);
 
-            const refreshParams = new URLSearchParams();
-            refreshParams.append('grant_type', 'refresh_token');
-            refreshParams.append('client_id', process.env.REACT_APP_KEYCLOAK_CLIENT_ID!);
-            refreshParams.append('refresh_token', refreshToken);
+                refreshingPromise = fetch(String(process.env.REACT_APP_KEYCLOAK_URL), {
+                    method: 'POST',
+                    body: refreshParams
+                })
+                .then(async (refreshResponse) => {
+                    if (refreshResponse.ok) {
+                        const newTokenJson = await refreshResponse.json();
+                        console.log("Token refreshed successfully.");
+                        return newTokenJson;
+                    } else {
+                        console.error("Token refresh failed");
+                        return null;
+                    }
+                })
+                .finally(() => {
+                    refreshingPromise = null;
+                });
+            }
 
-            const refreshResponse = await fetch(String(process.env.REACT_APP_KEYCLOAK_URL), {
-                method: 'POST',
-                body: refreshParams
-            });
+            // Attendre le nouveau token
+            const newTokenJson = await refreshingPromise;
 
-            if (refreshResponse.ok) {
-                const newTokenJson = await refreshResponse.json();
-                console.log("Token refreshed successfully.");
-
+            if (newTokenJson) {
                 const newAccessToken = newTokenJson.access_token;
                 const newHeaders = { ...headers, 'Authorization': `Bearer ${newAccessToken}` };
 
@@ -76,19 +114,19 @@ export async function POST(request: NextRequest) {
                     body: body,
                 });
 
-                // --- DEBUG DEBUG DEBUG ---
-                // Si la réponse n'est pas OK après refresh, on veut savoir pourquoi
+                // Gestion de la réponse après refresh
                 if (!response.ok) {
                     const errorText = await response.text();
-                    console.error(`Retry failed with status ${response.status}. Response body:`, errorText.substring(0, 500)); // Log les 500 premiers caractères
-                    // On essaie quand même de parser si c'est du JSON, sinon on renvoie l'erreur
+                    console.error(`Retry failed with status ${response.status}. Response body:`, errorText.substring(0, 500));
+
                     try {
                         const data = JSON.parse(errorText);
-                         const jsonResponse = NextResponse.json(data, {
+                        const jsonResponse = NextResponse.json(data, {
                             status: response.status,
                             statusText: response.statusText
                         });
-                        // IMPORTANT: On met à jour le cookie même si le retry a échoué (car le token est valide)
+
+                        // Mettre à jour le cookie
                         jsonResponse.cookies.set('token', JSON.stringify(newTokenJson), {
                             httpOnly: true,
                             sameSite: 'lax',
@@ -97,10 +135,10 @@ export async function POST(request: NextRequest) {
                         });
                         return jsonResponse;
                     } catch (jsonError) {
-                        return new NextResponse(errorText, { status: response.status });
+                        const errorResponse = new NextResponse(errorText, { status: response.status });
+                        return errorResponse;
                     }
                 }
-                // -------------------------
 
                 const data = await response.json();
                 const jsonResponse = NextResponse.json(data, {
@@ -108,6 +146,7 @@ export async function POST(request: NextRequest) {
                     statusText: response.statusText
                 });
 
+                // Mettre à jour le cookie avec le nouveau token
                 jsonResponse.cookies.set('token', JSON.stringify(newTokenJson), {
                     httpOnly: true,
                     sameSite: 'lax',
@@ -116,10 +155,17 @@ export async function POST(request: NextRequest) {
                 });
 
                 return jsonResponse;
-
             } else {
-                console.error("Token refresh failed");
-                router.push('/login');
+                // Le refresh a échoué, rediriger vers login
+                const errorResponse = NextResponse.json({
+                    error: 'Token refresh failed',
+                    // redirect: '/login'
+                }, { status: 401 });
+
+                // Supprimer le cookie invalide
+                errorResponse.cookies.delete('token');
+
+                return errorResponse;
             }
         }
 

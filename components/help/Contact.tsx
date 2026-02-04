@@ -6,6 +6,8 @@ import CarmooveButton from "@/components/Common/CarmooveButton";
 import { useGetVehicles, useTechnicalSupport } from "@/lib/hooks";
 
 import "./Contact.css";
+import {useQuery} from "@apollo/client/react";
+import {VEHICLES_QUERY} from "@/lib/graphql/queries";
 
 type Subject = {
     label: string;
@@ -62,9 +64,9 @@ const Contact = () => {
                 carmooveAppVersion: "",
                 comment: value.commentaire,
                 device_id: value.numeroDuBoitier,
-                vehicle_id: value.vehicule, // Note: dans le select c'est vehicle.id
+                vehicle_id: value.vehicule,
                 type: value.sujet,
-                time: Math.floor(Date.now() / 1000), // Get current time in UNIX timestamp
+                time: Math.floor(Date.now() / 1000),
                 mobileType: "WEB",
             },
         });
@@ -79,8 +81,8 @@ const Contact = () => {
     };
 
     return (
-        <div className="contact-box">
-            <h2>Pour nous contacter</h2>
+        <div className="contact-box mt-2">
+            <h3>Pour nous contacter</h3>
 
             <Typography>
                 Une question, un problème, une suggestion? Compléter ce formulaire pour

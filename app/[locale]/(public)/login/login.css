@@ -37,7 +37,7 @@
     height: 40px;
     opacity: 100%;
     color: #FFFFFF;
-    background-color: #3AA1D8;
+    background-color: #3AA1D8 !important;
     font-family: 'Open Sans', serif;
     font-weight: 700;
     font-size: 14px;

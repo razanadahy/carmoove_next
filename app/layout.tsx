@@ -25,7 +25,7 @@ export default async function RootLayout({children,}: { children: React.ReactNod
         // eslint-disable-next-line react-hooks/immutability
         console.error = (...args) => {
             if (typeof args[0] === 'string') {
-                if (args[0].includes('defaultProps') || args[0].includes('antd v5 support React is 16 ~ 18')) {
+                if (args[0].includes('defaultProps') || args[0].includes('antd: compatible')) {
                     return;
                 }
             }

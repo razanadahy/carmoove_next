@@ -17,7 +17,6 @@ export default function Login() {
 
     const [loading, setLoading] = useState(false)
     const [form] = Form.useForm();
-    console.log('KEYCLOAK_URL =', process.env.KEYCLOAK_URL);
 
     const handleLogin = async (values: { email: string, password: string }) => {
         const { email, password } = values;
@@ -76,7 +75,7 @@ export default function Login() {
                             <Form.Item label={<label className='password-label'>Mot de passe</label>} name='password' rules={[{ required: true, message: 'Veuillez saisir un mot de passe' }]}>
                                 <Input.Password  className='input-password' placeholder='Saisissez un mot de passe' disabled={loading} />
                             </Form.Item>
-                            <Space className='login-form-actions pb-3 pt-2'>
+                            <Space className='login-form-actions pb-3 pt-2 w-100'>
                                 <Button className='login-btn' type='primary' htmlType='submit' loading={loading} disabled={loading}>
                                     {loading ? '' : 'Se connecter'}
                                 </Button>
@@ -90,7 +89,7 @@ export default function Login() {
                                     </a>
                                 </div>
                             </Space>
-                            <Space>
+                            <Space className="w-100">
                                 <div className='contact-us-box'>
                                     <span className='contact-us'>
                                         Pas encore de compte ?

@@ -35,8 +35,9 @@ export default function MainLayout({ children }: MainLayoutProps) {
     const getPageTitle = (path: string): string => {
         if (path.includes('/dashboard')) return 'Tableau de bord';
         if (path.includes('/test-apollo')) return 'Test Apollo';
+        if (path.includes('/apollo-test')) return 'Test Apollo';
         if (path.includes('/planning')) return 'Planning';
-
+        if (path.includes('/settings')) return 'Paramètres';
         if (path.includes('/help')) return 'Contact';
         // Ajoute d'autres mappings ici
         return 'CarMoove';
@@ -72,9 +73,13 @@ export default function MainLayout({ children }: MainLayoutProps) {
         router.push('/help');
     }
 
+    const handleSettings = () => {
+        router.push('/settings/global');
+    };
+
     const userMenuItems = [
         { key: '1', icon: <UserOutlined />, label: 'Profil' },
-        { key: '2', icon: <SettingOutlined />, label: 'Paramètres' },
+        { key: '2', icon: <SettingOutlined />, label: 'Paramètres', onClick: handleSettings },
         { key: '3', icon: <QuestionCircleOutlined />, label: 'Aide', onClick: handleHelp },
         { type: 'divider' as const },
         { key: '4', icon: <LogoutOutlined />, label: 'Déconnexion', onClick: handleLogout }
@@ -100,6 +105,8 @@ export default function MainLayout({ children }: MainLayoutProps) {
     const getSelectedMenuKey = (path: string): string => {
         if (path.includes('/dashboard')) return '/dashboard';
         if (path.includes('/test-apollo')) return '/test-apollo';
+        if (path.includes('/apollo-test')) return '/apollo-test';
+        if (path.includes('/settings')) return '/settings';
         return path;
     };
 
