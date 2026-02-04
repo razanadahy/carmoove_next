@@ -12,12 +12,13 @@ import {
     DashboardOutlined,
     CarOutlined,
     QuestionCircleOutlined,
-    ExclamationCircleFilled
+    ExclamationCircleFilled, CalendarOutlined, ScheduleOutlined, PushpinOutlined, BarChartOutlined
 } from '@ant-design/icons';
 import { usePathname, useRouter } from "next/navigation";
 import Image from "next/image";
 import mini_masquotte_i from "@/assets/image/menu/mini-masquotte-footer.svg"
 import { logoutAction } from "@/app/actions/auth";
+import './mainLayout.css'
 
 const { Header, Sider, Content } = Layout;
 
@@ -34,11 +35,15 @@ export default function MainLayout({ children }: MainLayoutProps) {
     // Fonction simple pour mapper l'URL au titre de la page
     const getPageTitle = (path: string): string => {
         if (path.includes('/dashboard')) return 'Tableau de bord';
-        if (path.includes('/test-apollo')) return 'Test Apollo';
-        if (path.includes('/apollo-test')) return 'Test Apollo';
         if (path.includes('/planning')) return 'Planning';
         if (path.includes('/settings')) return 'Paramètres';
         if (path.includes('/help')) return 'Contact';
+        if (path.includes('/vehicles')) return 'Véhicules';
+        if (path.includes('/driver')) return 'Conducteur';
+        if (path.includes('/drivers')) return 'Conducteurs';
+        if (path.includes('/planning')) return 'Planning des véhicules';
+        if (path.includes('/maps')) return 'Suivi temps réel';
+        if (path.includes('/statistics')) return 'Statistiques';
         // Ajoute d'autres mappings ici
         return 'CarMoove';
     };
@@ -92,9 +97,29 @@ export default function MainLayout({ children }: MainLayoutProps) {
             label: 'Tableau de bord',
         },
         {
-            key: '/test-apollo',
+            key: '/vehicles',
             icon: <CarOutlined />,
-            label: 'Test Apollo',
+            label: 'Véhicules',
+        },
+        {
+            key: '/drivers',
+            icon: <UserOutlined />,
+            label: 'Conducteurs',
+        },
+        {
+            key: '/planning',
+            icon: <ScheduleOutlined />,
+            label: 'Planning',
+        },
+        {
+            key: '/maps',
+            icon: <PushpinOutlined />,
+            label: 'Carte',
+        },
+        {
+            key: '/statistics',
+            icon: <BarChartOutlined />,
+            label: 'Statistiques',
         }
     ];
 
@@ -104,8 +129,8 @@ export default function MainLayout({ children }: MainLayoutProps) {
 
     const getSelectedMenuKey = (path: string): string => {
         if (path.includes('/dashboard')) return '/dashboard';
-        if (path.includes('/test-apollo')) return '/test-apollo';
         if (path.includes('/apollo-test')) return '/apollo-test';
+        if (path.includes('/driver')) return '/drivers';
         if (path.includes('/settings')) return '/settings';
         return path;
     };
@@ -142,7 +167,7 @@ export default function MainLayout({ children }: MainLayoutProps) {
                 <Menu
                     theme="light"
                     mode="inline"
-                    style={{ fontSize: '16px' }}
+                    style={{ fontSize: '16px', fontWeight: '650' }}
                     selectedKeys={[getSelectedMenuKey(pathname)]}
                     items={menuItems}
                     className="bg-transparent"

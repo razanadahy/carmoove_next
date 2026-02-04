@@ -1,0 +1,32 @@
+.driver-path-wrapper {
+    padding: 24px;
+}
+
+.driver-path-wrapper h2 {
+    margin-bottom: 8px;
+}
+
+.driver-path-wrapper h4 {
+    color: #666;
+    font-weight: normal;
+    margin-bottom: 16px;
+}
+
+.range-picker {
+    width: 100%;
+    max-width: 400px;
+}
+
+.path-card {
+    background: #fafafa;
+}
+
+.path-card:hover {
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.loading-txt {
+    text-align: center;
+    padding: 50px;
+    color: #999;
+}

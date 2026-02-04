@@ -117,6 +117,21 @@ export const DRIVER_QUERY = gql`
   }
 `;
 
+export const DRIVER_STATISTICS_QUERY = gql`
+  query DriverStatistics($driverId: String!) {
+    driverStatistics(driverId: $driverId) {
+      nbPaths
+      usageTime
+      usageMileage
+      usageCost
+      totalFuel
+      consumption
+      electricConsumption
+      co2
+    }
+  }
+`;
+
 export const TELLTALESTATUS_QUERY = gql`
   query TellTaleStatus($vehicles: [String]) {
     tellTaleStatus(vehicles: $vehicles) {

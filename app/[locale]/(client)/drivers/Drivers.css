@@ -1,0 +1,87 @@
+.drivers-page {
+    padding: 24px;
+    max-width: 1200px;
+    margin: 0 auto;
+    position: relative;
+    min-height: calc(100vh - 64px);
+}
+
+.search-box {
+    margin-bottom: 24px;
+}
+
+.drivers-list {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin-bottom: 100px;
+}
+
+.driver-row {
+    background: #fff;
+    border-radius: 8px;
+    padding: 16px 20px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
+    text-decoration: none;
+    color: inherit;
+    display: block;
+}
+
+.driver-row:hover {
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    transform: translateY(-2px);
+}
+
+.driver-row-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.driver-name {
+    font-size: 16px;
+    font-weight: 500;
+    color: #333;
+    display: flex;
+    align-items: center;
+}
+
+.driver-status {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+}
+
+.footer-add-btn-box {
+    position: fixed;
+    bottom: 24px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 100;
+    display: flex;
+    gap: 12px;
+}
+
+.footer-add-btn-box button {
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+@media (max-width: 768px) {
+    .driver-row-content {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 12px;
+    }
+
+    .footer-add-btn-box {
+        flex-direction: column;
+        width: calc(100% - 48px);
+        left: 24px;
+        transform: none;
+    }
+
+    .footer-add-btn-box button {
+        width: 100%;
+    }
+}
