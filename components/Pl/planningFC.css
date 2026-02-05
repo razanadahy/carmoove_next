@@ -1,0 +1,302 @@
+.planning-main-box {
+    display: flex;
+    flex-direction: column;
+    gap: 25px;
+}
+
+
+.legend-green {
+    background: #68D15C !important;
+    border-radius: 2px;
+}
+
+.legend-red {
+    background: #E9445A !important;
+    border-radius: 2px;
+}
+
+.legende-text {
+    font-size: 13px;
+    color: #4D4D4D;
+}
+
+/* Events */
+.event-green {
+    background: #68D15C !important;
+    border-color: #68D15C !important;
+}
+
+.event-red {
+    background: #E9445A !important;
+    border-color: #E9445A !important;
+}
+
+.event-orange {
+    background: #FF9500 !important;
+    border-color: #FF9500 !important;
+}
+
+/* FullCalendar overrides */
+.fc {
+    background: #fff;
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+.fc-theme-standard td,
+.fc-theme-standard th {
+    border-color: #e0e0e0;
+}
+
+.fc .fc-toolbar {
+    padding: 12px 16px;
+    background: #fff;
+}
+
+.fc .fc-toolbar-title {
+    font-size: 1.2em;
+    color: #4D4D4D;
+    font-weight: 600;
+}
+
+.fc .fc-button {
+    background-color: #01426A;
+    border-color: #01426A;
+    font-size: 0.9em;
+    padding: 6px 12px;
+}
+
+.fc .fc-button:hover {
+    background-color: #013554;
+    border-color: #013554;
+}
+
+.fc .fc-button-primary:not(:disabled).fc-button-active,
+.fc .fc-button-primary:not(:disabled):active {
+    background-color: #013554;
+    border-color: #013554;
+}
+
+.fc .fc-button-primary:disabled {
+    background-color: #6c757d;
+    border-color: #6c757d;
+}
+
+/* Resource area (sidebar) */
+.fc .fc-resource-area {
+    width: 450px;
+}
+
+.fc .fc-datagrid-cell-frame {
+    padding: 0 !important;
+}
+
+.fc .fc-datagrid-cell-cushion {
+    padding: 0 10px;
+}
+
+.fc-datagrid-cell {
+    background: #fff !important;
+}
+
+.fc .fc-resource-group .fc-datagrid-cell-frame {
+    background: #F5F5F5;
+}
+
+/* Header des ressources */
+.resource-header {
+    font-weight: 600;
+    color: #4D4D4D;
+    padding: 8px 10px;
+}
+
+/* Groupe de marque */
+.make-group {
+    padding: 8px 10px;
+    font-weight: bold;
+    color: #4D4D4D;
+    cursor: pointer;
+}
+
+.make-group:hover {
+    background: #e8e8e8 !important;
+}
+
+/* Véhicules */
+.title-vehicle-num-planning {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    column-gap: 8px;
+    padding: 4px 0;
+    font-size: 13px;
+}
+
+.title-vehicle-num-planning .vehicle-info {
+    font-weight: 500;
+    color: #333;
+}
+
+.title-vehicle-num-planning .vehicle-energy {
+    font-weight: 300;
+    color: #666;
+}
+
+.reservation-link {
+    cursor: pointer;
+    transition: opacity 0.2s;
+}
+
+.reservation-link:hover {
+    opacity: 0.7;
+}
+
+.reservation-link.invisible {
+    visibility: hidden;
+}
+
+/* Timeline header */
+.fc .fc-timeline-header-row {
+    background: #fff !important;
+}
+
+.fc .fc-timeline-slot-frame {
+    color: #4D4D4D;
+}
+
+.fc .fc-timeline-slot-cushion {
+    font-weight: 600;
+}
+
+/* Today marker */
+.fc .fc-timeline-now-indicator-line {
+    border-color: #39A1D8;
+    border-width: 2px;
+}
+
+.fc .fc-timeline-now-indicator-arrow {
+    border-color: #39A1D8;
+    border-top-color: #39A1D8;
+}
+
+/* Event styles */
+.fc-timeline-event {
+    border-radius: 4px;
+    font-size: 12px;
+    padding: 2px 6px;
+}
+
+.fc-timeline-event .fc-event-title {
+    font-weight: 500;
+    color: #fff;
+}
+
+/* Row alternating colors */
+.fc .fc-timeline-lane:nth-child(odd) {
+    background: #fff;
+}
+
+.fc .fc-timeline-lane:nth-child(even) {
+    background: #fafafa;
+}
+
+/* Resource rows */
+.fc .fc-datagrid-body tr:nth-child(odd) {
+    background: #fff;
+}
+
+.fc .fc-datagrid-body tr:nth-child(even) {
+    background: #fafafa;
+}
+
+/* Immat box */
+.immat-box {
+    line-height: 30px;
+}
+
+/* Scrollbar styling */
+.fc .fc-scroller::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+}
+
+.fc .fc-scroller::-webkit-scrollbar-track {
+    background: #f1f1f1;
+}
+
+.fc .fc-scroller::-webkit-scrollbar-thumb {
+    background: #c1c1c1;
+    border-radius: 4px;
+}
+
+.fc .fc-scroller::-webkit-scrollbar-thumb:hover {
+    background: #a1a1a1;
+}
+
+/* Modal styles */
+.event-modal-content {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    padding: 8px 0;
+}
+
+.event-modal-row {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+}
+
+.event-modal-icon {
+    font-size: 20px;
+    color: #01426A;
+    margin-top: 2px;
+}
+
+.event-modal-info {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+
+.event-modal-label {
+    font-size: 12px;
+    color: #888;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.event-modal-value {
+    font-size: 15px;
+    color: #333;
+    font-weight: 500;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .fc .fc-resource-area {
+        width: 200px;
+    }
+
+    .title-vehicle-num-planning {
+        flex-wrap: wrap;
+        font-size: 12px;
+    }
+
+    .planning-legend {
+        flex-direction: column !important;
+        gap: 8px !important;
+    }
+}
+.fc-license-message {
+    visibility: hidden !important;
+    display: none !important;
+}
+
+/* Masquer les boutons expand/collapse des groupes */
+.fc .fc-datagrid-expander {
+    display: none !important;
+}
+.fc-icon-minus-square{
+    display: none !important;
+}

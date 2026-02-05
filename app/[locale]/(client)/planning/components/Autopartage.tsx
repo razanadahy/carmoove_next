@@ -1,9 +1,9 @@
 "use client"
 
-import { Alert } from "antd";
+import {Alert, Spin} from "antd";
 import {useQuery} from "@apollo/client";
 import {DRIVERS_QUERY} from "@/lib/graphql/queries";
-import {useCallback, useEffect, useMemo, useState} from "react";
+import React, {useCallback, useEffect, useMemo, useState} from "react";
 import {IDriver, IVehicle} from "@/lib/hooks/Interfaces";
 import {useQuery as useQueryCS, useQuery as useQueryRest} from "@tanstack/react-query";
 import {fetchCurrentUser} from "@/app/actions/auth";
@@ -14,6 +14,7 @@ import {useSearchParams} from "next/navigation";
 import {useGetVehicles, useVehiclesWithStatus} from "@/lib/hooks";
 import PlanningComponent from "@/app/[locale]/(client)/planning/components/common/PlanningComponent";
 import FilterComponent from "@/app/[locale]/(client)/planning/components/common/FilterComponent";
+import {PlanningFC} from "@/components/Pl/PlanningFC";
 
 export default function Autopartage() {
     const qDrivers = useQuery(DRIVERS_QUERY);
@@ -92,7 +93,7 @@ export default function Autopartage() {
         return searchParams.get('type') ?? 'planning';
     }, [searchParams.get('type')]);
 
-    const { vehicles: dataVehicles, loading, error } = useGetVehicles();
+    const { vehicles: dataVehicles, loading, error } = useGetVehicles(30000);
     const [vehicles, setVehicles] = useState<IVehicle[]>([]);
     useEffect(() => {
         if (!dataVehicles) return
@@ -102,8 +103,10 @@ export default function Autopartage() {
         setVehicles(filtered)
     }, [dataVehicles])
 
-    const { data: statusMap, isLoading } = useVehiclesWithStatus(vehicles);
+    const { data: statusMap, isLoading, vehiclesStatusWithLoading } = useVehiclesWithStatus(vehicles);
+
     const vehiclesWithStatus = useMemo(() => {
+
         return vehicles.map(v => ({
             ...v,
             stateCS: statusMap[v.id]
@@ -206,10 +209,28 @@ export default function Autopartage() {
             setLoadingComponent(false)
         }
     }, [loading, qDrivers.loading, qReservations.isLoading,queryLastReservation.isLoading]);
+
     return (
         <div style={{ padding: '24px' }}>
             <PlanningComponent text="Réservation en cours, à venir et passées" tabLink={tabs} loading={qReservations.isLoading || queryLastReservation.isLoading}/>
             <FilterComponent vehicules={vehiclesWithStatus} drivers={drivers} loadingDrivers={!(drivers.length>0)} setRespFilter={setFilter} loadingDisp={vehicles.length>0 ? isLoading : true}/>
+            {loadingComponent ? <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+                    <Spin size="large" />
+                </div> :
+                sPanelSelected === 'planning' ? (<PlanningFC resultVehicles={respFilter} vehicles={vehiclesWithStatus}
+                                                           allDrivers={drivers} selectedDriverTags={driverSelected}
+                                                           reservations={allReservationsPlanning}/>) : sPanelSelected === 'current' && ("huhu")
+                    // <div className="mt-4">
+                    //     <CurentReservation reservations={filterReservation} allReservation={reservations} freeFloating={false} allDrivers={qDrivers.data?.drivers??[]} currentUser={qCurrentUser.data!} loading={qDrivers.loading} vehicles={vehicles} />
+                    // </div> :
+                    // sPanelSelected === 'planned' ?
+                    //     <div className="mt-4">
+                    //         <FutureReservation reservations={filterReservation} allReservation={reservations} allDrivers={qDrivers.data?.drivers??[]} currentUser={qCurrentUser.data!} loading={qDrivers.loading} vehicles={vehicles} />
+                    //     </div>:
+                    //     <div className="mt-4">
+                    //         <ClosedReservation reservations={filterReservation} freeFloating={false} allDrivers={qDrivers.data?.drivers??[]} currentUser={qCurrentUser.data!} loading={qDrivers.loading} vehicles={vehicles} />
+                    //     </div>
+            }
         </div>
     );
 }

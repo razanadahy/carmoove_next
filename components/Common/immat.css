@@ -1,0 +1,42 @@
+.immat {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #D3D3D3;
+    border: #D3D3D3 solid 0px;
+    border-radius: 4px;
+    padding: 0 10px;
+    height: 19px;
+    align-self: center;
+    margin: 0 5px;
+    width: fit-content;
+}
+
+.immat.blue {
+    background-color: #01426A;
+    border: #01426A solid 0px;
+}
+
+.immat > span {
+    display: inline-block;
+    background-color: #ffffff;
+    padding: 0 10px;
+    font-size: 10px;
+    font-weight: 500;
+    height: 17px;
+    line-height: 17px;
+    text-align: center;
+    vertical-align: middle;
+}
+
+.immat.normal {
+    padding: 0 12px;
+}
+
+.immat.normal > span {
+    font-size: 12px;
+    font-weight: 500;
+    height: 17px;
+    line-height: 17px;
+    padding: 0 15px;
+}

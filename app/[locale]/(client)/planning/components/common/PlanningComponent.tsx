@@ -33,11 +33,12 @@ const PlanningComponent = (props: Iplanning) => {
            <div className=" text-res mb-2">
                <h2 className="my-0">{props.text}</h2>
            </div>
-           {props.loading ? (
-               <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', minHeight: '400px' }}>
-                   <Spin size="large" />
-               </div>
-           ) :<ConfigProvider
+           {/*{props.loading ? (*/}
+           {/*    <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>*/}
+           {/*        <Spin size="large" />*/}
+           {/*    </div>*/}
+           {/*) :*/}
+               <ConfigProvider
                theme={{
                    components: {
                        Tabs: {
@@ -56,8 +57,10 @@ const PlanningComponent = (props: Iplanning) => {
                    items={props.tabLink}
                    activeKey={sPanelSelected}
                    onChange={(key) => { handleTabChange(key) }}
+                   type={"line"}
                />
-           </ConfigProvider>}
+           </ConfigProvider>
+{/*}*/}
        </>
     )
 }

@@ -1,4 +1,4 @@
-.ant-tabs-nav-list{
+.tabs-box>.ant-tabs-nav>.ant-tabs-nav-wrap>.ant-tabs-nav-list{
     gap: 0.25rem!important;
     padding-inline: 0.5rem !important;
     padding-top: 0.25rem !important;

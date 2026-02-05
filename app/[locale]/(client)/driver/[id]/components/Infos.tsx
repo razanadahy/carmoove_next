@@ -16,6 +16,7 @@ import { DRIVER_QUERY, DRIVERS_QUERY } from "@/lib/graphql/queries";
 import { IDriver } from "@/lib/hooks/Interfaces";
 
 import "./Info.css";
+import {useQueryClient} from "@tanstack/react-query";
 
 const { TextArea } = Input;
 
@@ -32,6 +33,7 @@ export default function Infos({ driver }: InfosProps) {
     const [form] = Form.useForm();
     const router = useRouter();
     const { notification } = App.useApp();
+    const queryClient = useQueryClient();
 
     const { loading: loadingDrivers, error, data: dataDrivers } = useQuery(DRIVERS_QUERY, {
         pollInterval: 300000,
@@ -50,6 +52,9 @@ export default function Infos({ driver }: InfosProps) {
                 context: {
                     version: "php",
                 },
+            },
+            {
+                query: DRIVERS_QUERY,
             },
         ],
         awaitRefetchQueries: true,
@@ -79,6 +84,9 @@ export default function Infos({ driver }: InfosProps) {
                     version: "php",
                 },
             },
+            {
+                query: DRIVERS_QUERY,
+            },
         ],
     });
 
@@ -92,6 +100,9 @@ export default function Infos({ driver }: InfosProps) {
                 context: {
                     version: "php",
                 },
+            },
+            {
+                query: DRIVERS_QUERY,
             },
         ],
         onCompleted: () => {
@@ -123,6 +134,9 @@ export default function Infos({ driver }: InfosProps) {
                 context: {
                     version: "php",
                 },
+            },
+            {
+                query: DRIVERS_QUERY,
             },
         ],
         awaitRefetchQueries: true,
@@ -350,6 +364,7 @@ export default function Infos({ driver }: InfosProps) {
                     <Button
                         type="primary"
                         htmlType="submit"
+                        className="me-2"
                         loading={loading || isLoading}
                         icon={<RightOutlined />}
                         style={{ backgroundColor: 'rgba(1, 66, 106, 1)' }}

@@ -28,10 +28,9 @@ interface IGetVehicleStatusCS {
     vehicleId: string;
     plate: string;
 }
-
+const apiClient = createApiClientBrowser();
 export const getVehicleStatus = async (field: IGetVehicleStatusCS) => {
     try {
-        const apiClient = createApiClientBrowser();
         const { data } = await apiClient.get<IVehicleStatusCS>(`/v1/vehicle/status`, {
             params: field
         });
@@ -49,7 +48,7 @@ export const useVehiclesWithStatus = (vehicles: IVehicle[]) => {
                 vehicleId: vehicle.id,
                 plate: vehicle.information.registration,
             }),
-            enabled: !!vehicle.id,
+            enabled: !!vehicle.id
         })),
         combine: (results) => {
             const statusRecord: Record<string, IVehicleStatusCS> = {};

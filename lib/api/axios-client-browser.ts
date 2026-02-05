@@ -4,7 +4,7 @@ let refreshingPromise: Promise<any> | null = null;
 
 const createApiClientBrowser = (): AxiosInstance => {
     const client = axios.create({
-        baseURL: process.env.NEXT_PUBLIC_CAR_SHARING_URL || process.env.REACT_APP_CAR_SHARING_URL,
+        baseURL: process.env.REACT_APP_CAR_SHARING_URL,
         headers: {
             'Content-Type': 'application/json',
         },

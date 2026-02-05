@@ -19,7 +19,8 @@ import Image from "next/image";
 import mini_masquotte_i from "@/assets/image/menu/mini-masquotte-footer.svg"
 import { logoutAction } from "@/app/actions/auth";
 import './mainLayout.css'
-
+import dayjs from "dayjs";
+dayjs.locale('fr');
 const { Header, Sider, Content } = Layout;
 
 interface MainLayoutProps {
