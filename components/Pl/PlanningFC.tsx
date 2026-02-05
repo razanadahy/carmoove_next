@@ -65,8 +65,6 @@ export const PlanningFC = (props: PlanningProps) => {
     const [modalOpen, setModalOpen] = useState(false);
     const [selectedEvent, setSelectedEvent] = useState<ISelectedEvent | null>(null);
 
-
-    // Transformer les véhicules en ressources FullCalendar
     const resources = useMemo(() => {
         const groupsMap = new Map<string, IFormattedChild[]>();
 
@@ -121,7 +119,6 @@ export const PlanningFC = (props: PlanningProps) => {
         return fcResources;
     }, [props.resultVehicles]);
 
-    // Transformer les réservations en événements FullCalendar
     const events = useMemo(() => {
         const eventItems: IEventItem[] = [];
 
@@ -183,7 +180,6 @@ export const PlanningFC = (props: PlanningProps) => {
         // Véhicules indisponibles
         props.resultVehicles.forEach(vehicle => {
             if (vehicle?.stateCS?.state?.unavailable) {
-                console.log("tato pr eh")
                 const now = new Date();
                 const fiveYearsLater = new Date();
                 fiveYearsLater.setFullYear(fiveYearsLater.getFullYear() + 5);
@@ -207,7 +203,6 @@ export const PlanningFC = (props: PlanningProps) => {
         return eventItems;
     }, [props.resultVehicles, props.reservations, props.allDrivers, props.isFreeFloating]);
 
-    // Rendu personnalisé des ressources (sidebar)
     const renderResourceLabel = (arg: any) => {
         const { resource } = arg;
 
@@ -218,12 +213,11 @@ export const PlanningFC = (props: PlanningProps) => {
                 </div>
             );
         }
-        console.log(resource)
 
         const { model, make, energy, registration, isUnavailable } = resource.extendedProps;
 
         return (
-            <div className="title-vehicle-num-planning mt-0">
+            <div className="title-vehicle-num-planning mt-0 px-3">
                 <Image
                     className={`reservation-link ${isUnavailable ? "invisible" : ""}`}
                     src={flashIcon}

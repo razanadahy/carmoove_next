@@ -1,6 +1,7 @@
 'use server';
 
 import createApiClient from '@/lib/api/axios-client';
+import {IVehicleStatusCS} from "@/lib/hooks/Interfaces";
 const apiClient = createApiClient();
 interface IReservation {
     id: string;
@@ -23,6 +24,18 @@ export const fetchAllReservationsArchives = async ({ type }: {  type: string }) 
         return data.bookings;
     } catch (error) {
         console.error('Erreur lors de fetchVehicleReservations:', error);
+        throw error;
+    }
+}
+export const getVehicleStatus = async (field: IGetVehicleStatusCS) => {
+    try {
+
+        const { data } = await apiClient.get<IVehicleStatusCS>(`/v1/vehicle/status`, {
+            params: field
+        });
+        console.log("data : ",data);
+        return data
+    } catch (error) {
         throw error;
     }
 }

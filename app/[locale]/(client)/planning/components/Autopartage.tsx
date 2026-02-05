@@ -103,15 +103,8 @@ export default function Autopartage() {
         setVehicles(filtered)
     }, [dataVehicles])
 
-    const { data: statusMap, isLoading, vehiclesStatusWithLoading } = useVehiclesWithStatus(vehicles);
+    const { isLoading, vehiclesStatusWithLoading: vehiclesWithStatus } = useVehiclesWithStatus(vehicles);
 
-    const vehiclesWithStatus = useMemo(() => {
-
-        return vehicles.map(v => ({
-            ...v,
-            stateCS: statusMap[v.id]
-        }));
-    }, [vehicles, statusMap]);
     const tabs = useMemo(() => {
         const stringTaille = pastReservations.length === 0 ? '' : `(${pastReservations.length})`
         const stringTaillePlan = plannedReservations.length === 0 ? '' : `(${plannedReservations.length})`

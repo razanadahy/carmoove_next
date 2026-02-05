@@ -8,6 +8,7 @@ import { TECHNICAL_SUPPORT, REGISTER_DRIVER } from "../graphql/mutation";
 import {IVehicle, IVehicleStatusCS} from "@/lib/hooks/Interfaces";
 import {useQueries} from "@tanstack/react-query";
 import createApiClientBrowser from "@/lib/api/axios-client-browser";
+import {getVehicleStatus} from "@/app/actions/reservations";
 
 
 export const useGetVehicles = (pollInterval?: number) => {
@@ -24,21 +25,24 @@ export const useGetVehicles = (pollInterval?: number) => {
 
     return { vehicles, loading, error, refetch };
 };
-interface IGetVehicleStatusCS {
+export interface IGetVehicleStatusCS {
     vehicleId: string;
     plate: string;
 }
-const apiClient = createApiClientBrowser();
-export const getVehicleStatus = async (field: IGetVehicleStatusCS) => {
-    try {
-        const { data } = await apiClient.get<IVehicleStatusCS>(`/v1/vehicle/status`, {
-            params: field
-        });
-        return data
-    } catch (error) {
-        throw error;
-    }
-}
+
+// const apiClient = createApiClientBrowser();
+// export const getVehicleStatus = async (field: IGetVehicleStatusCS) => {
+//     try {
+//
+//         const { data } = await apiClient.get<IVehicleStatusCS>(`/v1/vehicle/status`, {
+//             params: field
+//         });
+//         console.log("data : ",data);
+//         return data
+//     } catch (error) {
+//         throw error;
+//     }
+// }
 
 export const useVehiclesWithStatus = (vehicles: IVehicle[]) => {
     return useQueries({

@@ -300,3 +300,8 @@
 .fc-icon-minus-square{
     display: none !important;
 }
+
+.fc-datagrid-cell-cushion.fc-scrollgrid-sync-inner{
+    margin: 0 !important;
+    padding: 0 !important;
+}
