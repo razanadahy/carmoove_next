@@ -21,14 +21,14 @@ interface FetchReservationsParams {
     to?: number;
 }
 
-export const fetchReservations = async (params: FetchReservationsParams): Promise<IReservation[]> => {
-    try {
-        const { data } = await apiClient.get<{ reservations: IReservation[] }>('/v1/reservations', {
-            params
-        });
-        return data.reservations ?? [];
-    } catch (error) {
-        console.error('Error fetching reservations:', error);
-        return [];
-    }
-}
+// export const fetchReservations = async (params: FetchReservationsParams): Promise<IReservation[]> => {
+//     try {
+//         const { data } = await apiClient.get<{ reservations: IReservation[] }>('/v1/reservations', {
+//             params
+//         });
+//         return data.reservations ?? [];
+//     } catch (error) {
+//         console.error('Error fetching reservations:', error);
+//         return [];
+//     }
+// }

@@ -7,7 +7,6 @@ import { VEHICLES_QUERY, DRIVERS_QUERY, DRIVER_QUERY, DRIVER_STATISTICS_QUERY, D
 import { TECHNICAL_SUPPORT, REGISTER_DRIVER } from "../graphql/mutation";
 import {IVehicle, IVehicleStatusCS} from "@/lib/hooks/Interfaces";
 import {useQueries} from "@tanstack/react-query";
-import createApiClientBrowser from "@/lib/api/axios-client-browser";
 import {getVehicleStatus} from "@/app/actions/reservations";
 
 

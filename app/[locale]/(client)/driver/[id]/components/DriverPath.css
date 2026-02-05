@@ -2,13 +2,9 @@
     padding: 24px;
 }
 
-.driver-path-wrapper h2 {
-    margin-bottom: 8px;
-}
 
-.driver-path-wrapper h4 {
+.driver-path-wrapper h5 {
     color: #666;
-    font-weight: normal;
     margin-bottom: 16px;
 }
 

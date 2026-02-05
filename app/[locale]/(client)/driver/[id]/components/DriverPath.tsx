@@ -58,8 +58,8 @@ export default function DriverPath({ driverId }: DriverPathProps) {
 
     return (
         <div className="driver-path-wrapper">
-            <h2>Trajets</h2>
-            <h4>Afficher les trajets :</h4>
+            <h3 className="mb-2">Trajets</h3>
+            <h5>Afficher les trajets :</h5>
 
             <RangePicker
                 defaultValue={[dayjs.unix(fromTo.from), dayjs.unix(fromTo.to)]}

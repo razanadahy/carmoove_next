@@ -1,5 +1,7 @@
 import { Dispatch, JSX, SetStateAction } from "react";
-
+import {IReservation} from "@/app/actions/reservationServices";
+import dayjs from "dayjs";
+export const PAGE_SIZE_DEFAULT = 10;
 export interface IUser {
     id: string;
     email: string;
@@ -601,4 +603,9 @@ export enum EnumStateCS {
     stolen = "stolen",
     towing = "towing",
     unavailable = "unavailable"
+}
+export interface IReservationCustom extends IReservation {
+    dateRange: [dayjs.Dayjs, dayjs.Dayjs]
+    dateUntil: dayjs.Dayjs
+    driverName: string
 }

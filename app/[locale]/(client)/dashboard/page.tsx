@@ -13,7 +13,7 @@ import {
     TYPE_VEHICLE,
     vehiclesByType,
 } from "@/lib/utils/VehicleType";
-import { fetchReservations, IReservation } from "@/app/actions/reservationServices";
+import {IReservation } from "@/app/actions/reservationServices";
 
 import BigBox from "./components/BigBox";
 import AlertBar from "./components/AlertBar";
@@ -25,6 +25,7 @@ import FiscalYearStats from "./components/Statistics/FiscalYearStats";
 import CarmooveGMapV2 from "./components/CarmooveGMapV2";
 
 import "./Dashboard.css";
+import {fetchReservations} from "@/app/actions/reservations";
 
 export default function Dashboard() {
     const [vehicleTypePill, setVehicleTypePill] = useState(TYPE_FLEET);

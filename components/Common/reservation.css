@@ -1,0 +1,65 @@
+
+
+.reservation-driver-name {
+    font-size: 14px;
+    font-weight: 600;
+    color: #4d4d4d;
+    display: inline-block;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+}
+/*.reservation-font{*/
+/*    font-family: OpenSans-Regular  ;*/
+/*}*/
+.font-size-14{
+    font-size: 14px;
+}
+.w-300px{
+    width: 300px;
+}
+.w-max{
+    width: max-content;
+}
+.reservation-date-picker,
+.reservation-date-picker div,
+.reservation-date-picker input {
+    color: #4d4d4d !important;
+    background-color: #FFF !important;
+}
+
+.btn-action-row-reservation {
+    border: rgba(0, 0, 0, 0) 1px solid;
+    border-radius: 4px;
+    display: flex;
+    padding-inline: 4px;
+    width: 22px !important;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    transition: all ease-in-out 0.4s;
+}
+
+/*.btn-action-row-reservation:hover {*/
+/*    border: #39A1D8 1px solid;*/
+/*}*/
+
+.reservation-form {
+    display: flex;
+    flex-direction: column;
+    gap: 7px;
+}
+
+.input-date-reservation {
+    min-width: 250px;
+}
+
+.ant-btn-dangerous {
+    border: none !important;
+    background: #E9445A !important;
+}
+
+.ant-btn-dangerous:hover {
+    border: none !important;
+    background: #e61e38 !important;
+}

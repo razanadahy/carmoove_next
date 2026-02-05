@@ -15,6 +15,9 @@ import {useGetVehicles, useVehiclesWithStatus} from "@/lib/hooks";
 import PlanningComponent from "@/app/[locale]/(client)/planning/components/common/PlanningComponent";
 import FilterComponent from "@/app/[locale]/(client)/planning/components/common/FilterComponent";
 import {PlanningFC} from "@/components/Pl/PlanningFC";
+import CurentReservation from "@/app/[locale]/(client)/planning/components/common/CurentReservation";
+import FutureReservation from "@/app/[locale]/(client)/planning/components/common/FutureReservation";
+import ClosedReservation from "@/app/[locale]/(client)/planning/components/common/ClosedReservation";
 
 export default function Autopartage() {
     const qDrivers = useQuery(DRIVERS_QUERY);
@@ -212,17 +215,17 @@ export default function Autopartage() {
                 </div> :
                 sPanelSelected === 'planning' ? (<PlanningFC resultVehicles={respFilter} vehicles={vehiclesWithStatus}
                                                            allDrivers={drivers} selectedDriverTags={driverSelected}
-                                                           reservations={allReservationsPlanning}/>) : sPanelSelected === 'current' && ("huhu")
-                    // <div className="mt-4">
-                    //     <CurentReservation reservations={filterReservation} allReservation={reservations} freeFloating={false} allDrivers={qDrivers.data?.drivers??[]} currentUser={qCurrentUser.data!} loading={qDrivers.loading} vehicles={vehicles} />
-                    // </div> :
-                    // sPanelSelected === 'planned' ?
-                    //     <div className="mt-4">
-                    //         <FutureReservation reservations={filterReservation} allReservation={reservations} allDrivers={qDrivers.data?.drivers??[]} currentUser={qCurrentUser.data!} loading={qDrivers.loading} vehicles={vehicles} />
-                    //     </div>:
-                    //     <div className="mt-4">
-                    //         <ClosedReservation reservations={filterReservation} freeFloating={false} allDrivers={qDrivers.data?.drivers??[]} currentUser={qCurrentUser.data!} loading={qDrivers.loading} vehicles={vehicles} />
-                    //     </div>
+                                                           reservations={allReservationsPlanning}/>) : sPanelSelected === 'current' ?
+                    <div className="mt-4">
+                        <CurentReservation reservations={filterReservation} allReservation={reservations} freeFloating={false} allDrivers={qDrivers.data?.drivers??[]} currentUser={qCurrentUser.data!} loading={qDrivers.loading} vehicles={vehicles} />
+                    </div> :
+                    sPanelSelected === 'planned' ?
+                        <div className="mt-4">
+                            <FutureReservation reservations={filterReservation} allReservation={reservations} allDrivers={qDrivers.data?.drivers??[]} currentUser={qCurrentUser.data!} loading={qDrivers.loading} vehicles={vehicles} />
+                        </div>:
+                        <div className="mt-4">
+                            <ClosedReservation reservations={filterReservation} freeFloating={false} allDrivers={qDrivers.data?.drivers??[]} currentUser={qCurrentUser.data!} loading={qDrivers.loading} vehicles={vehicles} />
+                        </div>
             }
         </div>
     );

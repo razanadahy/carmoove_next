@@ -33,13 +33,9 @@ export default function Infos({ driver }: InfosProps) {
     const [form] = Form.useForm();
     const router = useRouter();
     const { notification } = App.useApp();
-    const queryClient = useQueryClient();
 
     const { loading: loadingDrivers, error, data: dataDrivers } = useQuery(DRIVERS_QUERY, {
-        pollInterval: 300000,
-        context: {
-            version: "php",
-        },
+        pollInterval: 300000
     });
 
     const [driverMutate, { loading }] = useMutation(DRIVER_MUTATION, {
@@ -65,7 +61,6 @@ export default function Infos({ driver }: InfosProps) {
             });
         },
         onError: (e) => {
-            console.error("DRIVER_MUTATION error:", e);
             setIsLoading(false);
             notification.error({
                 message: "Erreur lors de la modification du conducteur",
