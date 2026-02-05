@@ -8,11 +8,7 @@ import { ME_QUERY } from "@/lib/graphql/queries";
 import { IUser, IVehicle } from "@/lib/hooks/Interfaces";
 import { useQuery as useQueryCS } from "@tanstack/react-query";
 import { useGetVehicles } from "@/lib/hooks";
-import {
-    TYPE_FLEET,
-    TYPE_VEHICLE,
-    vehiclesByType,
-} from "@/lib/utils/VehicleType";
+import {TYPE_FLEET, TYPE_VEHICLE, vehiclesByType,} from "@/lib/utils/VehicleType";
 import {IReservation } from "@/app/actions/reservationServices";
 
 import BigBox from "./components/BigBox";
