@@ -1,0 +1,21 @@
+.tabs-box {
+    width: 100%;
+}
+
+.tabs-box .ant-tabs-nav {
+    margin-bottom: 16px;
+}
+
+.tabs-box .ant-tabs-tab {
+    padding: 8px 16px;
+    font-weight: 500;
+}
+
+.tabs-box .ant-tabs-tab-active {
+    background: #f5f5f5;
+    border-radius: 8px;
+}
+
+.tabs-box .ant-tabs-ink-bar {
+    display: none;
+}

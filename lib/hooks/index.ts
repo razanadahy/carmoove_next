@@ -3,7 +3,7 @@
 import { useMemo } from "react";
 import { useQuery, useMutation } from "@apollo/client";
 import { App } from "antd";
-import { VEHICLES_QUERY, DRIVERS_QUERY, DRIVER_QUERY, DRIVER_STATISTICS_QUERY, DRIVER_PATH_QUERY } from "../graphql/queries";
+import { VEHICLES_QUERY, VEHICLE_QUERY, DRIVERS_QUERY, DRIVER_QUERY, DRIVER_STATISTICS_QUERY, DRIVER_PATH_QUERY } from "../graphql/queries";
 import { TECHNICAL_SUPPORT, REGISTER_DRIVER } from "../graphql/mutation";
 import {IVehicle, IVehicleStatusCS} from "@/lib/hooks/Interfaces";
 import {useQueries} from "@tanstack/react-query";
@@ -125,6 +125,21 @@ export const useRegisterDriver = (onCompleted?: () => void) => {
     });
 
     return { registerDriver, loading, error };
+};
+
+export const useGetVehicle = (vehicleId: string, pollInterval?: number) => {
+    const { data, loading, error, refetch } = useQuery(VEHICLE_QUERY, {
+        variables: {
+            id: vehicleId,
+        },
+        pollInterval: pollInterval ?? 0,
+        context: {
+            version: "php",
+        },
+        skip: !vehicleId,
+    });
+
+    return { data, loading, error, refetch };
 };
 
 export const useGetDriver = (driverId: string) => {
