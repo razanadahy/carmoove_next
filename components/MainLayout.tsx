@@ -39,6 +39,7 @@ export default function MainLayout({ children }: MainLayoutProps) {
         if (path.includes('/planning')) return 'Planning';
         if (path.includes('/settings')) return 'Paramètres';
         if (path.includes('/help')) return 'Contact';
+        if (path.includes('/vehicle')) return 'Véhicule';
         if (path.includes('/vehicles')) return 'Véhicules';
         if (path.includes('/driver')) return 'Conducteur';
         if (path.includes('/drivers')) return 'Conducteurs';
@@ -141,6 +142,7 @@ export default function MainLayout({ children }: MainLayoutProps) {
         if (path.includes('/dashboard')) return '/dashboard';
         if (path.includes('/driver')) return '/drivers';
         if (path.includes('/planning')) return '/planning';
+        if (path.includes('/vehicle')) return '/vehicles';
         return path;
     };
 

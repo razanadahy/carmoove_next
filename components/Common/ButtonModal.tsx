@@ -36,8 +36,7 @@ function ButtonModal<T>(props: ButtonModalProps<T>) {
     return (
         <>
             <Button
-
-                classNames={`filter-button ${(props.elementsChecked.length > 0 || modalOpen) ? 'active' : ''}`}
+                className={`filter-button ${(props.elementsChecked.length > 0 || modalOpen) ? 'active' : ''}`}
                 type="primary"
                 icon={<DownOutlined />}
                 iconPosition="end"

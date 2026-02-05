@@ -3,9 +3,9 @@ import React from "react";
 
 export const Loading = ({msg}: {msg: string}) => {
     return(
-        <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
-            <Spin size="large" tip={msg} >
-                <div style={{ minHeight: '100px' }} /> {/* Contenu vide minimum */}
+        <div style={{ textAlign: 'center', padding: '100px' }}>
+            <Spin size="large" tip={msg}>
+                <div style={{ height: '200px' }} />
             </Spin>
         </div>
     )

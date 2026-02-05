@@ -54,12 +54,12 @@
     min-width: 250px;
 }
 
-.ant-btn-dangerous {
-    border: none !important;
-    background: #E9445A !important;
-}
+/*.ant-btn-dangerous {*/
+/*    border: none !important;*/
+/*    background: #E9445A !important;*/
+/*}*/
 
-.ant-btn-dangerous:hover {
-    border: none !important;
-    background: #e61e38 !important;
-}
+/*.ant-btn-dangerous:hover {*/
+/*    border: none !important;*/
+/*    background: #e61e38 !important;*/
+/*}*/

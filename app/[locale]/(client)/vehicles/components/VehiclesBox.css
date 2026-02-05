@@ -1,0 +1,283 @@
+.vehicles-page {
+    padding: 0;
+}
+
+.search-box {
+    margin-bottom: 16px;
+}
+
+.search-input {
+    background-color: rgba(208, 208, 208, 0.7);
+    width: 100%;
+}
+
+.filter-buttons {
+    margin-bottom: 16px;
+}
+
+.filter-button {
+    background-color: #f5f5f5 !important;
+    color: #333 !important;
+    border: 1px solid #d9d9d9 !important;
+    font-weight: 500;
+}
+
+.filter-button:hover {
+    background-color: #e8e8e8 !important;
+    border-color: #01426A !important;
+}
+
+.filter-button.active {
+    background-color: #01426A !important;
+    color: #fff !important;
+    border-color: #01426A !important;
+}
+
+.vehicle-list {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.loading-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 200px;
+}
+
+.no-vehicles {
+    text-align: center;
+    padding: 50px;
+    color: #888;
+    background: #fafafa;
+    border-radius: 8px;
+}
+
+/* Vehicle Row */
+.vehicle-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 12px 16px;
+    background: #fff;
+    border: 1px solid #e8e8e8;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.vehicle-row:hover {
+    border-color: #01426A;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.vehicle-row-left {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    flex: 1;
+}
+
+.vehicle-info {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+
+.vehicle-name {
+    font-weight: 600;
+    color: #333;
+}
+
+.vehicle-energy {
+    font-size: 12px;
+    color: #888;
+}
+
+.vehicle-row-center {
+    flex: 1;
+    text-align: center;
+}
+
+.vehicle-driver {
+    font-size: 13px;
+    color: #666;
+}
+
+.vehicle-row-right {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-wrap: wrap;
+    justify-content: flex-end;
+}
+
+/* Status Filter Modal */
+.status-modal .status-tags-container {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.status-modal .status-group h4 {
+    margin: 0 0 10px 0;
+    font-size: 14px;
+    color: #666;
+    font-weight: 600;
+}
+
+.status-modal .status-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+.status-modal .option-tag-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 8px 12px;
+    border: 1px solid #d9d9d9;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: all 0.2s;
+    font-size: 13px;
+}
+
+.status-modal .option-tag-btn:hover {
+    border-color: #01426A;
+}
+
+.status-modal .ant-tag-checkable-checked.option-tag-btn {
+    background-color: #01426A !important;
+    border-color: #01426A !important;
+    color: #fff !important;
+}
+
+/* Status icons */
+.tag-icon {
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    display: inline-block;
+}
+
+.unavailable-icon {
+    background-color: #ff4d4f;
+}
+
+.available-icon {
+    background-color: #52c41a;
+}
+
+.unreserved-icon {
+    background-color: #d9d9d9;
+}
+
+.reserved-icon {
+    background-color: #1890ff;
+}
+
+.connected-icon {
+    background-color: #52c41a;
+}
+
+.not-connected-icon {
+    background-color: #ff4d4f;
+}
+
+.no-privacy-icon {
+    background-color: #52c41a;
+}
+
+.privacy-icon {
+    background-color: #1890ff;
+}
+
+.charge-icon {
+    background-color: #1890ff;
+}
+
+.parked-icon {
+    background-color: #faad14;
+}
+
+.engine-icon {
+    background-color: #52c41a;
+}
+
+.ras-icon {
+    background-color: #52c41a;
+}
+
+.low-batt-icon {
+    background-color: #faad14;
+}
+
+.fault-icon {
+    background-color: #ff4d4f;
+}
+
+.maintenance-icon {
+    background-color: #faad14;
+}
+
+.accident-icon {
+    background-color: #ff4d4f;
+}
+
+.towage-icon {
+    background-color: #722ed1;
+}
+
+.stolen-icon {
+    background-color: #ff4d4f;
+}
+
+.low-charge-icon {
+    background-color: #faad14;
+}
+
+.low-fuel-icon {
+    background-color: #fa8c16;
+}
+
+/* Custom button */
+.custom-button {
+    background-color: #01426A !important;
+    border-color: #01426A !important;
+}
+
+.custom-button:hover {
+    background-color: #013554 !important;
+    border-color: #013554 !important;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .vehicle-row {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 12px;
+    }
+
+    .vehicle-row-left,
+    .vehicle-row-center,
+    .vehicle-row-right {
+        width: 100%;
+    }
+
+    .vehicle-row-center {
+        text-align: left;
+    }
+
+    .vehicle-row-right {
+        justify-content: flex-start;
+    }
+
+    .filter-buttons {
+        overflow-x: auto;
+        padding-bottom: 8px;
+    }
+}

@@ -6,7 +6,7 @@ import { NOTIFICATIONS_QUERY } from "@/lib/graphql/queries";
 import { ARCHIVE_ALL_MUTATION, ARCHIVE_SELECTION_MUTATION } from "@/lib/graphql/mutation";
 import { useEffect, useMemo, useState } from "react";
 import { LoadingOutlined } from "@ant-design/icons";
-import { Empty, Spin } from "antd";
+import { App, Empty, Spin } from "antd";
 import { categoriesList } from "./AlertsList";
 import AddFilter from "./AddFilter";
 import AlertRow from "./AlertRow";
@@ -50,6 +50,7 @@ interface IPropsAlertsRead {
 }
 
 const AlertsRead = (props: IPropsAlertsRead) => {
+    const { notification } = App.useApp();
     const [checkedList, setCheckedList] = useState<string[]>([]);
     const [isAllSelected, setIsAllSelected] = useState<boolean>(false);
     const [types, setTypes] = useState<string>("all");
@@ -168,8 +169,16 @@ const AlertsRead = (props: IPropsAlertsRead) => {
                     archived: true,
                 },
             });
+            notification.success({
+                message: "Notifications archivées",
+                description: `${checkedList.length} notification(s) archivée(s) avec succès.`,
+            });
             return result;
         } catch (error) {
+            notification.error({
+                message: "Erreur",
+                description: "Une erreur est survenue lors de l'archivage des notifications.",
+            });
             throw error;
         } finally {
             setCheckedList([]);
@@ -184,8 +193,16 @@ const AlertsRead = (props: IPropsAlertsRead) => {
                     vehicleIds: props.vehicles.map((vehicle: IVehicle) => vehicle.id),
                 },
             });
+            notification.success({
+                message: "Toutes les notifications archivées",
+                description: "Toutes les notifications ont été archivées avec succès.",
+            });
             return result;
         } catch (error) {
+            notification.error({
+                message: "Erreur",
+                description: "Une erreur est survenue lors de l'archivage des notifications.",
+            });
             throw error;
         } finally {
             setCheckedList([]);
