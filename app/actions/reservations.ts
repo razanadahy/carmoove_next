@@ -1,7 +1,7 @@
 'use server';
 
 import createApiClient from '@/lib/api/axios-client';
-import {IVehicleStatusCS} from "@/lib/hooks/Interfaces";
+import {IPostUpdateStateCS, IVehicleStatusCS} from "@/lib/hooks/Interfaces";
 import {IGetVehicleStatusCS} from "@/lib/hooks";
 const apiClient = createApiClient();
 interface IReservation {
@@ -65,6 +65,14 @@ export const deleteReservation = async (field: IDeleteReservation) => {
         return data;
     } catch (error) {
         console.error('Erreur lors de deleteBooking:', error);
+        throw error;
+    }
+}
+export const updateState = async (field: IPostUpdateStateCS) => {
+    try {
+        const { data } = await apiClient.post(`/v1/vehicle/${field.id}/${field.state}?state=${field.value}`,);
+        return data;
+    } catch (error) {
         throw error;
     }
 }

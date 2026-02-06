@@ -1,0 +1,15 @@
+.vehicle-icon-box {
+    background-color: #F1F1F4;
+    border: 1px solid #F1F1F4;
+    border-radius: 6px;
+    margin: auto 2px;
+    width: 28px;
+    height: 28px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.vehicle-icon-box.link {
+    cursor: pointer;
+}

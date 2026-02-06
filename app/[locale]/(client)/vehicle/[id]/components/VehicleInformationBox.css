@@ -40,6 +40,46 @@
     font-weight: 500;
     color: #333;
 }
+.disponibility-icon-box {
+    height: 19px;
+}
+
+
+.icon-modal-box > div > .ant-modal-content > .ant-modal-header {
+    margin-bottom: 0;
+}
+
+
+.icon-modal-box > div > .ant-modal-content > .ant-modal-footer {
+    display: flex;
+    flex-direction: row;
+    justify-content: end;
+    gap: 10px;
+    font-size: 14px;
+    font-weight: 600;
+    line-height: 16px;
+    color: #4D4D4D;
+}
+
+.icon-modal-box > div > .ant-modal-content > .ant-modal-body {
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 22px;
+    color: #4D4D4D;
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+}
+
+.icon-modal-box.modal-status > div > .ant-modal-content > .ant-modal-footer {
+    flex-direction: column;
+    align-items: end;
+}
+.icon-modal-box.modal-status > div > .ant-modal-content > .ant-modal-footer > div {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 10px;
+}
 
 .energy-info {
     color: #666;
