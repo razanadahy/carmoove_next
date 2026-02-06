@@ -1,6 +1,8 @@
+'use client'
 import React from 'react';
 import { Tooltip } from 'antd';
 import './StatShowBox.css';
+import detail_icon from '@/assets/image/vehicle/detail.svg';
 
 interface StatShowBoxProps {
     title: string;
@@ -32,17 +34,17 @@ const StatShowBox: React.FC<StatShowBoxProps> = ({ title, value, unity, tooltip,
         unity = time.unit;
     }
     return (
-        <div className='stat-show-box'>
+        <div className='stat-show-box' style={{border: '1px solid #39A1D8'}}>
             <div className='stat-show-box-title'>
                 <span>{title}</span>
             </div>
             <div className='stat-show-box-value'>
                 <span style={{ color }}>{value}</span>
             </div>
-            <div className='stat-show-box-unity'>
-                <span>{unity}</span>
+            <div className='stat-show-box-unity w-100 justify-content-between'>
+                <span style={{fontWeight: "700"}}>{unity}</span>
                 <Tooltip placement="bottom" arrow={false} color="white" title={<span className="stat-tooltip-text">{tooltip ?? title}</span>}>
-                    <img src="/image/vehicle/detail.svg" alt="detail" />
+                    <img src={detail_icon.src} alt="detail" />
                 </Tooltip>
             </div>
         </div>

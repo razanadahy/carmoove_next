@@ -119,6 +119,10 @@
 
 .driver-information {
     font-size: 14px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-wrap: wrap;
 }
 
 .driver-information strong {
@@ -137,6 +141,29 @@
 
 .driver-information a:hover {
     text-decoration: underline;
+}
+
+.driver-action-icon {
+    cursor: pointer;
+    color: #1890ff;
+    font-size: 20px;
+    padding: 6px;
+    border-radius: 6px;
+    transition: all 0.3s ease;
+    margin-left: 10px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.driver-action-icon:hover {
+    color: #ffffff;
+    background-color: #1890ff;
+    transform: scale(1.1);
+}
+
+.driver-action-icon:active {
+    transform: scale(0.95);
 }
 
 .ml-10 {

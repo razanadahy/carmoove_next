@@ -4,7 +4,7 @@ import React, { useEffect, useState } from "react";
 import { format } from "date-fns";
 import {EnumStateCS, IVehicle} from "@/lib/hooks/Interfaces";
 import {App, Modal, Spin, Switch} from "antd";
-import { CheckOutlined, CloseOutlined, LoadingOutlined } from "@ant-design/icons";
+import { CheckOutlined, CloseOutlined, LoadingOutlined, EditOutlined, UserAddOutlined } from "@ant-design/icons";
 import { useRouter } from "next/navigation";
 import "./VehicleInformationBox.css";
 import {useQueryClient, useMutation as useMutationCS, useQuery} from "@tanstack/react-query";
@@ -12,6 +12,7 @@ import {getVehicleStatus, updateState} from "@/app/actions/reservations";
 import {energyTrueFormat} from "@/services/VehiculesService";
 import Immat from "@/components/Common/Immat";
 import VehicleStatusInResult from "@/app/[locale]/(client)/vehicle/[id]/components/VehicleStatusInResult";
+import ChangeDriverDrawer from "@/app/[locale]/(client)/vehicle/[id]/components/ChangeDriverDrawer";
 
 import itenerary_i from "@/assets/image/itenerary.svg";
 import stolen_i from "@/assets/image/vehicle/any.svg";
@@ -45,6 +46,7 @@ function VehicleInformationBox(props: IProps) {
     const [modalPrivacyOpen, setModalPrivacyOpen] = useState<boolean>(false);
     const [modalSetDisponibilityOpen, setModalSetDisponibilityOpen] = useState<boolean>(false);
     const [modalStatusOpen, setModalStatusOpen] = useState<boolean>(false);
+    const [drawerDriverOpen, setDrawerDriverOpen] = useState<boolean>(false);
 
     const [unavailable, setUnavailable] = useState<boolean>(false);
     const [privacy, setPrivacy] = useState<boolean>(vehicle.status.privacy);
@@ -308,9 +310,21 @@ function VehicleInformationBox(props: IProps) {
                                         </span>
                                     )}
                                 </span>
+                                <EditOutlined
+                                    className="driver-action-icon"
+                                    onClick={() => setDrawerDriverOpen(true)}
+                                    title="Changer le conducteur"
+                                />
                             </>
                         ) : (
-                            <>Aucun conducteur</>
+                            <>
+                                <span>Aucun conducteur</span>
+                                <UserAddOutlined
+                                    className="driver-action-icon"
+                                    onClick={() => setDrawerDriverOpen(true)}
+                                    title="Ajouter un conducteur"
+                                />
+                            </>
                         )}
                     </div>
                 </div>
@@ -420,6 +434,13 @@ function VehicleInformationBox(props: IProps) {
             >
                 Vous pouvez modifier les statuts du véhicule ci-dessous. Attention, si vous bénéficiez de la fonctionnalité de réservation, l'activation d'un de ces statuts rendra le véhicule indisponible.
             </Modal>
+
+            {/* Drawer Change Driver */}
+            <ChangeDriverDrawer
+                open={drawerDriverOpen}
+                onClose={() => setDrawerDriverOpen(false)}
+                vehicle={vehicle}
+            />
         </>
     );
 }
