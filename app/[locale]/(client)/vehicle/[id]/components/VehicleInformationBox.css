@@ -1,0 +1,138 @@
+.vehicle-box {
+    background: #fff;
+    border-radius: 8px;
+    padding: 20px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.vehicle-box.mt-3 {
+    margin-top: 1rem;
+}
+
+.vehicle-box.mb-0 {
+    margin-bottom: 0;
+}
+
+.info-vehicle-box {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    padding-bottom: 15px;
+    border-bottom: 1px solid #e8e8e8;
+}
+
+.info-vehicle-box.mb-1 {
+    margin-bottom: 0.5rem;
+}
+
+.vehicle-registration {
+    background: #0055a4;
+    color: #fff;
+    padding: 8px 15px;
+    border-radius: 4px;
+    font-weight: bold;
+    font-size: 16px;
+    letter-spacing: 1px;
+}
+
+.vehicle-info {
+    font-size: 16px;
+    font-weight: 500;
+    color: #333;
+}
+
+.energy-info {
+    color: #666;
+    font-weight: normal;
+}
+
+.vehicle-status-info {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    padding: 15px 0;
+    align-items: center;
+}
+
+.vehicle-info-plus {
+    padding-top: 15px;
+    border-top: 1px solid #e8e8e8;
+}
+
+.last-localisation {
+    margin-bottom: 10px;
+    font-size: 14px;
+}
+
+.last-localisation strong {
+    color: #333;
+}
+
+.last-localisation a {
+    color: #1890ff;
+    text-decoration: none;
+}
+
+.last-localisation a:hover {
+    text-decoration: underline;
+}
+
+.driver-information {
+    font-size: 14px;
+}
+
+.driver-information strong {
+    color: #333;
+}
+
+.driver-fullname {
+    font-weight: 500;
+    color: #333;
+}
+
+.driver-information a {
+    color: #1890ff;
+    text-decoration: none;
+}
+
+.driver-information a:hover {
+    text-decoration: underline;
+}
+
+.ml-10 {
+    margin-left: 10px;
+}
+
+/* Modal styles */
+.icon-modal-box .ant-modal-footer {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 15px;
+    padding: 20px;
+    border-top: 1px solid #e8e8e8;
+}
+
+.modal-status .ant-modal-footer {
+    flex-direction: column;
+    gap: 10px;
+}
+
+.modal-status .ant-modal-footer > div {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    padding: 10px 0;
+}
+
+.disponibility-icon-box {
+    cursor: pointer;
+    padding: 8px;
+    border-radius: 4px;
+    transition: background-color 0.3s;
+}
+
+.disponibility-icon-box:hover {
+    background-color: #f0f0f0;
+}

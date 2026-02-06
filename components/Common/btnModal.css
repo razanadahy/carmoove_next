@@ -1,0 +1,18 @@
+.option-tag-btn{
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 4px 12px;
+    border: 1.5px solid #d9d9d9;
+    border-radius: 15px;
+    cursor: pointer;
+    transition: all 0.2s;
+    font-size: 13px;
+    flex-direction: column;
+}
+.icon-modal-box .ant-modal-footer{
+    display: flex;
+    margin-top: 25px !important;
+    justify-content: flex-end !important;
+    gap: 12px;
+}

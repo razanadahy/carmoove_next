@@ -1,7 +1,8 @@
 import {Dispatch, SetStateAction, useCallback, useState} from "react";
 import {Button,  Modal, Tag} from "antd";
 import {DownOutlined} from "@ant-design/icons";
-
+import './btnModal.css'
+import '@/app/[locale]/(client)/vehicles/components/VehiclesBox.css'
 
 interface ButtonModalProps<T> {
     title: string;
@@ -64,7 +65,7 @@ function ButtonModal<T>(props: ButtonModalProps<T>) {
             >
                 {props.elements.map((element) => (
                     <Tag.CheckableTag
-                        className="option-tag-btn"
+                        className="option-tag-btn m-1"
                         key={props.getKey(element)}
                         checked={isChecked(element)}
                         onChange={(checked) => { addElementCheck(checked, element) }}

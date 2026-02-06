@@ -136,20 +136,21 @@
 .status-modal .option-tag-btn {
     display: inline-flex;
     align-items: center;
-    gap: 6px;
-    padding: 8px 12px;
-    border: 1px solid #d9d9d9;
-    border-radius: 6px;
+    justify-content: center;
+    padding: 4px 12px;
+    border: 1.5px solid #d9d9d9;
+    border-radius: 15px;
     cursor: pointer;
     transition: all 0.2s;
     font-size: 13px;
+    flex-direction: column;
 }
 
 .status-modal .option-tag-btn:hover {
     border-color: #01426A;
 }
 
-.status-modal .ant-tag-checkable-checked.option-tag-btn {
+.ant-tag-checkable-checked.option-tag-btn {
     background-color: #01426A !important;
     border-color: #01426A !important;
     color: #fff !important;
@@ -157,90 +158,9 @@
 
 /* Status icons */
 .tag-icon {
-    width: 18px;
-    height: 18px;
-    border-radius: 50%;
+    margin-right: 3px;
+    padding: 3px;
     display: inline-block;
-}
-
-.unavailable-icon {
-    background-color: #ff4d4f;
-}
-
-.available-icon {
-    background-color: #52c41a;
-}
-
-.unreserved-icon {
-    background-color: #d9d9d9;
-}
-
-.reserved-icon {
-    background-color: #1890ff;
-}
-
-.connected-icon {
-    background-color: #52c41a;
-}
-
-.not-connected-icon {
-    background-color: #ff4d4f;
-}
-
-.no-privacy-icon {
-    background-color: #52c41a;
-}
-
-.privacy-icon {
-    background-color: #1890ff;
-}
-
-.charge-icon {
-    background-color: #1890ff;
-}
-
-.parked-icon {
-    background-color: #faad14;
-}
-
-.engine-icon {
-    background-color: #52c41a;
-}
-
-.ras-icon {
-    background-color: #52c41a;
-}
-
-.low-batt-icon {
-    background-color: #faad14;
-}
-
-.fault-icon {
-    background-color: #ff4d4f;
-}
-
-.maintenance-icon {
-    background-color: #faad14;
-}
-
-.accident-icon {
-    background-color: #ff4d4f;
-}
-
-.towage-icon {
-    background-color: #722ed1;
-}
-
-.stolen-icon {
-    background-color: #ff4d4f;
-}
-
-.low-charge-icon {
-    background-color: #faad14;
-}
-
-.low-fuel-icon {
-    background-color: #fa8c16;
 }
 
 /* Custom button */

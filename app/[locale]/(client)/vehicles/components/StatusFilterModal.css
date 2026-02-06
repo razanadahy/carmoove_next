@@ -1,0 +1,114 @@
+.status-modal .status-group {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.status-modal .status-group h4 {
+    font-size: 14px;
+    font-weight: 600;
+    color: #333;
+    margin: 0;
+}
+
+.status-modal .option-tag-btn:hover {
+    border-color: #01426A;
+    background: #f5f5f5;
+}
+
+.status-modal .ant-tag-checkable-checked.option-tag-btn .tag-icon {
+    background: transparent !important;
+}
+
+.status-modal .ant-tag-checkable-checked.option-tag-btn {
+    background: #01426A;
+    border-color: #01426A;
+    color: #fff;
+}
+
+/* Changer la couleur des SVG en blanc quand le tag est coché */
+.status-modal .ant-tag-checkable-checked.option-tag-btn svg {
+    /* Change stroke color to white */
+    stroke: #fff !important;
+}
+
+/* Les cercles (background des icônes) en bleu */
+.status-modal .ant-tag-checkable-checked.option-tag-btn svg circle {
+    fill: #01426A !important;
+    stroke: #fff !important;
+}
+
+/* Les cercles qui ont un stroke sans fill deviennent transparents avec bordure blanche */
+.status-modal .ant-tag-checkable-checked.option-tag-btn svg circle[fill="none"] {
+    fill: transparent !important;
+    stroke: #fff !important;
+}
+
+/* Les rectangles (background des icônes) en bleu */
+.status-modal .ant-tag-checkable-checked.option-tag-btn svg rect {
+    fill: #01426A !important;
+    stroke: #fff !important;
+}
+
+/* Les paths principaux (icônes internes) en blanc */
+.status-modal .ant-tag-checkable-checked.option-tag-btn svg path {
+    /*fill: #fff !important;*/
+    stroke: #fff !important;
+}
+
+/* Exception : si un path a fill="none", le garder transparent */
+/*.status-modal .ant-tag-checkable-checked.option-tag-btn svg path[fill="none"] {*/
+/*    fill: none !important;*/
+/*}*/
+
+/*.status-modal .ant-tag-checkable-checked.option-tag-btn svg line {*/
+/*    stroke: #fff !important;*/
+/*}*/
+
+.status-modal .ant-tag-checkable-checked.option-tag-btn svg ellipse {
+    stroke: #fff !important;
+}
+
+.status-modal .ant-tag-checkable-checked.option-tag-btn svg polyline {
+    stroke: #fff !important;
+}
+
+.status-modal .ant-tag-checkable-checked.option-tag-btn svg g {
+    stroke: #fff !important;
+}
+
+/* Exception pour les lignes rouges (comme dans "Non connecté" et "Smart géolocalisé") */
+/* Ces lignes doivent rester visibles mais en couleur plus claire */
+.status-modal .ant-tag-checkable-checked.option-tag-btn svg line[stroke="#E9445A"] {
+    stroke: #ff6b7f !important;
+    opacity: 0.9;
+}
+
+.status-modal .ant-tag-checkable-checked.option-tag-btn img {
+    /*filter: brightness(0) invert(1);*/
+}
+
+/* Animation au survol des tags cochés */
+.status-modal .ant-tag-checkable-checked.option-tag-btn:hover {
+    background: #012d4a;
+    border-color: #012d4a;
+}
+
+/* Footer du modal */
+.status-modal .ant-modal-footer {
+    display: flex;
+    justify-content: flex-end;
+    gap: 12px;
+    padding: 16px 24px;
+    border-top: 1px solid #f0f0f0;
+}
+
+.status-modal .ant-modal-footer .custom-button {
+    background: #01426A;
+    border-color: #01426A;
+}
+
+.status-modal .ant-modal-footer .custom-button:hover {
+    background: #012d4a;
+    border-color: #012d4a;
+}
