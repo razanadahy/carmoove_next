@@ -22,6 +22,8 @@ import editSrc from "@/assets/image/vehicle/edit.svg";
 import Image from "next/image";
 import add_i from '@/assets/image/add.svg';
 import plus_i from '@/assets/image/plus.svg';
+import { getISV } from "../services/DetailServices";
+import { Certificate, Additional_information, Fluids, Tire, Electric } from "../services/DetailInterfaces";
 
 export interface IDataRowTableV2 {
     oneCol?: boolean
@@ -103,6 +105,27 @@ function DetailV2(props: { vehicle: IVehicle }) {
         retry: false
     });
 
+    const qSIV = useQuery({
+        queryKey: ["siv", props.vehicle.id],
+        queryFn: () => getISV(props.vehicle.id)
+    });
+
+    const [certificate, setCertificate] = useState<Certificate | null>(null);
+    const [additionalInfo, setAdditionalInfo] = useState<Additional_information | null>(null);
+    const [fluids, setFluids] = useState<Fluids | null>(null);
+    const [tires, setTires] = useState<Tire[] | null>(null);
+    const [electric, setElectric] = useState<Electric | null>(null);
+
+    useEffect(() => {
+        if (qSIV.data) {
+            setCertificate(qSIV.data.certificate);
+            setAdditionalInfo(qSIV.data.additional_information);
+            setFluids(qSIV.data.fluids);
+            setTires(qSIV.data.tires);
+            setElectric(qSIV.data.electric);
+        }
+    }, [qSIV.data]);
+
     const saveAcquisition = ({ mode, seller, start, duration, mileage, price, tax, subscription, redemptionValue }: {
         mode: string,
         seller?: string,
@@ -173,6 +196,114 @@ function DetailV2(props: { vehicle: IVehicle }) {
         shouldDisplay(props.vehicle.information.co2) && { data: "CO2 (en g/km)", value: props.vehicle.information.co2, action: <></> },
     ].filter(Boolean) as IDataRowTableV2[];
 
+    const adminData: IDataRowTableV2[] = useMemo(() => {
+        if (!certificate) return [];
+        return [
+            shouldDisplay(certificate?.plate) && { data: "Immatriculation (A)", value: certificate?.plate, action: <></> },
+            shouldDisplay(certificate?.first_registration) && { data: "Date de première immatriculation (B)", value: certificate?.first_registration, action: <></> },
+            shouldDisplay(certificate?.brand) && { data: "Marque du véhicule (D.1)", value: certificate?.brand, action: <></> },
+            shouldDisplay(certificate?.type_variant_version) && { data: "Type, version ou variante du modèle de voiture (D.2)", value: certificate?.type_variant_version, action: <></> },
+            shouldDisplay(certificate?.cnit) && { data: "Code national d'identification du type (D.2.1)", value: certificate?.cnit, action: <></> },
+            shouldDisplay(certificate?.model) && { data: "Dénomination commerciale (D.3)", value: certificate?.model, action: <></> },
+            shouldDisplay(certificate?.vin) && { data: "N° d'identification du véhicule (E)", value: certificate?.vin, action: <></> },
+            shouldDisplay(certificate?.mass_f1) && { data: "Masse en charge maximale techniquement admissible (F.1)", value: certificate?.mass_f1 + " (kg)", action: <></> },
+            shouldDisplay(certificate?.mass_f3) && { data: "Masse en charge maximale admissible de l'ensemble en service dans l'État membre d'immatriculation (F.3)", value: certificate?.mass_f3 + " (kg)", action: <></> },
+            shouldDisplay(certificate?.mass_g) && { data: "Masse du véhicule en service avec carrosserie et dispositif d'attelage (G)", value: certificate?.mass_g + " (kg)", action: <></> },
+            shouldDisplay(certificate?.unloaded_weight) && { data: "Poids à vide national (G.1)", value: certificate?.unloaded_weight, action: <></> },
+            shouldDisplay(certificate?.category) && { data: "Catégorie du véhicule (J)", value: certificate?.category, action: <></> },
+            shouldDisplay(certificate?.national_type) && { data: "Genre national (J.1)", value: certificate?.national_type, action: <></> },
+            shouldDisplay(certificate?.national_bodywork) && { data: "Carrosserie - Désignation nationale (J.3)", value: certificate?.national_bodywork, action: <></> },
+            shouldDisplay(certificate?.reception_number) && { data: "N° de réception par type (K)", value: certificate?.reception_number, action: <></> },
+            shouldDisplay(certificate?.displacement) && { data: "Cylindrée (P.1)", value: certificate?.displacement + " (cm3)", action: <></> },
+            shouldDisplay(certificate?.max_net_power) && { data: "Puissance nette maximale (P.2)", value: certificate?.max_net_power + " (kW)", action: <></> },
+            shouldDisplay(certificate?.energy) && { data: "Type de carburant ou source d'énergie (P.3)", value: certificate?.energy, action: <></> },
+            shouldDisplay(certificate?.administrative_power) && { data: "Puissance administrative nationale (P.6)", value: certificate?.administrative_power, action: <></> },
+            shouldDisplay(certificate?.seats) && { data: "Nombre de places assises, y compris celle du conducteur (S.1)", value: certificate?.seats, action: <></> },
+            shouldDisplay(certificate?.standing_places) && { data: "Nombre de places debout (S.2)", value: certificate?.standing_places, action: <></> },
+            shouldDisplay(certificate?.sound_level) && { data: "Niveau sonore à l'arrêt (U.1)", value: certificate?.sound_level + " (dB [A])", action: <></> },
+            shouldDisplay(certificate?.engine_speed) && { data: "Vitesse du moteur (U.2)", value: certificate?.engine_speed + " (tours/min)", action: <></> },
+            shouldDisplay(certificate?.co2) && { data: "CO2 (V.7)", value: certificate?.co2 + " (g/km)", action: <></> },
+            shouldDisplay(certificate?.environmental_class) && { data: "Indication de la classe environnementale de réception CE (V.9)", value: certificate?.environmental_class, action: <></> },
+            shouldDisplay(certificate?.certificate_date) && { data: "Date du Certificat d'Immatriculation (I)", value: certificate?.certificate_date, action: <></> }
+        ].filter(Boolean) as IDataRowTableV2[];
+    }, [certificate]);
+
+    const donneAdd: IDataRowTableV2[] = useMemo(() => {
+        if (!additionalInfo) return [];
+        return [
+            shouldDisplay(additionalInfo.color) && { data: "Couleur du véhicule", value: additionalInfo.color, action: <></> },
+            shouldDisplay(additionalInfo.model) && { data: "Nom du modèle", value: additionalInfo.model, action: <></> },
+            shouldDisplay(additionalInfo.generation) && { data: "Génération du modèle", value: additionalInfo.generation, action: <></> },
+            shouldDisplay(additionalInfo.additional_model) && { data: "Donnée complémentaire sur le nom du modèle", value: additionalInfo.additional_model, action: <></> },
+            shouldDisplay(additionalInfo.full_version) && { data: "Version complète", value: additionalInfo.full_version, action: <></> },
+            shouldDisplay(additionalInfo.version) && { data: "Version", value: additionalInfo.version, action: <></> },
+            shouldDisplay(additionalInfo.cylinders_in_liters) && { data: "Cylindrées (en litres)", value: additionalInfo.cylinders_in_liters, action: <></> },
+            shouldDisplay(additionalInfo.injection_label) && { data: "Injection", value: additionalInfo.injection_label, action: <></> },
+            shouldDisplay(additionalInfo.injection_type) && { data: "Type d'injection", value: additionalInfo.injection_type, action: <></> },
+            shouldDisplay(additionalInfo.valves) && { data: "Nombre de valves", value: additionalInfo.valves, action: <></> },
+            shouldDisplay(additionalInfo.horsepower) && { data: "Puissance (en chevaux)", value: additionalInfo.horsepower, action: <></> },
+            shouldDisplay(additionalInfo.bodywork) && { data: "Carrosserie", value: additionalInfo.bodywork, action: <></> },
+            shouldDisplay(additionalInfo.commercial_start_date) && { data: "Date de début de commercialisation", value: additionalInfo.commercial_start_date, action: <></> },
+            shouldDisplay(additionalInfo.commercial_end_date) && { data: "Date de fin de commercialisation", value: additionalInfo.commercial_end_date, action: <></> },
+            shouldDisplay(additionalInfo.phase) && { data: "Phase de commercialisation", value: additionalInfo.phase, action: <></> },
+            shouldDisplay(additionalInfo.doors) && { data: "Nombre de portes", value: additionalInfo.doors, action: <></> },
+            shouldDisplay(additionalInfo.engine_code) && { data: "Code moteur", value: additionalInfo.engine_code, action: <></> },
+            shouldDisplay(additionalInfo.transmission_type) && { data: "Type de transmission", value: additionalInfo.transmission_type, action: <></> },
+            shouldDisplay(additionalInfo.euro_standard) && { data: "Standard Euro", value: additionalInfo.euro_standard, action: <></> },
+            shouldDisplay(additionalInfo.particulate_filter) && { data: "Présence d'un filtre à particule", value: additionalInfo.particulate_filter, action: <></> },
+            shouldDisplay(additionalInfo.adblue) && { data: "Adblue", value: additionalInfo.adblue, action: <></> },
+            shouldDisplay(additionalInfo.gearbox_code) && { data: "Code boite de vitesse", value: additionalInfo.gearbox_code, action: <></> },
+            shouldDisplay(additionalInfo.gearbox_type) && { data: "Type de boite de vitesse", value: additionalInfo.gearbox_type, action: <></> },
+            shouldDisplay(additionalInfo.gears) && { data: "Nombre de rapports de vitesse", value: additionalInfo.gears, action: <></> },
+            shouldDisplay(additionalInfo.crit_air) && { data: "Vignette Crit'Air", value: additionalInfo.crit_air, action: <></> },
+            shouldDisplay(additionalInfo.urban_co2) && { data: "CO2 en mode urbain", value: additionalInfo.urban_co2 + " (en g/km)", action: <></> },
+            shouldDisplay(additionalInfo.extra_urban_co2) && { data: "CO2 en mode extra-urbain", value: additionalInfo.extra_urban_co2 + " (en g/km)", action: <></> },
+            shouldDisplay(additionalInfo.urban_fuel_consumption) && { data: "Consommation urbaine", value: additionalInfo.urban_fuel_consumption, action: <></> },
+            shouldDisplay(additionalInfo.extra_urban_fuel_consumption) && { data: "Consommation extra-urbaine", value: additionalInfo.extra_urban_fuel_consumption, action: <></> },
+            shouldDisplay(additionalInfo.combined_fuel_consumption) && { data: "Consommation", value: additionalInfo.combined_fuel_consumption, action: <></> }
+        ].filter(Boolean) as IDataRowTableV2[];
+    }, [additionalInfo]);
+
+    const dFluide: IDataRowTableV2[] = useMemo(() => {
+        if (!fluids) return [];
+        return [
+            shouldDisplay(fluids.fuel_tank_capacity) && { data: "Capacité du réservoir de carburant", value: fluids.fuel_tank_capacity, action: <></> },
+            shouldDisplay(fluids.engine_oil_standard) && { data: "Norme d'huile moteur", value: fluids.engine_oil_standard, action: <></> },
+            shouldDisplay(fluids.engine_oil_acea) && { data: "Norme ACEA", value: fluids.engine_oil_acea, action: <></> },
+            shouldDisplay(fluids.engine_oil_viscosity) && { data: "Viscosité de l'huile moteur", value: fluids.engine_oil_viscosity, action: <></> },
+            shouldDisplay(fluids.engine_oil_with_filter_capacity_min) && { data: "Capacité minimale d'huile moteur", value: fluids.engine_oil_with_filter_capacity_min, action: <></> },
+            shouldDisplay(fluids.engine_oil_with_filter_capacity_max) && { data: "Capacité maximale d'huile moteur", value: fluids.engine_oil_with_filter_capacity_max, action: <></> },
+            shouldDisplay(fluids.brake_fluid_capacity) && { data: "Capacité de liquide de frein", value: fluids.brake_fluid_capacity, action: <></> },
+            shouldDisplay(fluids.brake_fluid_standard) && { data: "Norme de liquide de frein", value: fluids.brake_fluid_standard, action: <></> },
+            shouldDisplay(fluids.engine_coolant_capacity_min) && { data: "Capacité minimale de liquide de refroidissement", value: fluids.engine_coolant_capacity_min, action: <></> },
+            shouldDisplay(fluids.engine_coolant_capacity_max) && { data: "Capacité maximale de liquide de refroidissement", value: fluids.engine_coolant_capacity_max, action: <></> },
+            shouldDisplay(fluids.engine_coolant_type) && { data: "Type de liquide de refroidissement", value: fluids.engine_coolant_type, action: <></> },
+            shouldDisplay(fluids.air_conditioning_gas_capacity_min) && { data: "Capacité minimale de gaz d'air conditionné", value: fluids.air_conditioning_gas_capacity_min, action: <></> },
+            shouldDisplay(fluids.air_conditioning_gas_capacity_max) && { data: "Capacité maximale de gaz d'air conditionné", value: fluids.air_conditioning_gas_capacity_max, action: <></> },
+            shouldDisplay(fluids.air_conditioning_gas_standard) && { data: "Norme de gaz d'air conditionné", value: fluids.air_conditioning_gas_standard, action: <></> },
+            shouldDisplay(fluids.power_steering_fluid_capacity) && { data: "Capacité de liquide de direction assistée", value: fluids.power_steering_fluid_capacity, action: <></> },
+            shouldDisplay(fluids.power_steering_fluid_standard) && { data: "Norme de liquide de direction assistée", value: fluids.power_steering_fluid_standard, action: <></> }
+        ].filter(Boolean) as IDataRowTableV2[];
+    }, [fluids]);
+
+    const dElectric: IDataRowTableV2[] = useMemo(() => {
+        if (props.vehicle.information.energy !== "EL" || electric === null) return [];
+        return [
+            shouldDisplay(electric.front_engine_type) && { data: "Type de moteur avant", value: electric.front_engine_type, action: <></> },
+            shouldDisplay(electric.front_engine_kw_power) && { data: "Puissance du moteur avant", value: electric.front_engine_kw_power + " (en kW)", action: <></> },
+            shouldDisplay(electric.front_engine_horsepower) && { data: "Puissance du moteur avant", value: electric.front_engine_horsepower + " (en chevaux)", action: <></> },
+            shouldDisplay(electric["1st_rear_engine_type"]) && { data: "Type du 1er moteur arrière", value: electric["1st_rear_engine_type"], action: <></> },
+            shouldDisplay(electric["1st_rear_engine_kw_power"]) && { data: "Puissance du 1er moteur arrière", value: electric["1st_rear_engine_kw_power"] + " (en kW)", action: <></> },
+            shouldDisplay(electric["1st_rear_engine_horsepower"]) && { data: "Puissance du 1er moteur arrière", value: electric["1st_rear_engine_horsepower"] + " (en chevaux)", action: <></> },
+            shouldDisplay(electric.battery_type) && { data: "Type de batterie", value: electric.battery_type, action: <></> },
+            shouldDisplay(electric.battery_voltage) && { data: "Voltage de la batterie", value: electric.battery_voltage, action: <></> },
+            shouldDisplay(electric.battery_kw_power) && { data: "Puissance de la batterie", value: electric.battery_kw_power, action: <></> },
+            shouldDisplay(electric.charging_plug) && { data: "Prise de recharge", value: electric.charging_plug, action: <></> },
+            shouldDisplay(electric.wltp_combined_autonomy_summer) && { data: "Autonomie en été (conduite mixte)", value: electric.wltp_combined_autonomy_summer, action: <></> },
+            shouldDisplay(electric.wltp_combined_autonomy_winter) && { data: "Autonomie en hiver (conduite mixte)", value: electric.wltp_combined_autonomy_winter, action: <></> }
+        ].filter(Boolean) as IDataRowTableV2[];
+    }, [props.vehicle.information.energy, electric]);
+
     if (qVehicleStatus.isLoading) {
         return <Loading msg="Chargement des détails..." />;
     }
@@ -184,9 +315,13 @@ function DetailV2(props: { vehicle: IVehicle }) {
                 <div className="col">
                     {boitierData.length > 0 && <DetailItem key='boitierData' title="Boitier" data={boitierData} />}
                     {motorisationData.length > 0 && <DetailItem key='motorisationData' title="Motorisation" data={motorisationData} />}
+                    {donneAdd.length > 0 && <DetailItem key='donneAdd' title="Données additionnelles" data={donneAdd} />}
+                    {chassisData.length > 0 && <DetailItem key='chassisData' title="Chassis & carrosserie" data={chassisData} />}
                 </div>
                 <div className="col">
-                    {chassisData.length > 0 && <DetailItem key='chassisData' title="Chassis & carrosserie" data={chassisData} />}
+                    {adminData.length > 0 && <DetailItem key='adminData' title="Données administratives" data={adminData} />}
+                    {dFluide.length > 0 && <DetailItem key='dFluide' title="Données fluides" data={dFluide} />}
+                    {dElectric.length > 0 && <DetailItem key='dElectric' title="Données électriques" data={dElectric} />}
                 </div>
             </div>
         </>
