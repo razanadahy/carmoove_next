@@ -7,6 +7,7 @@ import { motion } from "framer-motion";
 import { useGetVehicle } from "@/lib/hooks";
 import { Loading } from "@/components/Common/Loading";
 import Resume from "./components/Resume";
+import DetailV2 from "./components/DetailV2";
 import "./Vehicle.css";
 
 export default function Vehicle() {
@@ -28,12 +29,11 @@ export default function Vehicle() {
                 label: "Résumé",
                 children: <Resume vehicle={vehicle} />,
             },
-            // Les autres onglets seront ajoutés plus tard
-            // {
-            //     key: "detail",
-            //     label: "Détail",
-            //     children: <DetailV2 vehicle={vehicle} />,
-            // },
+            {
+                key: "detail",
+                label: "Détail",
+                children: <DetailV2 vehicle={vehicle} />,
+            },
             // {
             //     key: "stats",
             //     label: "Stats",

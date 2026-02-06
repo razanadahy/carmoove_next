@@ -1,0 +1,54 @@
+.table-data-value {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.table-data-row {
+    display: flex;
+    align-items: center;
+    padding: 10px 0;
+    border-bottom: 1px solid #f0f0f0;
+}
+
+.table-data-row:last-child {
+    border-bottom: none;
+}
+
+.table-data-label {
+    flex: 0 0 40%;
+    font-size: 14px;
+    color: #666;
+    font-weight: 500;
+}
+
+.table-data-value-content {
+    flex: 1;
+    font-size: 14px;
+    color: #333;
+    font-weight: 400;
+}
+
+.table-data-action {
+    flex: 0 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+}
+
+@media (max-width: 768px) {
+    .table-data-row {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 5px;
+    }
+
+    .table-data-label,
+    .table-data-value-content {
+        flex: 1 1 100%;
+    }
+
+    .table-data-action {
+        align-self: flex-end;
+    }
+}
