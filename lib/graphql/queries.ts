@@ -274,6 +274,7 @@ export const STAT_QUERY = gql`
                 fuel
             }
             cost
+            co2
             distance
             usageTime
             nbPath

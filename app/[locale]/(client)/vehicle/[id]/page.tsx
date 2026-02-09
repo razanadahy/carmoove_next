@@ -8,6 +8,7 @@ import { useGetVehicle } from "@/lib/hooks";
 import { Loading } from "@/components/Common/Loading";
 import Resume from "./components/Resume";
 import DetailV2 from "./components/DetailV2";
+import Stats from "./components/Stats";
 import "./Vehicle.css";
 
 export default function Vehicle() {
@@ -34,11 +35,11 @@ export default function Vehicle() {
                 label: "Détail",
                 children: <DetailV2 vehicle={vehicle} />,
             },
-            // {
-            //     key: "stats",
-            //     label: "Stats",
-            //     children: <Stats vehicle={vehicle} />,
-            // },
+            {
+                key: "stats",
+                label: "Stats",
+                children: <Stats vehicle={vehicle} />,
+            },
             // {
             //     key: "paths",
             //     label: "Trajets",

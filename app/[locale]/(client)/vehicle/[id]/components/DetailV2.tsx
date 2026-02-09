@@ -814,8 +814,8 @@ function DetailV2(props: { vehicle: IVehicle }) {
             shouldDisplay(additionalInfo.engine_code) && { data: "Code moteur", value: additionalInfo.engine_code, action: <></> },
             shouldDisplay(additionalInfo.transmission_type) && { data: "Type de transmission", value: additionalInfo.transmission_type, action: <></> },
             shouldDisplay(additionalInfo.euro_standard) && { data: "Standard Euro", value: additionalInfo.euro_standard, action: <></> },
-            shouldDisplay(additionalInfo.particulate_filter) && { data: "Présence d'un filtre à particule", value: additionalInfo.particulate_filter, action: <></> },
-            shouldDisplay(additionalInfo.adblue) && { data: "Adblue", value: additionalInfo.adblue, action: <></> },
+            shouldDisplay(additionalInfo.particulate_filter) && { data: "Présence d'un filtre à particule", value: additionalInfo.particulate_filter ? "Oui" : "Non", action: <></> },
+            shouldDisplay(additionalInfo.adblue) && { data: "Adblue", value: additionalInfo.adblue ? "Oui" : "Non", action: <></> },
             shouldDisplay(additionalInfo.gearbox_code) && { data: "Code boite de vitesse", value: additionalInfo.gearbox_code, action: <></> },
             shouldDisplay(additionalInfo.gearbox_type) && { data: "Type de boite de vitesse", value: additionalInfo.gearbox_type, action: <></> },
             shouldDisplay(additionalInfo.gears) && { data: "Nombre de rapports de vitesse", value: additionalInfo.gears, action: <></> },
@@ -945,6 +945,12 @@ function DetailV2(props: { vehicle: IVehicle }) {
     }, [tires]);
 
     // Equipment queries - must be before any conditional return
+
+
+    useEffect(() => {
+        console.log(additionalInfo?.particulate_filter)
+    }, [additionalInfo?.particulate_filter]);
+
     const qEquipmentsVehicle = useQuery({
         queryKey: ['equipment', props.vehicle.id],
         queryFn: () => getParamEquipmentsVehicule(props.vehicle.id)

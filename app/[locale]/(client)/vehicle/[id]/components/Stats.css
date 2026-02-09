@@ -1,0 +1,54 @@
+.stats-main-content {
+    padding: 20px;
+    background: #fff;
+    border-radius: 8px;
+    margin-top: 20px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.stats-main-content h2 {
+    font-size: 18px;
+    font-weight: 600;
+    color: #333;
+    margin-bottom: 20px;
+    padding-bottom: 10px;
+    border-bottom: 2px solid #f0f0f0;
+}
+
+.stats-period-selector {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-bottom: 20px;
+}
+
+.stats-period-label {
+    margin-left: 10px;
+    margin-right: 10px;
+    color: #666;
+}
+
+.stats-period-selector .select-box {
+    width: 200px;
+    display: inline-block;
+}
+
+.stats-info-periode {
+    font-size: 14px;
+    font-weight: normal;
+    color: #888;
+    margin-left: 10px;
+}
+
+@media (max-width: 768px) {
+    .stats-period-selector {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .stats-period-label {
+        margin-left: 0;
+        margin-right: 0;
+    }
+}
