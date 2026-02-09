@@ -46,7 +46,7 @@ export interface IGetVehicleStatusCS {
 export const useVehiclesWithStatus = (vehicles: IVehicle[]) => {
     return useQueries({
         queries: vehicles.map(vehicle => ({
-            queryKey: ['vehicleStatus', vehicle.id],
+            queryKey: ['vehicle', vehicle.id],
             queryFn: () => getVehicleStatus({
                 vehicleId: vehicle.id,
                 plate: vehicle.information.registration,

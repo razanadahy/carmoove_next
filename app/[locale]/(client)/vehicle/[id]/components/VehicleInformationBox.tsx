@@ -83,7 +83,7 @@ function VehicleInformationBox(props: IProps) {
             vehicleId: props.vehicle.id,
             plate: props.vehicle.information.registration,
         }),
-        enabled: !!props.vehicle.device?.id
+        enabled: !!vehicle.id
     })
 
     useEffect(() => {
