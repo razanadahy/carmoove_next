@@ -1,119 +1,117 @@
 export interface Certificate {
-    plate: string;
-    first_registration: string;
-    brand: string;
-    type_variant_version: string;
-    cnit: string;
-    model: string;
-    vin: string;
-    mass_f1: number;
-    mass_f3: number;
-    mass_g: number;
-    unloaded_weight: number;
-    category: string;
-    national_type: string;
-    national_bodywork: string;
-    reception_number: string;
-    displacement: number;
-    max_net_power: number;
-    energy: string;
-    administrative_power: number;
-    seats: number;
-    standing_places: number;
-    sound_level: number;
-    engine_speed: number;
-    co2: number;
-    environmental_class: string;
-    certificate_date: string;
+    administrative_power?: number
+    brand?: string
+    category?: string
+    certificate_date?: string
+    cnit?: string
+    co2?: number
+    displacement?: number
+    energy?: string
+    engine_speed?: number
+    environmental_class?: string
+    first_registration?: string
+    mass_f1?: number
+    mass_f2?: number
+    mass_f3?: number
+    mass_g?: number
+    max_net_power?: number
+    model?: string
+    national_bodywork?: string
+    national_type?: string
+    plate?: string
+    power_mass_ratio?: number
+    reception_number?: string
+    seats?: number
+    sound_level?: number
+    standing_places?: number
+    type_variant_version?: string
+    unloaded_weight?: number
+    vin?: string
 }
-
-export interface Additional_information {
-    color: string;
-    model: string;
-    generation: string;
-    additional_model: string;
-    full_version: string;
-    version: string;
-    cylinders_in_liters: string;
-    injection_label: string;
-    injection_type: string;
-    valves: number;
-    horsepower: number;
-    bodywork: string;
-    commercial_start_date: string;
-    commercial_end_date: string;
-    phase: string;
-    doors: number;
-    engine_code: string;
-    transmission_type: string;
-    euro_standard: string;
-    particulate_filter: string;
-    adblue: string;
-    gearbox_code: string;
-    gearbox_type: string;
-    gears: number;
-    crit_air: string;
-    urban_co2: number;
-    extra_urban_co2: number;
-    urban_fuel_consumption: string;
-    extra_urban_fuel_consumption: string;
-    combined_fuel_consumption: string;
-    starter_battery_power: string;
-    starter_battery_capacity: string;
-    rear_braking_system: string;
-    rear_trunk_capacity: number;
-    extended_rear_trunk_capacity: number;
-    max_length: string;
-    combined_horse_power: number;
-    wheel_drive: string;
-    front_axle_type: string;
-    rear_axle_type: string;
+export interface Additional_information{
+    adblue?: boolean
+    additional_model?: string
+    bodywork?: string
+    starter_battery_power?: number
+    color?: string
+    combined_fuel_consumption?: number
+    combined_horse_power?: number
+    commercial_end_date?: string
+    commercial_start_date?: string
+    crit_air?: string
+    cylinders_in_liters?: number
+    doors?: number
+    engine_code?: string
+    euro_standard?: string
+    extended_rear_trunk_capacity?: number
+    extra_urban_co2?: number
+    extra_urban_fuel_consumption?: number
+    front_axle_type?: string
+    full_version?: string
+    gearbox_code?: string
+    gearbox_type?: string
+    gears?: number
+    generation?: string
+    horsepower?: number
+    injection_label?: string
+    injection_type?: string
+    max_length?: number
+    model?: string
+    particulate_filter?: boolean
+    phase?: string
+    rear_axle_type?: string
+    rear_braking_system?: string
+    rear_trunk_capacity?: number
+    starter_battery_capacity?: number
+    transmission_type?: string
+    urban_co2?: number
+    urban_fuel_consumption?: number
+    valves?: number
+    version?: string
+    wheel_drive?: string
 }
-
-export interface Fluids {
-    fuel_tank_capacity: string;
-    engine_oil_standard: string;
-    engine_oil_acea: string;
-    engine_oil_viscosity: string;
-    engine_oil_with_filter_capacity_min: string;
-    engine_oil_with_filter_capacity_max: string;
-    brake_fluid_capacity: string;
-    brake_fluid_standard: string;
-    engine_coolant_capacity_min: string;
-    engine_coolant_capacity_max: string;
-    engine_coolant_type: string;
-    air_conditioning_gas_capacity_min: string;
-    air_conditioning_gas_capacity_max: string;
-    air_conditioning_gas_standard: string;
-    power_steering_fluid_capacity: string;
-    power_steering_fluid_standard: string;
+export interface Tire{
+    front_display?: string
+    front_highway_pressure?: number
+    front_is_all_season?: boolean
+    front_is_summer?: boolean
+    front_is_winter?: boolean
+    front_load?: number
+    front_normal_pressure?: number
+    front_radial?: number
+    front_ratio?: number
+    front_speed?: string
+    front_width?: number
+    rear_display?: string
+    rear_highway_pressure?: number
+    rear_is_all_season?: boolean
+    rear_is_summer?: boolean
+    rear_is_winter?: boolean
+    rear_load?: number
+    rear_normal_pressure?: number
+    rear_radial?: number
+    rear_ratio?: number
+    rear_speed?: string
+    rear_width?: number
 }
-
-export interface Tire {
-    front_display: string;
-    front_width: string;
-    front_ratio: string;
-    front_radial: string;
-    front_load: string;
-    front_speed: string;
-    front_normal_pressure: string;
-    front_highway_pressure: string;
-    front_is_summer: boolean;
-    front_is_winter: boolean;
-    front_is_all_season: boolean;
-    rear_display: string;
-    rear_width: string;
-    rear_ratio: string;
-    rear_radial: string;
-    rear_load: string;
-    rear_speed: string;
-    rear_normal_pressure: string;
-    rear_highway_pressure: string;
-    rear_is_summer: boolean;
-    rear_is_winter: boolean;
-    rear_is_all_season: boolean;
+export interface Fluids{
+    air_conditioning_gas_capacity_max?: number
+    air_conditioning_gas_capacity_min?: number
+    air_conditioning_gas_standard?: string
+    brake_fluid_capacity?: number
+    brake_fluid_standard?: string
+    engine_coolant_capacity_max?: number
+    engine_coolant_capacity_min?: number
+    engine_coolant_type?: string
+    engine_oil_acea?: string
+    engine_oil_standard?: string
+    engine_oil_viscosity?: string
+    engine_oil_with_filter_capacity_max?: number
+    engine_oil_with_filter_capacity_min?: number
+    fuel_tank_capacity?: number
+    power_steering_fluid_capacity?: number
+    power_steering_fluid_standard?: string
 }
-
 export interface Electric {
     front_engine_type: string;
     front_engine_kw_power: number;
@@ -130,14 +128,15 @@ export interface Electric {
     "1st_rear_engine_nm_torque": number;
     "2nd_rear_engine_nm_torque": number;
     combined_nm_torque: number;
-    battery_weight: string;
+    battery_weight: number;
     battery_layout: string;
     battery_type: string;
     battery_voltage: number;
     battery_kw_power: number;
     "1st_battery_kwh_capacity": number;
+    usable_1st_battery_kwh_capacity: number;
     "2nd_battery_kwh_capacity": number;
-    "usable_2nd_battery_kwh_capacity": number;
+    usable_2nd_battery_kwh_capacity: number;
     charging_plug: string;
     dc_charger_power_kw: number;
     dc_charging_time_min: number;
@@ -145,18 +144,26 @@ export interface Electric {
     ac_charging_time_80_home_min: number;
     ac_charging_time_80_home_reinforced_min: number;
     ac_charging_time_80_wallbox_min: number;
-    acceleration_0_100: string;
-    max_speed: string;
-    wltp_combined_autonomy_summer: string;
-    wltp_combined_autonomy_winter: string;
-    wltp_urban_autonomy_summer: string;
-    wltp_urban_autonomy_winter: string;
-    wltp_highway_autonomy_summer: string;
-    wltp_highway_autonomy_winter: string;
-    combined_consumption_kwh_100km_summer: string;
-    combined_consumption_kwh_100km_winter: string;
-    urban_consumption_kwh_100km_summer: string;
-    urban_consumption_kwh_100km_winter: string;
-    highway_consumption_kwh_100km_summer: string;
-    highway_consumption_kwh_100km_winter: string;
+    acceleration_0_100: number;
+    max_speed: number;
+    wltp_combined_autonomy_summer: number;
+    wltp_combined_autonomy_winter: number;
+    wltp_urban_autonomy_summer: number;
+    wltp_urban_autonomy_winter: number;
+    wltp_highway_autonomy_summer: number;
+    wltp_highway_autonomy_winter: number;
+    combined_consumption_kwh_100km_summer: number;
+    combined_consumption_kwh_100km_winter: number;
+    urban_consumption_kwh_100km_summer: number;
+    urban_consumption_kwh_100km_winter: number;
+    highway_consumption_kwh_100km_summer: number;
+    highway_consumption_kwh_100km_winter: number;
+}
+
+export interface DetailInterfaces {
+    additional_information: Additional_information;
+    certificate: Certificate;
+    tires: Tire[];
+    fluids: Fluids
+    electric: Electric;
 }

@@ -1,9 +1,12 @@
 'use client'
 
-import { Col, DatePicker, Form, Input, InputNumber, notification, Row } from "antd";
+import { DatePicker, Form, Input, InputNumber, App, Spin } from "antd";
 import React, { useEffect, useState } from "react";
 import { IVehicle } from "@/lib/hooks/Interfaces";
 import dayjs from "dayjs";
+import { useMutation, useQuery } from "@apollo/client";
+import { LAST_SCHEDULED_MAINTENANCE, LAST_TECHNICAL_DATE } from "@/lib/graphql/mutation";
+import { STAT_QUERY, VEHICLE_QUERY } from "@/lib/graphql/queries";
 import './MaintenanceForm.css';
 
 export function formatNum(number: number, virg: number): string {
@@ -11,88 +14,134 @@ export function formatNum(number: number, virg: number): string {
     return result.toString().replace('.', ',');
 }
 
+const toValidDayjs = (timestamp: number | null | undefined): dayjs.Dayjs | null => {
+    if (!timestamp || timestamp <= 0) return null;
+    return dayjs.unix(timestamp);
+};
+
 export default function MaintenanceForm(props: { vehicle: IVehicle }) {
+    const { notification } = App.useApp();
     const [form] = Form.useForm();
     const dateFormat = 'DD/MM/YYYY';
     const [maintenance, setMaintenance] = useState<any>({
         ...props.vehicle.maintenance,
-        lastScheduledMaintenance: dayjs.unix(props.vehicle.maintenance.lastScheduledMaintenance),
-        lastControlDate: dayjs.unix(props.vehicle.maintenance.lastControlDate),
-        nextScheduledMaintenance: dayjs.unix(props.vehicle.maintenance.nextScheduledMaintenance),
-        nextControlDate: dayjs.unix(props.vehicle.maintenance.nextControlDate),
+        lastScheduledMaintenance: toValidDayjs(props.vehicle.maintenance.lastScheduledMaintenance),
+        lastControlDate: toValidDayjs(props.vehicle.maintenance.lastControlDate),
+        nextScheduledMaintenance: toValidDayjs(props.vehicle.maintenance.nextScheduledMaintenance),
+        nextControlDate: toValidDayjs(props.vehicle.maintenance.nextControlDate),
         privacy: props.vehicle.status.privacy,
     });
 
     const [statistic, setStatistic] = useState<any>(null);
 
-    // TODO: Implement data fetching logic here
-    // This should be replaced with actual API calls using your data fetching method
+    // Fetch statistics data
+    const { data, loading, error } = useQuery(STAT_QUERY, {
+        fetchPolicy: "network-only",
+        variables: {
+            vehicleId: props.vehicle.id,
+        },
+        context: {
+            version: 'php'
+        }
+    });
+
+    // Mutation for last scheduled maintenance
+    const [lastScheduledMaintenanceMutate] = useMutation(LAST_SCHEDULED_MAINTENANCE, {
+        refetchQueries: [{
+            query: VEHICLE_QUERY,
+            variables: {
+                id: props.vehicle.id
+            },
+            context: {
+                version: 'php'
+            }
+        }],
+        awaitRefetchQueries: true,
+        onCompleted: () => {
+            notification.success({
+                message: 'Vos informations personnelles ont été mises à jour'
+            });
+        },
+        onError: () => {
+            notification.error({
+                message: 'Erreur lors de la mise à jour'
+            });
+        }
+    });
+
+    // Mutation for last technical date
+    const [lastTechnicalDateMutate] = useMutation(LAST_TECHNICAL_DATE, {
+        refetchQueries: [{
+            query: VEHICLE_QUERY,
+            variables: {
+                id: props.vehicle.id
+            },
+            context: {
+                version: 'php'
+            }
+        }],
+        awaitRefetchQueries: true,
+        onCompleted: () => {
+            notification.success({
+                message: 'Vos informations personnelles ont été mises à jour'
+            });
+        },
+        onError: () => {
+            notification.error({
+                message: 'Erreur lors de la mise à jour'
+            });
+        }
+    });
+
     useEffect(() => {
-        // Fetch statistics data
-        // setStatistic(data);
-    }, [props.vehicle.id]);
-
-    const handleLastScheduledMaintenanceChange = async (date: dayjs.Dayjs | null) => {
-        if (!date) return;
-
-        try {
-            // TODO: Implement mutation to update last scheduled maintenance
-            // await updateLastScheduledMaintenance({
-            //   vehicleId: props.vehicle.id,
-            //   date: date.unix(),
-            //   mileage: maintenance.lastMaintenanceMileage
-            // });
-
-            notification.success({
-                message: 'Date du dernier entretien mise à jour'
-            });
-        } catch (error) {
-            notification.error({
-                message: 'Erreur lors de la mise à jour'
-            });
+        if (data) {
+            setStatistic(data.detailedStatistic);
         }
+    }, [data]);
+
+    const handleLastScheduledMaintenanceChange = (date: dayjs.Dayjs | null) => {
+        if (!date) return;
+        lastScheduledMaintenanceMutate({
+            variables: {
+                vehicleId: props.vehicle.id,
+                date: date.unix(),
+                mileage: maintenance.lastMaintenanceMileage
+            }
+        });
     };
 
-    const handleLastTechnicalDateChange = async (date: dayjs.Dayjs | null) => {
+    const handleLastTechnicalDateChange = (date: dayjs.Dayjs | null) => {
         if (!date) return;
-
-        try {
-            // TODO: Implement mutation to update last technical date
-            // await updateLastTechnicalDate({
-            //   vehicleId: props.vehicle.id,
-            //   date: date.unix(),
-            // });
-
-            notification.success({
-                message: 'Date du dernier contrôle technique mise à jour'
-            });
-        } catch (error) {
-            notification.error({
-                message: 'Erreur lors de la mise à jour'
-            });
-        }
+        lastTechnicalDateMutate({
+            variables: {
+                vehicleId: props.vehicle.id,
+                date: date.unix(),
+            }
+        });
     };
 
-    const handleLastMaintenanceMileageChange = async (value: number | null) => {
+    const handleLastMaintenanceMileageChange = (value: number | null) => {
         if (!value) return;
-
-        try {
-            // TODO: Implement mutation to update last maintenance mileage
-            // await updateLastScheduledMaintenance({
-            //   vehicleId: props.vehicle.id,
-            //   date: props.vehicle.maintenance.lastScheduledMaintenance,
-            //   mileage: value
-            // });
-
-            notification.success({
-                message: 'Kilométrage du dernier entretien mis à jour'
-            });
-        } catch (error) {
-            notification.error({
-                message: 'Erreur lors de la mise à jour'
-            });
-        }
+        lastScheduledMaintenanceMutate({
+            variables: {
+                vehicleId: props.vehicle.id,
+                date: props.vehicle.maintenance.lastScheduledMaintenance,
+                mileage: value
+            }
+        });
     };
+
+    if (loading) {
+        return <Spin />;
+    }
+
+    if (error) {
+        return <p>Erreur de chargement</p>;
+    }
+
+    if (!data?.detailedStatistic) {
+        return null;
+    }
 
     return (
         <Form
@@ -111,7 +160,7 @@ export default function MaintenanceForm(props: { vehicle: IVehicle }) {
                 <InputNumber
                     disabled
                     formatter={(value) => `${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ' ')}
-                    value={formatNum(props.vehicle.status.mileage ?? 0, 0)}
+                    value={formatNum(statistic?.vehicle?.status?.mileage ?? 0, 0)}
                     style={{ width: '100%', color: '#4d4d4d' }}
                 />
             </Form.Item>

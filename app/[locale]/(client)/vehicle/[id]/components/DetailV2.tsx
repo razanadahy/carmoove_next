@@ -101,7 +101,7 @@ function DetailV2(props: { vehicle: IVehicle }) {
             vehicleId: props.vehicle.id,
             plate: props.vehicle.information.registration,
         }),
-        enabled: !!props.vehicle.device?.id,
+        enabled: !!props.vehicle.id,
         retry: false
     });
 
@@ -153,6 +153,156 @@ function DetailV2(props: { vehicle: IVehicle }) {
         });
     };
 
+    // Handlers for phone number
+    const handleEditPhoneNumber = () => {
+        setShowInput(true);
+        setPhoneNumber(props.vehicle.assistance?.phoneNumber);
+    };
+
+    const handleSavePhoneNumber = () => {
+        // TODO: Implement saveAssistance mutation
+        notification.success({ message: 'Numéro de téléphone mis à jour' });
+        setShowInput(false);
+    };
+
+    // Handlers for assistance distance
+    const handleEditAssistanceDistance = () => {
+        setShowInputAssistanceDistance(true);
+        setAssistanceDistance(props.vehicle.assistance?.distance);
+    };
+
+    const handleSaveAssistanceDistance = () => {
+        // TODO: Implement saveAssistance mutation
+        notification.success({ message: 'Distance de prise en charge mise à jour' });
+        setShowInputAssistanceDistance(false);
+    };
+
+    // Handlers for leaser
+    const handleEditLeaser = () => {
+        setShowInputLeaser(true);
+        setLeaser(props.vehicle.acquisition?.seller || '');
+    };
+
+    const handleSaveLeaser = () => {
+        if (mode !== null && leaser)
+            saveAcquisition({ mode: mode, seller: leaser });
+        setShowInputLeaser(false);
+    };
+
+    // Handlers for start date
+    const handleEditStart = () => {
+        setShowInputStart(true);
+        setStart(props.vehicle.acquisition?.start ? dayjs(props.vehicle.acquisition?.start * 1000) : null);
+    };
+
+    const handleSaveStart = () => {
+        if (mode !== null) {
+            saveAcquisition({ mode: mode, start: start ? start.unix() : 0 });
+        }
+        setShowInputStart(false);
+    };
+
+    // Handlers for duration
+    const handleEditDuration = () => {
+        setShowInputDuration(true);
+        setDuration(props.vehicle.acquisition?.duration || 0);
+    };
+
+    const handleSaveDuration = () => {
+        if (mode !== null && (duration || duration === 0))
+            saveAcquisition({ mode: mode, duration: duration });
+        setShowInputDuration(false);
+    };
+
+    // Handlers for mileage
+    const handleEditMileage = () => {
+        setShowInputMileage(true);
+        setMileage(props.vehicle.acquisition?.mileage || 0);
+    };
+
+    const handleSaveMileage = () => {
+        if (mode !== null && (mileage || mileage === 0))
+            saveAcquisition({ mode: mode, mileage: mileage });
+        setShowInputMileage(false);
+    };
+
+    // Handlers for price
+    const handleEditPrice = () => {
+        setShowInputPrice(true);
+        setPrice(props.vehicle.acquisition?.price || 0);
+    };
+
+    const handleSavePrice = () => {
+        if (mode !== null && (price || price === 0))
+            saveAcquisition({ mode: mode, price: price });
+        setShowInputPrice(false);
+    };
+
+    // Handlers for tax
+    const handleEditTax = () => {
+        setShowInputTax(true);
+        setTax(props.vehicle.acquisition?.tax || 0);
+    };
+
+    const handleSaveTax = () => {
+        if (mode !== null && (tax || tax === 0))
+            saveAcquisition({ mode: mode, tax: tax });
+        setShowInputTax(false);
+    };
+
+    // Handlers for subscription
+    const handleEditSubscription = () => {
+        setShowInputSubscription(true);
+        setSubscription(props.vehicle.acquisition?.subscription || 0);
+    };
+
+    const handleSaveSubscription = () => {
+        if (mode !== null && (subscription || subscription === 0))
+            saveAcquisition({ mode: mode, subscription: subscription });
+        setShowInputSubscription(false);
+    };
+
+    // Handlers for redemption value
+    const handleEditRedemptionValue = () => {
+        setShowInputRedemptionValue(true);
+        setRedemptionValue(props.vehicle.acquisition?.redemptionValue || 0);
+    };
+
+    const handleSaveRedemptionValue = () => {
+        if (mode !== null && (redemptionValue || redemptionValue === 0))
+            saveAcquisition({ mode: mode, redemptionValue: redemptionValue });
+        setShowInputRedemptionValue(false);
+    };
+
+    // onChange handlers
+    const onChangeStart = (date: Dayjs) => {
+        setStart(date);
+    };
+
+    const onChangeDuration = (value: number | null) => {
+        setDuration(value || 0);
+    };
+
+    const onChangeMileage = (value: number | null) => {
+        setMileage(value || 0);
+    };
+
+    const onChangePrice = (value: number | null) => {
+        setPrice(value || 0);
+    };
+
+    const onChangeTax = (value: number | null) => {
+        setTax(value || 0);
+    };
+
+    const onChangeSubscription = (value: number | null) => {
+        setSubscription(value || 0);
+    };
+
+    const onChangeRedemptionValue = (value: number | null) => {
+        setRedemptionValue(value || 0);
+    };
+
     // Build data arrays with filtering
     const boitierData: IDataRowTableV2[] = [
         shouldDisplay(props.vehicle.device?.type) && { data: "Type de Boitier", value: props.vehicle.device?.type, action: <></> },
@@ -195,6 +345,376 @@ function DetailV2(props: { vehicle: IVehicle }) {
         shouldDisplay(props.vehicle.information.consumptionUrban) && { data: "Consommation ville", value: props.vehicle.information.consumptionUrban, action: <></> },
         shouldDisplay(props.vehicle.information.co2) && { data: "CO2 (en g/km)", value: props.vehicle.information.co2, action: <></> },
     ].filter(Boolean) as IDataRowTableV2[];
+
+    // Insurance data
+    const insuranceData: IDataRowTableV2[] = [
+        {
+            data: "Assureur",
+            value: props?.vehicle?.assistance?.code || "ND",
+            action: <></>,
+        },
+        {
+            data: "Tél assistance",
+            value: showInput ? (
+                <InputNumber
+                    controls={false}
+                    value={phoneNumber}
+                    onChange={(value: valueType | null) => {
+                        setPhoneNumber(value);
+                    }}
+                    className="tel-input"
+                />
+            ) : (
+                props.vehicle.assistance?.phoneNumber || "ND"
+            ),
+            action: showInput ? (
+                <Button onClick={handleSavePhoneNumber} type="text" className="btn-valider-detail-acq">
+                    OK
+                </Button>
+            ) : (
+                <Button
+                    onClick={handleEditPhoneNumber}
+                    type="text"
+                    disabled={!props?.vehicle?.assistance?.code}
+                >
+                    <Image src={editSrc} alt="edit" />
+                </Button>
+            ),
+        },
+        {
+            data: "Distance de prise en charge",
+            value: showInputAssistanceDistance ? (
+                <InputNumber
+                    controls={false}
+                    value={assistanceDistance}
+                    onChange={(value: number | null) => {
+                        if (!value) setAssistanceDistance(0);
+                        else setAssistanceDistance(value);
+                    }}
+                    className="distance-input"
+                />
+            ) : (
+                props.vehicle.assistance?.distance || "ND"
+            ),
+            action: showInputAssistanceDistance ? (
+                <Button onClick={handleSaveAssistanceDistance} type="text" className="btn-valider-detail-acq">
+                    OK
+                </Button>
+            ) : (
+                <Button
+                    onClick={handleEditAssistanceDistance}
+                    type="text"
+                    disabled={!props?.vehicle?.assistance?.code}
+                >
+                    <Image src={editSrc} alt="edit" />
+                </Button>
+            )
+        },
+    ];
+
+    // Acquisition data
+    let acquisitionData: IDataRowTableV2[] = [
+        {
+            data: "Mode acquisition",
+            value: <span>{mode}</span>,
+            action: (
+                <Dropdown menu={{
+                    items: [
+                        {
+                            label: (
+                                <div onClick={() => {
+                                    saveAcquisition({ mode: VehicleAcquisitionEnum.ACHAT });
+                                    setMode(VehicleAcquisitionEnum.ACHAT);
+                                }}>Achat</div>
+                            ),
+                            key: "ACHAT",
+                        },
+                        {
+                            label: (
+                                <div onClick={() => {
+                                    saveAcquisition({ mode: VehicleAcquisitionEnum.LLD });
+                                    setMode(VehicleAcquisitionEnum.LLD);
+                                }}>LLD</div>
+                            ),
+                            key: "LLD",
+                        },
+                        {
+                            label: (
+                                <div onClick={() => {
+                                    saveAcquisition({ mode: VehicleAcquisitionEnum.LOA });
+                                    setMode(VehicleAcquisitionEnum.LOA);
+                                }}>LOA</div>
+                            ),
+                            key: "LOA",
+                        },
+                        {
+                            label: (
+                                <div onClick={() => {
+                                    saveAcquisition({ mode: VehicleAcquisitionEnum.CREDITBAIL });
+                                    setMode(VehicleAcquisitionEnum.CREDITBAIL);
+                                }}>Crédit bail</div>
+                            ),
+                            key: "CREDITBAIL",
+                        },
+                    ]
+                }} trigger={["click"]}>
+                    <Button type="text">
+                        <Image src={editSrc} alt="edit" />
+                    </Button>
+                </Dropdown>
+            ),
+        },
+    ];
+
+    if (mode !== null) {
+        acquisitionData.push(
+            {
+                data: mode === VehicleAcquisitionEnum.ACHAT ? "Vendeur" : "Leaser",
+                value: showInputLeaser ? (
+                    <Input
+                        className="input-disabled-standby input-custom-table-acq"
+                        value={leaser}
+                        onChange={(e) => {
+                            setLeaser(e.target.value);
+                        }}
+                    />
+                ) : (
+                    leaser ? <span>{leaser}</span> : <span>ND</span>
+                ),
+                action: showInputLeaser ? (
+                    <Button onClick={handleSaveLeaser} type="text" className="btn-valider-detail-acq">
+                        OK
+                    </Button>
+                ) : (
+                    <Button onClick={handleEditLeaser} type="text">
+                        <Image src={editSrc} alt="edit" />
+                    </Button>
+                ),
+            }
+        );
+        acquisitionData.push(
+            {
+                data: mode === VehicleAcquisitionEnum.ACHAT ?
+                    "Date d'achat" : (mode === VehicleAcquisitionEnum.CREDITBAIL || mode === VehicleAcquisitionEnum.LLD) ?
+                        "Début du leasing" : mode === VehicleAcquisitionEnum.LOA ?
+                            "Début de la LOA" : "champ invalid",
+                value: (start || showInputStart) ? (
+                    <DatePicker
+                        className="input-disabled-standby input-custom-table-acq"
+                        allowClear={true}
+                        suffixIcon={showInputStart ? <CalendarOutlined /> : null}
+                        variant={showInputStart ? "outlined" : "borderless"}
+                        disabled={!showInputStart}
+                        value={start}
+                        onChange={onChangeStart}
+                        style={{ color: "#4D4D4D" }}
+                        format="DD/MM/YYYY"
+                    />
+                ) : (
+                    <span>ND</span>
+                ),
+                action: showInputStart ? (
+                    <Button onClick={handleSaveStart} type="text" className="btn-valider-detail-acq">
+                        OK
+                    </Button>
+                ) : (
+                    <Button onClick={handleEditStart} type="text">
+                        <Image src={editSrc} alt="edit" />
+                    </Button>
+                ),
+            }
+        );
+        if (mode !== VehicleAcquisitionEnum.ACHAT) {
+            acquisitionData.push(
+                {
+                    data: "Durée",
+                    value: (props.vehicle.acquisition?.duration || showInputDuration) ? (
+                        <InputNumber
+                            className="input-disabled-standby input-custom-table-acq"
+                            variant={showInputDuration ? "outlined" : "borderless"}
+                            disabled={!showInputDuration}
+                            value={duration}
+                            onChange={onChangeDuration}
+                            suffix="mois"
+                            style={{ color: "#4D4D4D" }}
+                        />
+                    ) : (
+                        <span>ND</span>
+                    ),
+                    action: showInputDuration ? (
+                        <Button onClick={handleSaveDuration} type="text" className="btn-valider-detail-acq">
+                            OK
+                        </Button>
+                    ) : (
+                        <Button onClick={handleEditDuration} type="text">
+                            <Image src={editSrc} alt="edit" />
+                        </Button>
+                    ),
+                }
+            );
+            acquisitionData.push(
+                {
+                    data: mode === VehicleAcquisitionEnum.LOA ? "Fin de la LOA" : "Fin du leasing",
+                    value: (props.vehicle.acquisition?.duration && props.vehicle.acquisition?.start) ? (
+                        <DatePicker
+                            className="input-disabled-standby input-custom-table-acq"
+                            allowClear={false}
+                            suffixIcon={null}
+                            variant="borderless"
+                            disabled
+                            value={dayjs(start).add(duration, "month")}
+                            style={{ color: "#4D4D4D" }}
+                            format="DD/MM/YYYY"
+                        />
+                    ) : (
+                        <span>ND</span>
+                    ),
+                    action: <></>,
+                }
+            );
+        }
+        if (mode === VehicleAcquisitionEnum.LLD || mode === VehicleAcquisitionEnum.CREDITBAIL) {
+            acquisitionData.push(
+                {
+                    data: "Kilométrage contractuel",
+                    value: (props.vehicle.acquisition?.mileage || showInputMileage) ? (
+                        <InputNumber
+                            className="input-disabled-standby input-custom-table-acq"
+                            variant={showInputMileage ? "outlined" : "borderless"}
+                            disabled={!showInputMileage}
+                            value={mileage}
+                            onChange={onChangeMileage}
+                            suffix="Km"
+                            style={{ color: "#4D4D4D" }}
+                        />
+                    ) : (
+                        <span>ND</span>
+                    ),
+                    action: showInputMileage ? (
+                        <Button onClick={handleSaveMileage} type="text" className="btn-valider-detail-acq">
+                            OK
+                        </Button>
+                    ) : (
+                        <Button onClick={handleEditMileage} type="text">
+                            <Image src={editSrc} alt="edit" />
+                        </Button>
+                    ),
+                }
+            );
+        }
+        acquisitionData.push(
+            {
+                data: mode === VehicleAcquisitionEnum.ACHAT ? "Prix d'Achat (HT)" : "Apport initial (HT)",
+                value: (props.vehicle.acquisition?.price || showInputPrice) ? (
+                    <InputNumber
+                        className="input-disabled-standby input-custom-table-acq"
+                        suffix="€"
+                        variant={showInputPrice ? "outlined" : "borderless"}
+                        disabled={!showInputPrice}
+                        value={price}
+                        onChange={onChangePrice}
+                        style={{ color: "#4D4D4D", width: "120px" }}
+                    />
+                ) : (
+                    <span>ND</span>
+                ),
+                action: showInputPrice ? (
+                    <Button onClick={handleSavePrice} type="text" className="btn-valider-detail-acq">
+                        OK
+                    </Button>
+                ) : (
+                    <Button onClick={handleEditPrice} type="text">
+                        <Image src={editSrc} alt="edit" />
+                    </Button>
+                ),
+            }
+        );
+        acquisitionData.push(
+            {
+                data: "Taux de TVA",
+                value: (props.vehicle.acquisition?.tax || showInputTax) ? (
+                    <InputNumber
+                        className="input-disabled-standby input-custom-table-acq"
+                        suffix="%"
+                        variant={showInputTax ? "outlined" : "borderless"}
+                        disabled={!showInputTax}
+                        value={tax}
+                        onChange={onChangeTax}
+                        style={{ color: "#4D4D4D" }}
+                    />
+                ) : (
+                    <span>ND</span>
+                ),
+                action: showInputTax ? (
+                    <Button onClick={handleSaveTax} type="text" className="btn-valider-detail-acq">
+                        OK
+                    </Button>
+                ) : (
+                    <Button onClick={handleEditTax} type="text">
+                        <Image src={editSrc} alt="edit" />
+                    </Button>
+                ),
+            }
+        );
+        if (mode !== VehicleAcquisitionEnum.ACHAT) {
+            acquisitionData.push(
+                {
+                    data: "Montant mensuel (HT)",
+                    value: (props.vehicle.acquisition?.subscription || showInputSubscription) ? (
+                        <InputNumber
+                            className="input-disabled-standby input-custom-table-acq"
+                            suffix="€"
+                            variant={showInputSubscription ? "outlined" : "borderless"}
+                            disabled={!showInputSubscription}
+                            value={subscription}
+                            onChange={onChangeSubscription}
+                            style={{ color: "#4D4D4D" }}
+                        />
+                    ) : (
+                        <span>ND</span>
+                    ),
+                    action: showInputSubscription ? (
+                        <Button onClick={handleSaveSubscription} type="text" className="btn-valider-detail-acq">
+                            OK
+                        </Button>
+                    ) : (
+                        <Button onClick={handleEditSubscription} type="text">
+                            <Image src={editSrc} alt="edit" />
+                        </Button>
+                    ),
+                }
+            );
+        }
+        if (mode === VehicleAcquisitionEnum.LOA) {
+            acquisitionData.push(
+                {
+                    data: "Valeur de rachat",
+                    value: (props.vehicle.acquisition?.redemptionValue || showInputRedemptionValue) ? (
+                        <InputNumber
+                            className="input-disabled-standby input-custom-table-acq"
+                            suffix="€"
+                            variant={showInputRedemptionValue ? "outlined" : "borderless"}
+                            disabled={!showInputRedemptionValue}
+                            value={redemptionValue}
+                            onChange={onChangeRedemptionValue}
+                            style={{ color: "#4D4D4D" }}
+                        />
+                    ) : (
+                        <span>ND</span>
+                    ),
+                    action: showInputRedemptionValue ? (
+                        <Button onClick={handleSaveRedemptionValue} type="text" className="btn-valider-detail-acq">
+                            OK
+                        </Button>
+                    ) : (
+                        <Button onClick={handleEditRedemptionValue} type="text">
+                            <Image src={editSrc} alt="edit" />
+                        </Button>
+                    ),
+                }
+            );
+        }
+    }
 
     const adminData: IDataRowTableV2[] = useMemo(() => {
         if (!certificate) return [];
@@ -260,7 +780,17 @@ function DetailV2(props: { vehicle: IVehicle }) {
             shouldDisplay(additionalInfo.extra_urban_co2) && { data: "CO2 en mode extra-urbain", value: additionalInfo.extra_urban_co2 + " (en g/km)", action: <></> },
             shouldDisplay(additionalInfo.urban_fuel_consumption) && { data: "Consommation urbaine", value: additionalInfo.urban_fuel_consumption, action: <></> },
             shouldDisplay(additionalInfo.extra_urban_fuel_consumption) && { data: "Consommation extra-urbaine", value: additionalInfo.extra_urban_fuel_consumption, action: <></> },
-            shouldDisplay(additionalInfo.combined_fuel_consumption) && { data: "Consommation", value: additionalInfo.combined_fuel_consumption, action: <></> }
+            shouldDisplay(additionalInfo.combined_fuel_consumption) && { data: "Consommation", value: additionalInfo.combined_fuel_consumption, action: <></> },
+            shouldDisplay(additionalInfo.starter_battery_power) && { data: "Puissance de la batterie de démarrage", value: additionalInfo.starter_battery_power, action: <></> },
+            shouldDisplay(additionalInfo.starter_battery_capacity) && { data: "Capacité de la batterie de démarrage", value: additionalInfo.starter_battery_capacity, action: <></> },
+            shouldDisplay(additionalInfo.rear_braking_system) && { data: "Système de freinage arrière", value: additionalInfo.rear_braking_system, action: <></> },
+            shouldDisplay(additionalInfo.rear_trunk_capacity) && { data: "Capacité du coffre arrière", value: additionalInfo.rear_trunk_capacity + " (Litre)", action: <></> },
+            shouldDisplay(additionalInfo.extended_rear_trunk_capacity) && { data: "Capacité étendue du coffre arrière", value: additionalInfo.extended_rear_trunk_capacity + " (Litre)", action: <></> },
+            shouldDisplay(additionalInfo.max_length) && { data: "Longueur maximale", value: additionalInfo.max_length, action: <></> },
+            shouldDisplay(additionalInfo.combined_horse_power) && { data: "Puissance combinée", value: additionalInfo.combined_horse_power, action: <></> },
+            shouldDisplay(additionalInfo.wheel_drive) && { data: "Roues motrices", value: additionalInfo.wheel_drive, action: <></> },
+            shouldDisplay(additionalInfo.front_axle_type) && { data: "Type de suspensions avant", value: additionalInfo.front_axle_type, action: <></> },
+            shouldDisplay(additionalInfo.rear_axle_type) && { data: "Type de suspensions arrières", value: additionalInfo.rear_axle_type, action: <></> },
         ].filter(Boolean) as IDataRowTableV2[];
     }, [additionalInfo]);
 
@@ -290,19 +820,85 @@ function DetailV2(props: { vehicle: IVehicle }) {
         if (props.vehicle.information.energy !== "EL" || electric === null) return [];
         return [
             shouldDisplay(electric.front_engine_type) && { data: "Type de moteur avant", value: electric.front_engine_type, action: <></> },
-            shouldDisplay(electric.front_engine_kw_power) && { data: "Puissance du moteur avant", value: electric.front_engine_kw_power + " (en kW)", action: <></> },
-            shouldDisplay(electric.front_engine_horsepower) && { data: "Puissance du moteur avant", value: electric.front_engine_horsepower + " (en chevaux)", action: <></> },
+            shouldDisplay(electric.front_engine_kw_power) && { data: "Puissance du moteur avant (kW)", value: electric.front_engine_kw_power, action: <></> },
+            shouldDisplay(electric.front_engine_horsepower) && { data: "Puissance du moteur avant (chevaux)", value: electric.front_engine_horsepower, action: <></> },
             shouldDisplay(electric["1st_rear_engine_type"]) && { data: "Type du 1er moteur arrière", value: electric["1st_rear_engine_type"], action: <></> },
-            shouldDisplay(electric["1st_rear_engine_kw_power"]) && { data: "Puissance du 1er moteur arrière", value: electric["1st_rear_engine_kw_power"] + " (en kW)", action: <></> },
-            shouldDisplay(electric["1st_rear_engine_horsepower"]) && { data: "Puissance du 1er moteur arrière", value: electric["1st_rear_engine_horsepower"] + " (en chevaux)", action: <></> },
+            shouldDisplay(electric["1st_rear_engine_kw_power"]) && { data: "Puissance du 1er moteur arrière (kW)", value: electric["1st_rear_engine_kw_power"], action: <></> },
+            shouldDisplay(electric["1st_rear_engine_horsepower"]) && { data: "Puissance du 1er moteur arrière (chevaux)", value: electric["1st_rear_engine_horsepower"], action: <></> },
+            shouldDisplay(electric["2nd_rear_engine_type"]) && { data: "Type du 2nd moteur arrière", value: electric["2nd_rear_engine_type"], action: <></> },
+            shouldDisplay(electric["2nd_rear_engine_kw_power"]) && { data: "Puissance du 2nd moteur arrière (kW)", value: electric["2nd_rear_engine_kw_power"], action: <></> },
+            shouldDisplay(electric["2nd_rear_engine_horsepower"]) && { data: "Puissance du 2nd moteur arrière (chevaux)", value: electric["2nd_rear_engine_horsepower"], action: <></> },
+            shouldDisplay(electric.combined_kw_power) && { data: "Puissance combinée", value: electric.combined_kw_power, action: <></> },
+            shouldDisplay(electric.engine_cooling_type) && { data: "Type de refroidissement moteur", value: electric.engine_cooling_type, action: <></> },
+            shouldDisplay(electric.front_engine_nm_torque) && { data: "Couple du moteur avant", value: electric.front_engine_nm_torque, action: <></> },
+            shouldDisplay(electric["1st_rear_engine_nm_torque"]) && { data: "Couple du 1er moteur arrière", value: electric["1st_rear_engine_nm_torque"], action: <></> },
+            shouldDisplay(electric["2nd_rear_engine_nm_torque"]) && { data: "Couple du 2nd moteur arrière", value: electric["2nd_rear_engine_nm_torque"], action: <></> },
+            shouldDisplay(electric.combined_nm_torque) && { data: "Couple combiné", value: electric.combined_nm_torque, action: <></> },
+            shouldDisplay(electric.battery_weight) && { data: "Poids de la batterie", value: electric.battery_weight, action: <></> },
+            shouldDisplay(electric.battery_layout) && { data: "Position de la batterie", value: electric.battery_layout, action: <></> },
             shouldDisplay(electric.battery_type) && { data: "Type de batterie", value: electric.battery_type, action: <></> },
             shouldDisplay(electric.battery_voltage) && { data: "Voltage de la batterie", value: electric.battery_voltage, action: <></> },
             shouldDisplay(electric.battery_kw_power) && { data: "Puissance de la batterie", value: electric.battery_kw_power, action: <></> },
+            shouldDisplay(electric["1st_battery_kwh_capacity"]) && { data: "Capacité de la 1ère batterie", value: electric["1st_battery_kwh_capacity"], action: <></> },
+            shouldDisplay(electric["2nd_battery_kwh_capacity"]) && { data: "Capacité de la 2nde batterie", value: electric["2nd_battery_kwh_capacity"], action: <></> },
+            shouldDisplay(electric["usable_2nd_battery_kwh_capacity"]) && { data: "Capacité utile de la 2nde batterie", value: electric["usable_2nd_battery_kwh_capacity"], action: <></> },
             shouldDisplay(electric.charging_plug) && { data: "Prise de recharge", value: electric.charging_plug, action: <></> },
+            shouldDisplay(electric.dc_charger_power_kw) && { data: "Puissance du chargeur DC", value: electric.dc_charger_power_kw, action: <></> },
+            shouldDisplay(electric.dc_charging_time_min) && { data: "Temps minimum de recharge DC", value: electric.dc_charging_time_min, action: <></> },
+            shouldDisplay(electric.ac_charger_power_kw) && { data: "Puissance du chargeur AC", value: electric.ac_charger_power_kw, action: <></> },
+            shouldDisplay(electric.ac_charging_time_80_home_min) && { data: "Temps de recharge à 80%", value: electric.ac_charging_time_80_home_min + " (en minutes)", action: <></> },
+            shouldDisplay(electric.ac_charging_time_80_home_reinforced_min) && { data: "Temps de recharge renforcée à 80%", value: electric.ac_charging_time_80_home_reinforced_min + " (en minutes)", action: <></> },
+            shouldDisplay(electric.ac_charging_time_80_wallbox_min) && { data: "Temps de recharge à une borne à 80%", value: electric.ac_charging_time_80_wallbox_min + " (en minutes)", action: <></> },
+            shouldDisplay(electric.acceleration_0_100) && { data: "Temps de 0 à 100 km/h", value: electric.acceleration_0_100, action: <></> },
+            shouldDisplay(electric.max_speed) && { data: "Vitesse maximale", value: electric.max_speed, action: <></> },
             shouldDisplay(electric.wltp_combined_autonomy_summer) && { data: "Autonomie en été (conduite mixte)", value: electric.wltp_combined_autonomy_summer, action: <></> },
-            shouldDisplay(electric.wltp_combined_autonomy_winter) && { data: "Autonomie en hiver (conduite mixte)", value: electric.wltp_combined_autonomy_winter, action: <></> }
+            shouldDisplay(electric.wltp_combined_autonomy_winter) && { data: "Autonomie en hiver (conduite mixte)", value: electric.wltp_combined_autonomy_winter, action: <></> },
+            shouldDisplay(electric.wltp_urban_autonomy_summer) && { data: "Autonomie en été (conduite urbaine)", value: electric.wltp_urban_autonomy_summer, action: <></> },
+            shouldDisplay(electric.wltp_urban_autonomy_winter) && { data: "Autonomie en hiver (conduite urbaine)", value: electric.wltp_urban_autonomy_winter, action: <></> },
+            shouldDisplay(electric.wltp_highway_autonomy_summer) && { data: "Autonomie en été (conduite sur autoroute)", value: electric.wltp_highway_autonomy_summer, action: <></> },
+            shouldDisplay(electric.wltp_highway_autonomy_winter) && { data: "Autonomie en hiver (conduite sur autoroute)", value: electric.wltp_highway_autonomy_winter, action: <></> },
+            shouldDisplay(electric.combined_consumption_kwh_100km_summer) && { data: "Consommation aux 100km en été (conduite mixte)", value: electric.combined_consumption_kwh_100km_summer, action: <></> },
+            shouldDisplay(electric.combined_consumption_kwh_100km_winter) && { data: "Consommation aux 100km en hiver (conduite mixte)", value: electric.combined_consumption_kwh_100km_winter, action: <></> },
+            shouldDisplay(electric.urban_consumption_kwh_100km_summer) && { data: "Consommation aux 100km en été (conduite urbaine)", value: electric.urban_consumption_kwh_100km_summer, action: <></> },
+            shouldDisplay(electric.urban_consumption_kwh_100km_winter) && { data: "Consommation aux 100km en hiver (conduite urbaine)", value: electric.urban_consumption_kwh_100km_winter, action: <></> },
+            shouldDisplay(electric.highway_consumption_kwh_100km_summer) && { data: "Consommation aux 100km en été (conduite sur autoroute)", value: electric.highway_consumption_kwh_100km_summer, action: <></> },
+            shouldDisplay(electric.highway_consumption_kwh_100km_winter) && { data: "Consommation aux 100km en hiver (conduite sur autoroute)", value: electric.highway_consumption_kwh_100km_winter, action: <></> },
         ].filter(Boolean) as IDataRowTableV2[];
     }, [props.vehicle.information.energy, electric]);
+
+    const dTires: IDataRowTableV2[] = useMemo(() => {
+        if (tires === null || tires.length === 0) return [];
+        const tiresData: IDataRowTableV2[] = [];
+        for (let i = 0; i < tires.length; i++) {
+            const tire = tires[i];
+            const tireItems = [
+                shouldDisplay(tire.front_display) && { data: "Référence pneu avant", value: tire.front_display, action: <></> },
+                shouldDisplay(tire.front_width) && { data: "Largeur du pneu avant", value: tire.front_width, action: <></> },
+                shouldDisplay(tire.front_ratio) && { data: "Rapport hauteur/largeur du pneu avant", value: tire.front_ratio, action: <></> },
+                shouldDisplay(tire.front_radial) && { data: "Diamètre de la jante du pneu avant", value: tire.front_radial, action: <></> },
+                shouldDisplay(tire.front_load) && { data: "Indice de charge du pneu avant", value: tire.front_load, action: <></> },
+                shouldDisplay(tire.front_speed) && { data: "Indice de vitesse du pneu avant", value: tire.front_speed, action: <></> },
+                shouldDisplay(tire.front_normal_pressure) && { data: "Pression recommandée du pneu avant", value: tire.front_normal_pressure, action: <></> },
+                shouldDisplay(tire.front_highway_pressure) && { data: "Pression sur autoroute recommandée du pneu avant", value: tire.front_highway_pressure, action: <></> },
+                tire.front_is_summer !== undefined && { data: "Pneu avant été", value: tire.front_is_summer ? "Oui" : "Non", action: <></> },
+                tire.front_is_winter !== undefined && { data: "Pneu avant hiver", value: tire.front_is_winter ? "Oui" : "Non", action: <></> },
+                tire.front_is_all_season !== undefined && { data: "Pneu avant 4 saisons", value: tire.front_is_all_season ? "Oui" : "Non", action: <></> },
+                shouldDisplay(tire.rear_display) && { data: "Référence pneu arrière", value: tire.rear_display, action: <></> },
+                shouldDisplay(tire.rear_width) && { data: "Largeur du pneu arrière", value: tire.rear_width, action: <></> },
+                shouldDisplay(tire.rear_ratio) && { data: "Rapport hauteur/largeur du pneu arrière", value: tire.rear_ratio, action: <></> },
+                shouldDisplay(tire.rear_radial) && { data: "Diamètre de la jante du pneu arrière", value: tire.rear_radial, action: <></> },
+                shouldDisplay(tire.rear_load) && { data: "Indice de charge du pneu arrière", value: tire.rear_load, action: <></> },
+                shouldDisplay(tire.rear_speed) && { data: "Indice de vitesse du pneu arrière", value: tire.rear_speed, action: <></> },
+                shouldDisplay(tire.rear_normal_pressure) && { data: "Pression recommandée du pneu arrière", value: tire.rear_normal_pressure, action: <></> },
+                shouldDisplay(tire.rear_highway_pressure) && { data: "Pression sur autoroute recommandée du pneu arrière", value: tire.rear_highway_pressure, action: <></> },
+                tire.rear_is_summer !== undefined && { data: "Pneu arrière été", value: tire.rear_is_summer ? "Oui" : "Non", action: <></> },
+                tire.rear_is_winter !== undefined && { data: "Pneu arrière hiver", value: tire.rear_is_winter ? "Oui" : "Non", action: <></> },
+                tire.rear_is_all_season !== undefined && { data: "Pneu arrière 4 saisons", value: tire.rear_is_all_season ? "Oui" : "Non", action: <></> },
+            ].filter(Boolean) as IDataRowTableV2[];
+            tiresData.push(...tireItems);
+        }
+        return tiresData;
+    }, [tires]);
 
     if (qVehicleStatus.isLoading) {
         return <Loading msg="Chargement des détails..." />;
@@ -311,18 +907,66 @@ function DetailV2(props: { vehicle: IVehicle }) {
     return (
         <>
             <VehicleInformationBox vehicle={props.vehicle} />
-            <div className="row detail-main-box">
-                <div className="col">
-                    {boitierData.length > 0 && <DetailItem key='boitierData' title="Boitier" data={boitierData} />}
-                    {motorisationData.length > 0 && <DetailItem key='motorisationData' title="Motorisation" data={motorisationData} />}
-                    {donneAdd.length > 0 && <DetailItem key='donneAdd' title="Données additionnelles" data={donneAdd} />}
-                    {chassisData.length > 0 && <DetailItem key='chassisData' title="Chassis & carrosserie" data={chassisData} />}
-                </div>
-                <div className="col">
-                    {adminData.length > 0 && <DetailItem key='adminData' title="Données administratives" data={adminData} />}
-                    {dFluide.length > 0 && <DetailItem key='dFluide' title="Données fluides" data={dFluide} />}
-                    {dElectric.length > 0 && <DetailItem key='dElectric' title="Données électriques" data={dElectric} />}
-                </div>
+            <div className="detail-main-box">
+
+                {boitierData.length > 0 &&
+                    <div>
+                        <DetailItem key='boitierData' title="Boitier" data={boitierData} />
+                    </div>
+                }
+
+                {motorisationData.length > 0 &&
+                    <div>
+                        <DetailItem key='motorisationData' title="Motorisation" data={motorisationData} />
+                    </div>
+                }
+
+                {chassisData.length > 0 &&
+                    <div>
+                        <DetailItem key='chassisData' title="Chassis & carrosserie" data={chassisData} />
+                    </div>
+                }
+
+                {adminData.length > 0 &&
+                    <div>
+                        <DetailItem key='adminData' title="Données administratives" data={adminData} />
+                    </div>
+                }
+
+                {donneAdd.length > 0 &&
+                    <div>
+                        <DetailItem key='donneAdd' title="Données additionnelles" data={donneAdd} />
+                    </div>
+                }
+                {insuranceData.length > 0 &&
+                    <div>
+                        <DetailItem key='insuranceData' title="Assurance" data={insuranceData} />
+                    </div>
+                }
+
+                {acquisitionData.length > 0 &&
+                    <div>
+                        <DetailItem key='acquisitionData' title="Mode d'achat" data={acquisitionData} />
+                    </div>
+                }
+
+                {dFluide.length > 0 &&
+                    <div>
+                        <DetailItem key='dFluide' title="Données fluides" data={dFluide} />
+                    </div>
+                }
+
+                {dElectric.length > 0 &&
+                    <div>
+                        <DetailItem key='dElectric' title="Données électriques" data={dElectric} />
+                    </div>
+                }
+
+                {dTires.length > 0 &&
+                    <div>
+                        <DetailItem key='dTires' title="Données pneumatiques" data={dTires} />
+                    </div>
+                }
             </div>
         </>
     );
