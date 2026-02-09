@@ -1,0 +1,9 @@
+.gestion-main-row {
+    margin-top: 20px;
+}
+
+@media (max-width: 768px) {
+    .gestion-main-row {
+        margin-top: 16px;
+    }
+}

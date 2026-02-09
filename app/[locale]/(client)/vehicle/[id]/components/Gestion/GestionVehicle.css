@@ -1,0 +1,108 @@
+.main-content-gestion-vehicle {
+    width: 100%;
+}
+
+.main-content-gestion-vehicle h2 {
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: #333;
+    margin: 0;
+}
+
+.gestion-main-box {
+    background: #fff;
+    border-radius: 12px;
+    padding: 20px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+}
+
+.title-box-state-action {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    margin-bottom: 24px;
+    padding-bottom: 16px;
+    border-bottom: 1px solid #f0f0f0;
+}
+
+.title-state-action {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 14px;
+    color: #666;
+}
+
+.icon-cle-rfid {
+    width: 24px;
+    height: 24px;
+    cursor: pointer;
+    transition: transform 0.2s;
+}
+
+.icon-cle-rfid:hover {
+    transform: scale(1.1);
+}
+
+.action-security-box {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 24px;
+    justify-content: flex-start;
+    padding: 20px 0;
+}
+
+.footer-gestion-vehicle-box {
+    margin-top: 24px;
+    padding-top: 20px;
+    border-top: 1px solid #f0f0f0;
+}
+
+.footer-gestion-vehicle {
+    display: block;
+    font-size: 13px;
+    color: #888;
+    margin-bottom: 16px;
+    line-height: 1.5;
+}
+
+.footer-gestion-vehicle-icon-box {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+}
+
+.information-in-modal-box {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    padding: 16px 0;
+}
+
+.information-in-modal {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-size: 14px;
+    color: #666;
+}
+
+.information-in-modal img {
+    width: 24px;
+    height: 24px;
+}
+
+@media (max-width: 768px) {
+    .title-box-state-action {
+        flex-direction: column;
+        gap: 12px;
+    }
+
+    .action-security-box {
+        justify-content: center;
+    }
+
+    .footer-gestion-vehicle-icon-box {
+        flex-direction: column;
+    }
+}

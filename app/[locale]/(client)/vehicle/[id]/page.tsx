@@ -11,6 +11,7 @@ import DetailV2 from "./components/DetailV2";
 import Stats from "./components/Stats";
 import PathsV2 from "./components/PathsV2";
 import TableDiagV2 from "./components/TableDiagV2";
+import Gestion from "./components/Gestion";
 import "./Vehicle.css";
 
 export default function Vehicle() {
@@ -59,13 +60,13 @@ export default function Vehicle() {
         }
 
         // Gestion tab
-        // if (vehicle.device?.configuration) {
-        //     tabList.push({
-        //         key: "gestion",
-        //         label: "Gestion",
-        //         children: <Gestion vehicle={vehicle} />,
-        //     });
-        // }
+        if (vehicle.device?.configuration) {
+            tabList.push({
+                key: "gestion",
+                label: "Gestion",
+                children: <Gestion vehicle={vehicle} />,
+            });
+        }
 
         // Autorisation tab
         // if (vehicle.device?.carSharing) {

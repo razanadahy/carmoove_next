@@ -1,0 +1,31 @@
+.common-function-container {
+    padding: 12px 0;
+    border-bottom: 1px solid #f0f0f0;
+}
+
+.common-function-container:last-child {
+    border-bottom: none;
+}
+
+.common-function-title {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 14px;
+    font-weight: 600;
+    color: #333;
+    margin: 0 0 8px 0;
+}
+
+.common-function-tooltip-icon {
+    color: #7A8089;
+    cursor: pointer;
+    font-size: 14px;
+}
+
+.common-function-info {
+    font-size: 13px;
+    color: #7A8089;
+    margin-bottom: 4px;
+    line-height: 1.5;
+}

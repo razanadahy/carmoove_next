@@ -477,6 +477,19 @@ export enum EnumImmobilizerStatusCS {
     UNLOCKED = "UNLOCKED",
 }
 
+export enum EnumAction {
+    IMMOBILIZE = "IMMOBILIZE",
+    CENTRAL_LOCK = "CENTRAL-LOCK",
+    HONK = "HONK",
+    TURNING_LIGHTS = "TURNING-LIGHTS",
+    UNLOCK_TRUNK = "UNLOCK-TRUNK",
+}
+
+export interface IActionsCS {
+    actions: EnumAction[];
+    error: string | null | undefined;
+}
+
 export enum EnumHandbrakeStatusCS {
     ON = "ON",
     OFF = "OFF",

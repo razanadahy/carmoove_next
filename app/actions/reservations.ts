@@ -1,7 +1,7 @@
 'use server';
 
 import createApiClient from '@/lib/api/axios-client';
-import {IPostUpdateStateCS, IVehicleStatusCS} from "@/lib/hooks/Interfaces";
+import {EnumImmobilizerStatusCS, EnumLockStatusCS, IPostUpdateStateCS, IVehicleStatusCS} from "@/lib/hooks/Interfaces";
 import {IGetVehicleStatusCS} from "@/lib/hooks";
 const apiClient = createApiClient();
 interface IReservation {
@@ -73,6 +73,125 @@ export const updateState = async (field: IPostUpdateStateCS) => {
         const { data } = await apiClient.post(`/v1/vehicle/${field.id}/${field.state}?state=${field.value}`,);
         return data;
     } catch (error) {
+        throw error;
+    }
+}
+import { EnumAction, IActionsCS } from "@/lib/hooks/Interfaces";
+
+export interface IGetActionsList {
+    id: string,
+}
+interface IPostUpdateLightOnSecurity {
+    vehicleId: string,
+}
+interface IPostUpdateImmobilizationSecurity {
+    vehicleId: string,
+    value: boolean
+}
+
+interface IPostUpdateHonkSecurity {
+    vehicleId: string,
+}
+
+interface IPostUpdateLockSecurity {
+    vehicleId: string,
+    value: boolean
+}
+
+interface IResponseImmobilizerSecurity {
+    Status: EnumImmobilizerStatusCS,
+    error: string
+}
+
+interface IResponseLockSecurity {
+    Status: EnumLockStatusCS,
+    error: string
+}
+
+interface IPostUpdateUnlockTrunkSecurity {
+    vehicleId: string,
+}
+export const getActionsList = async (field: IGetActionsList) => {
+    try {
+        const { data } = await apiClient.get<IActionsCS>(
+            `/v1/vehicle/actions`, {
+                params: field
+            }
+        );
+        return data;
+    } catch (error) {
+        console.error('Erreur lors de getActionsList:', error);
+        throw error;
+    }
+}
+
+
+export const updateImmobilizationSecurity = async (field: IPostUpdateImmobilizationSecurity) => {
+    try {
+        const { data } = await apiClient.post<IResponseImmobilizerSecurity>(
+            `/v1/vehicle/${field.value ? 'immobilize' : 'start'}`, {
+                vehicleId: field.vehicleId
+            }
+        );
+        return data;
+    } catch (error) {
+        console.error('Erreur lors de updateImmobilizationSecurity:', error);
+        throw error;
+    }
+}
+
+export const updateHonkSecurity = async (field: IPostUpdateHonkSecurity) => {
+    try {
+        const { data } = await apiClient.post(
+            `/v1/vehicle/honk`, {
+                vehicleId: field.vehicleId
+            }
+        );
+        return data;
+    } catch (error) {
+        console.error('Erreur lors de updateHonkSecurity:', error);
+        throw error;
+    }
+}
+
+export const updateLockSecurity = async (field: IPostUpdateLockSecurity) => {
+    try {
+        const { data } = await apiClient.post<IResponseLockSecurity>(
+            `/v1/vehicle/${field.value ? 'lock' : 'unlock'}`, {
+                vehicleId: field.vehicleId
+            }
+        );
+        return data;
+    } catch (error) {
+        console.error('Erreur lors de updateLockSecurity:', error);
+        throw error;
+    }
+}
+
+export const updatUnlockTrunkSecurity = async (field: IPostUpdateUnlockTrunkSecurity) => {
+    try {
+        const { data } = await apiClient.post(
+            `/v1/vehicle/trunk/unlock`, {
+                vehicleId: field.vehicleId
+            }
+        );
+        return data;
+    } catch (error) {
+        console.error('Erreur lors de updatUnlockTrunkSecurity:', error);
+        throw error;
+    }
+}
+
+export const updatLightOnSecurity = async (field: IPostUpdateLightOnSecurity) => {
+    try {
+        const { data } = await apiClient.post(
+            `/v1/vehicle/lights/on`, {
+                vehicleId: field.vehicleId
+            }
+        );
+        return data;
+    } catch (error) {
+        console.error('Erreur lors de updatLightOnSecurity:', error);
         throw error;
     }
 }
