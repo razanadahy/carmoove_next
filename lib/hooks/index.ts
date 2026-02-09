@@ -3,8 +3,11 @@
 import { useMemo } from "react";
 import { useQuery, useMutation } from "@apollo/client";
 import { App } from "antd";
-import { VEHICLES_QUERY, VEHICLE_QUERY, DRIVERS_QUERY, DRIVER_QUERY, DRIVER_STATISTICS_QUERY, DRIVER_PATH_QUERY } from "../graphql/queries";
-import { TECHNICAL_SUPPORT, REGISTER_DRIVER } from "../graphql/mutation";
+import {
+    VEHICLES_QUERY, VEHICLE_QUERY, DRIVERS_QUERY, DRIVER_QUERY, DRIVER_STATISTICS_QUERY, DRIVER_PATH_QUERY,
+    NOMENCLATURE_QUERY
+} from "../graphql/queries";
+import {TECHNICAL_SUPPORT, REGISTER_DRIVER, REGISTER_ASSISTANCE} from "../graphql/mutation";
 import {IVehicle, IVehicleStatusCS} from "@/lib/hooks/Interfaces";
 import {useQueries} from "@tanstack/react-query";
 import {getVehicleStatus} from "@/app/actions/reservations";
@@ -198,4 +201,68 @@ export const useGetDriverPath = ({
     });
 
     return { data, loading, error, fetchMore };
+};
+
+
+export const useRegisterAssistance = (id: string, onCompleted?: () => void) => {
+    const { notification } = App.useApp();
+
+    const [registerAssistance, { loading, error }] = useMutation(
+        REGISTER_ASSISTANCE,
+        {
+            refetchQueries: [
+                {
+                    query: VEHICLE_QUERY,
+                    variables: { id },
+                    context: {
+                        version: "php",
+                    },
+                },
+            ],
+
+            onError: () => {
+                notification.error({
+                    message: "Erreur lors de la mise à jour de l'assurance",
+                });
+            },
+
+            onCompleted: (data) => {
+                onCompleted?.();
+                if (data.registerAssistance)
+                    notification.success({
+                        message: "L'assurance a été mise à jour",
+                    });
+            },
+        }
+    );
+
+    return { registerAssistance, loading, error };
+};
+
+
+type InsuranceType = Record<string, any>;
+
+export const useGetInsurances = (code: string) => {
+    const { data, loading, error } = useQuery(NOMENCLATURE_QUERY, {
+        variables: {
+            category: "INSURANCES",
+            code,
+        },
+    });
+
+    const insuranceData = useMemo(
+        () =>
+            data?.nomenclature
+                .map((insurance: InsuranceType) => ({
+                    code: insurance.code,
+                    label: insurance.translation[0].text,
+                }))
+                .sort(
+                    (a: InsuranceType, b: InsuranceType) =>
+                        a.label > b.label ? 1 : b.label > a.label ? -1 : 0 // Sort insurances by label
+                ) ?? [],
+        [data]
+    );
+
+    return [insuranceData, loading, error];
 };

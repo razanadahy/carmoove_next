@@ -1,0 +1,33 @@
+.assurance-list-wrapper {
+    padding: 16px;
+}
+
+.assurance-list-wrapper h2 {
+    font-size: 18px;
+    font-weight: 600;
+    color: #333;
+    margin-bottom: 20px;
+    padding-bottom: 10px;
+    border-bottom: 2px solid #f0f0f0;
+}
+
+.assurance-loading {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 200px;
+}
+
+.assistance-row {
+    padding: 12px 16px;
+    cursor: pointer;
+    border-radius: 6px;
+    margin-bottom: 8px;
+    background: #fafafa;
+    transition: all 0.2s ease;
+}
+
+.assistance-row:hover {
+    background: #e6f7ff;
+    color: #1890ff;
+}

@@ -1,7 +1,7 @@
 'use client'
 
 import React, { JSX, ReactElement, useEffect, useMemo, useState } from "react";
-import { Button, InputNumber, Dropdown, Input, DatePicker, Form, Transfer, App, Modal } from "antd";
+import { Button, InputNumber, Dropdown, Input, DatePicker, Form, Transfer, App, Modal, Drawer } from "antd";
 import dayjs, { Dayjs } from "dayjs";
 import { CalendarOutlined, MinusCircleOutlined, PlusOutlined } from "@ant-design/icons";
 import { valueType } from "antd/lib/statistic/utils";
@@ -24,6 +24,10 @@ import add_i from '@/assets/image/add.svg';
 import plus_i from '@/assets/image/plus.svg';
 import { getISV } from "../services/DetailServices";
 import { Certificate, Additional_information, Fluids, Tire, Electric } from "../services/DetailInterfaces";
+import AssistanceList from "./AssistanceList";
+import { useQuery as useApolloQuery } from "@apollo/client";
+import { NOMENCLATURE_QUERY } from "@/lib/graphql/queries";
+import {useGetInsurances, useRegisterAssistance} from "@/lib/hooks";
 
 export interface IDataRowTableV2 {
     oneCol?: boolean
@@ -116,6 +120,17 @@ function DetailV2(props: { vehicle: IVehicle }) {
     const [tires, setTires] = useState<Tire[] | null>(null);
     const [electric, setElectric] = useState<Electric | null>(null);
 
+    // Drawer state for AssistanceList
+    const [isDrawerOpen, setIsDrawerOpen] = useState<boolean>(false);
+
+    const [insurance, error, loading] = useGetInsurances(
+        props?.vehicle?.assistance?.code ?? ""
+    );
+
+    const openAssistanceDrawer = () => {
+        setIsDrawerOpen(true);
+    };
+
     useEffect(() => {
         if (qSIV.data) {
             setCertificate(qSIV.data.certificate);
@@ -159,8 +174,23 @@ function DetailV2(props: { vehicle: IVehicle }) {
         setPhoneNumber(props.vehicle.assistance?.phoneNumber);
     };
 
+    const { registerAssistance } = useRegisterAssistance(props.vehicle.id);
+    const saveAssistance = ({phoneNumber, distance,}: { phoneNumber?: string; distance?: number; }) => {
+        registerAssistance({
+            variables: {
+                vehicle_id: props.vehicle.id,
+                code: props?.vehicle?.assistance?.code,
+                phoneNumber: phoneNumber
+                    ? phoneNumber.toString()
+                    : props.vehicle.assistance?.phoneNumber,
+                distance: distance ?? props.vehicle.assistance?.distance,
+            },
+        });
+    };
+
     const handleSavePhoneNumber = () => {
-        // TODO: Implement saveAssistance mutation
+        if (props.vehicle.assistance?.phoneNumber !== phoneNumber)
+            saveAssistance({ phoneNumber: phoneNumber?.toString() });
         notification.success({ message: 'Numéro de téléphone mis à jour' });
         setShowInput(false);
     };
@@ -172,7 +202,8 @@ function DetailV2(props: { vehicle: IVehicle }) {
     };
 
     const handleSaveAssistanceDistance = () => {
-        // TODO: Implement saveAssistance mutation
+        if (props.vehicle.assistance?.distance !== assistanceDistance)
+            saveAssistance({ distance: assistanceDistance });
         notification.success({ message: 'Distance de prise en charge mise à jour' });
         setShowInputAssistanceDistance(false);
     };
@@ -350,8 +381,12 @@ function DetailV2(props: { vehicle: IVehicle }) {
     const insuranceData: IDataRowTableV2[] = [
         {
             data: "Assureur",
-            value: props?.vehicle?.assistance?.code || "ND",
-            action: <></>,
+            value: props?.vehicle?.assistance?.code ? insurance[0]?.label ?? "ND" : "ND",
+            action: (
+                <Button onClick={openAssistanceDrawer} type="text">
+                    <Image src={editSrc} alt="edit" />
+                </Button>
+            ),
         },
         {
             data: "Tél assistance",
@@ -968,6 +1003,21 @@ function DetailV2(props: { vehicle: IVehicle }) {
                     </div>
                 }
             </div>
+
+            <Drawer
+                title={null}
+                placement="right"
+                onClose={() => setIsDrawerOpen(false)}
+                open={isDrawerOpen}
+                width={400}
+            >
+                <AssistanceList
+                    vehicleId={props.vehicle.id}
+                    phoneNumber={props.vehicle.assistance?.phoneNumber}
+                    distance={props.vehicle.assistance?.distance}
+                    onClose={() => setIsDrawerOpen(false)}
+                />
+            </Drawer>
         </>
     );
 }
