@@ -5,7 +5,7 @@ import { useQuery, useMutation } from "@apollo/client";
 import { App } from "antd";
 import {
     VEHICLES_QUERY, VEHICLE_QUERY, DRIVERS_QUERY, DRIVER_QUERY, DRIVER_STATISTICS_QUERY, DRIVER_PATH_QUERY,
-    NOMENCLATURE_QUERY
+    NOMENCLATURE_QUERY, PATHS_QUERY, COUNT_PATHS_QUERY
 } from "../graphql/queries";
 import {TECHNICAL_SUPPORT, REGISTER_DRIVER, REGISTER_ASSISTANCE} from "../graphql/mutation";
 import {IVehicle, IVehicleStatusCS} from "@/lib/hooks/Interfaces";
@@ -251,4 +251,60 @@ export const useGetInsurances = (code: string) => {
     );
 
     return [insuranceData, loading, error];
+};
+
+export const useGetVehiclePaths = ({
+    from,
+    to,
+    vehicleId,
+    offset = 0,
+    limit = 30,
+}: {
+    from: number;
+    to: number;
+    vehicleId: string;
+    offset?: number;
+    limit?: number;
+}) => {
+    const { data, loading, error, fetchMore } = useQuery(PATHS_QUERY, {
+        fetchPolicy: "no-cache",
+        variables: {
+            vehicleIds: [vehicleId],
+            from,
+            to,
+            offset,
+            limit,
+        },
+        context: {
+            version: "php",
+        },
+        pollInterval: 300000,
+    });
+
+    return { data, loading, error, fetchMore };
+};
+
+export const useCountVehiclePaths = ({
+    from,
+    to,
+    vehicleId,
+}: {
+    from: number;
+    to: number;
+    vehicleId: string;
+}) => {
+    const { data, loading, error } = useQuery(COUNT_PATHS_QUERY, {
+        fetchPolicy: "network-only",
+        variables: {
+            vehicleIds: [vehicleId],
+            from,
+            to,
+        },
+        context: {
+            version: "php",
+        },
+        pollInterval: 300000,
+    });
+
+    return { count: data?.countPaths ?? 0, loading, error };
 };

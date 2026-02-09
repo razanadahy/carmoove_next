@@ -9,6 +9,7 @@ import { Loading } from "@/components/Common/Loading";
 import Resume from "./components/Resume";
 import DetailV2 from "./components/DetailV2";
 import Stats from "./components/Stats";
+import PathsV2 from "./components/PathsV2";
 import "./Vehicle.css";
 
 export default function Vehicle() {
@@ -40,11 +41,11 @@ export default function Vehicle() {
                 label: "Stats",
                 children: <Stats vehicle={vehicle} />,
             },
-            // {
-            //     key: "paths",
-            //     label: "Trajets",
-            //     children: <PathsV2 vehicle={vehicle} />,
-            // },
+            {
+                key: "paths",
+                label: "Trajets",
+                children: <PathsV2 vehicle={vehicle} />,
+            },
         ];
 
         // Diag tab

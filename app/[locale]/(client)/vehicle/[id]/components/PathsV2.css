@@ -1,0 +1,52 @@
+.paths-v2-container {
+    padding: 20px;
+    width: 100%;
+}
+
+.paths-v2-container h2 {
+    margin-bottom: 16px;
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: #333;
+}
+
+.paths-v2-filters {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 20px;
+}
+
+.paths-v2-separator {
+    margin-left: 10px;
+    margin-right: 10px;
+    color: #666;
+}
+
+.custom-daterange-mobile {
+    max-width: 100%;
+}
+
+@media (max-width: 768px) {
+    .paths-v2-filters {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .paths-v2-separator {
+        margin: 10px 0;
+    }
+
+    .custom-daterange-mobile {
+        width: 100%;
+    }
+
+    .select-box {
+        width: 100% !important;
+    }
+
+    .select-box .ant-select {
+        width: 100% !important;
+    }
+}

@@ -1,0 +1,146 @@
+.path-card {
+    width: 22rem;
+    border-radius: 12px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+    transition: all 0.3s ease;
+}
+
+.path-card:hover {
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.12);
+    transform: translateY(-2px);
+}
+
+.path-card .ant-card-body {
+    padding: 16px;
+}
+
+.path-card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 16px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid #f0f0f0;
+}
+
+.path-card-date {
+    font-size: 14px;
+    color: #666;
+    font-weight: 500;
+}
+
+.path-card-duration {
+    font-size: 14px;
+    color: #1890ff;
+    font-weight: 600;
+}
+
+.path-card-route {
+    position: relative;
+    padding-left: 20px;
+    margin-bottom: 16px;
+}
+
+.path-card-location {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    position: relative;
+}
+
+.path-card-location:first-child {
+    margin-bottom: 20px;
+}
+
+.path-card-dot {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    flex-shrink: 0;
+    margin-top: 4px;
+}
+
+.path-card-dot.start {
+    background-color: #52c41a;
+    z-index: 10;
+}
+
+.path-card-dot.end {
+    background-color: #f5222d;
+    z-index: 10;
+}
+
+.path-card-line {
+    position: absolute;
+    left: 24px;
+    top: 5px;
+    width: 2px;
+    height: calc(100% - 32px);
+    background: linear-gradient(to bottom, #52c41a, #f5222d);
+    z-index: 0;
+}
+
+.path-card-address {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+
+.address-text {
+    font-size: 13px;
+    color: #333;
+    line-height: 1.4;
+    word-break: break-word;
+}
+
+.city-text {
+    font-size: 12px;
+    color: #999;
+}
+
+.path-card-stats {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
+    padding-top: 12px;
+    border-top: 1px solid #f0f0f0;
+}
+
+.path-stat {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+
+.stat-label {
+    font-size: 11px;
+    color: #999;
+    text-transform: uppercase;
+}
+
+.stat-value {
+    font-size: 14px;
+    color: #333;
+    font-weight: 600;
+}
+
+.path-card-private {
+    margin-top: 12px;
+    padding: 6px 12px;
+    background-color: #fff7e6;
+    border-radius: 4px;
+    text-align: center;
+}
+
+.path-card-private span {
+    font-size: 12px;
+    color: #fa8c16;
+    font-weight: 500;
+}
+
+@media (max-width: 768px) {
+    .path-card {
+        width: 100%;
+        max-width: 100%;
+    }
+}

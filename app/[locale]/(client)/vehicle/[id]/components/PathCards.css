@@ -1,0 +1,78 @@
+.path-cards {
+    width: 100%;
+}
+
+.filter-buttons {
+    margin-bottom: 20px;
+}
+
+.filter-button {
+    background-color: #f0f0f0;
+    color: #333;
+    border: 1px solid #d9d9d9;
+    border-radius: 20px;
+    padding: 4px 16px;
+    height: auto;
+    font-size: 14px;
+    transition: all 0.3s ease;
+}
+
+.filter-button:hover {
+    background-color: #e6e6e6;
+    border-color: #b3b3b3;
+    color: #333;
+}
+
+.filter-button.active {
+    background-color: #1890ff;
+    border-color: #1890ff;
+    color: #fff;
+}
+
+.filter-button.active:hover {
+    background-color: #40a9ff;
+    border-color: #40a9ff;
+}
+
+.path-modal .modal-content {
+    padding: 20px 0;
+}
+
+.path-modal .modal-content span {
+    display: inline-block;
+    min-width: 80px;
+    font-weight: 500;
+}
+
+.path-modal .ant-slider {
+    margin-top: 10px;
+}
+
+.no-data-information {
+    padding: 40px;
+    text-align: center;
+    color: #999;
+    width: 100%;
+}
+
+/* Modal customization */
+.icon-modal-box.path-modal .ant-modal-footer {
+    display: flex;
+    justify-content: space-between;
+}
+
+.icon-modal-box.path-modal .custom-button {
+    background-color: #1890ff;
+}
+
+@media (max-width: 768px) {
+    .filter-buttons {
+        flex-wrap: wrap;
+        gap: 8px;
+    }
+
+    .filter-button {
+        font-size: 12px;
+        padding: 4px 12px;
+    }
+}
