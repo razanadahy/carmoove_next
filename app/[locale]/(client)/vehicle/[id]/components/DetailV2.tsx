@@ -5,7 +5,7 @@ import { Button, InputNumber, Dropdown, Input, DatePicker, Form, Transfer, App, 
 import dayjs, { Dayjs } from "dayjs";
 import { CalendarOutlined, MinusCircleOutlined, PlusOutlined } from "@ant-design/icons";
 import { valueType } from "antd/lib/statistic/utils";
-import { IVehicle } from "@/lib/hooks/Interfaces";
+import {IVehicle, Translation} from "@/lib/hooks/Interfaces";
 import { Loading } from "@/components/Common/Loading";
 import VehicleInformationBox from "./VehicleInformationBox";
 import DetailItem from "./DetailItem";
@@ -28,6 +28,15 @@ import AssistanceList from "./AssistanceList";
 import { useQuery as useApolloQuery } from "@apollo/client";
 import { NOMENCLATURE_QUERY } from "@/lib/graphql/queries";
 import {useGetInsurances, useRegisterAssistance} from "@/lib/hooks";
+import ParkingSection from "@/app/[locale]/(client)/vehicle/[id]/components/ParkingSection";
+import {
+    addEquipments,
+    addEquipmentsVehicle,
+    Equipment,
+    getParamEquipments,
+    getParamEquipmentsVehicule
+} from "@/app/actions/equipmentServices";
+import CarmooveButton from "@/components/Common/CarmooveButton";
 
 export interface IDataRowTableV2 {
     oneCol?: boolean
@@ -935,15 +944,185 @@ function DetailV2(props: { vehicle: IVehicle }) {
         return tiresData;
     }, [tires]);
 
+    // Equipment queries - must be before any conditional return
+    const qEquipmentsVehicle = useQuery({
+        queryKey: ['equipment', props.vehicle.id],
+        queryFn: () => getParamEquipmentsVehicule(props.vehicle.id)
+    })
+    const qEquipments = useQuery({
+        queryKey: ['equipments'],
+        queryFn: async () => {
+            const data = await getParamEquipments();
+            return data.filter((equipment: any) => !equipment.code?.startsWith('TMP'));
+        }
+    })
+    const tableData = useMemo(() => {
+        if (!qEquipmentsVehicle.data) return []
+
+        return qEquipmentsVehicle.data?.map((eq: Equipment, index: number) => {
+            let fr:Translation | undefined = undefined
+            if (eq.translation){
+                fr = eq.translation.find(t => t.language === 'FR')
+            }
+
+            return {
+                key: eq.code,
+                name: fr?.text || '-'
+            }
+        })
+    }, [qEquipmentsVehicle.data])
+
+    const tableDataAll = useMemo(() => {
+        if (!qEquipments.data) return []
+
+        return qEquipments.data.map((eq: Equipment) => {
+            const fr = eq.translation.find(t => t.language === 'FR')
+            return {
+                key: eq.code,
+                name: fr?.text || '-'
+            }
+        })
+
+    }, [qEquipments.data])
+
+    const [loadingEquipement, setLoadingEquipement] = useState(true)
+    useEffect(() => {
+        if (qEquipmentsVehicle.isLoading || qEquipments.isLoading){
+            setLoadingEquipement(true)
+        }else{
+            setLoadingEquipement(false)
+        }
+    },[qEquipmentsVehicle.isLoading, qEquipments.isLoading])
+
+    const [mockData, setMockData] = useState<{key: string, name: string}[]>([]);
+    const [targetKeys, setTargetKeys] = useState<React.Key[]>([]);
+
+    useEffect(() => {
+        const vehicleCodes: string[] =tableData.map(
+            (eq) => eq.key
+        ) || []
+
+        setTargetKeys(vehicleCodes);
+        setMockData(tableDataAll);
+    }, [tableDataAll, tableData]);
+
+    const [modalOpen, setModalOpen] = useState(false)
+    const [form] = Form.useForm();
+    const [loadingModal, setLoadingModal] = useState(false)
+
+    useEffect(() => {
+        if (!modalOpen){
+            form.resetFields()
+        }
+    }, [modalOpen, form]);
+
+    // Conditional return - after all hooks
     if (qVehicleStatus.isLoading) {
         return <Loading msg="Chargement des détails..." />;
     }
+
+
+    const onChange: TransferProps['onChange'] = (newTargetKeys, direction, moveKeys) => {
+
+        const equipmentsArray = newTargetKeys.map(key => String(key));
+
+        addEquipmentsVehicle({ equipments: equipmentsArray }, props.vehicle.id)
+            .then(() => {
+                notification['success']({
+                    message: 'Les équipements ont été ajoutés au véhicule avec succès.'
+                });
+            })
+            .catch(err => {
+                notification['error']({
+                    message: err.message || "Une erreur est survenue lors de l'ajout des équipements."
+                });
+            });
+
+        setTargetKeys(newTargetKeys);
+    };
+
+    const onFinish = (values: any) => {
+        setLoadingModal(true)
+        const equipmentsArray = Array.isArray(values.names)
+            ? values.names
+            : [values.names];
+        addEquipments({equipments: equipmentsArray}).then((data) => {
+            notification['success']({
+                message: "Demande envoyée"
+            });
+
+        }).catch((err) => {
+            notification['error']({
+                message: err
+            });
+        }).finally(()=>{
+            setModalOpen(false)
+            setLoadingModal(false)
+        })
+    };
+
+    const specsData: IDataRowTableV2[] = [
+        {
+            oneCol: true,
+            child: (<>
+                    <ParkingSection vehicle={props.vehicle} />
+                    <a className="crud-link" onClick={(e) => {
+                        e.preventDefault()
+                        router.push('/settings')
+                    }}>
+                        <Image className="ico-i-r" src={add_i} alt="Ajouter une carte RFID" />
+                        Créer un nouvel emplacement
+                    </a>
+                    <div className="mx-0 my-3 w-100">
+                        <div className="mb-1">
+                            <span  style={{fontSize: '0.85rem', fontWeight: 'bold'}}>Equipements</span>
+                        </div>
+                        {loadingEquipement ? (<Loading msg={"Chargement d'équipement"}/>) : (
+                            <Transfer
+                                dataSource={mockData}
+                                targetKeys={targetKeys}
+                                onChange={onChange}
+                                showSearch
+                                render={(item) => item.name}
+                                oneWay={false}
+                                pagination
+                                titles={['', '']}
+                                footer={() => null}
+                                showSelectAll={false}
+                                className="mb-2"
+                                locale={{
+                                    itemUnit: 'Équipements du véhicule',
+                                    itemsUnit: 'Tous les équipements',
+                                }}
+                            />
+                        )}
+
+                        <a className="crud-link d-inline-flex align-items-center"
+                           onClick={() => setModalOpen(true)}>
+                            <Image className="ico-i-r me-1 mt-1" src={add_i} alt="Ajouter une carte RFID" />
+                            Demander l'ajout d'un équipement
+                        </a>
+                    </div>
+                </>
+            ),
+            data: "Stationnement",
+            value: <></>,
+            action: <></>
+        }
+    ]
 
     return (
         <>
             <VehicleInformationBox vehicle={props.vehicle} />
             <div className="detail-main-box">
-
+                <div>
+                    <DetailItem
+                        key='specsData'
+                        title="Caractéristiques & équipements"
+                        data={specsData}
+                        footer={null}
+                    />
+                </div>
                 {boitierData.length > 0 &&
                     <div>
                         <DetailItem key='boitierData' title="Boitier" data={boitierData} />
@@ -1018,6 +1197,93 @@ function DetailV2(props: { vehicle: IVehicle }) {
                     onClose={() => setIsDrawerOpen(false)}
                 />
             </Drawer>
+
+            <Modal
+                title="Ajout d’un équipement"
+                className="icon-modal-box"
+                centered
+                maskClosable={false}
+                destroyOnHidden={true}
+                open={modalOpen}
+                onOk={() => { }}
+                onCancel={() => { setModalOpen(false) }}
+                footer={[
+                    <Button color={"danger"} size={"large"} key="cancel" type="default"  onClick={() => {
+                        // setNewEquipment("")
+                        setModalOpen(false)
+                        form.resetFields()
+                    }}>
+                        Annuler
+                    </Button>,
+                    <CarmooveButton
+                        htmlType='submit'
+                        key={"submit"}
+                        loading={loadingModal}
+                        style={{ textTransform: 'uppercase', fontSize: '14px', width: 'fit-content', letterSpacing: '0.1rem' }}
+                        onClick={()=>form.submit()}
+                    >
+                        <Image src={plus_i} className="me-1 scall" alt="plus_i" />
+                        Ajouter
+                    </CarmooveButton>,
+                ]}>
+
+                <Form
+                    form={form}
+                    name="dynamic_form_item"
+                    onFinish={onFinish}
+                    size={'large'}
+                    className="w-100"
+                    layout={"vertical"}
+                    autoFocus={true}
+                    disabled={loadingModal}
+                    autoComplete="off"
+                    initialValues={{ layout: "vertical" }}>
+                    <Form.List name="names">
+                        {(fields, { add, remove }, { errors }) => (
+                            <>
+                                {fields.map(({key, ...field}, index) => (
+                                    <Form.Item
+                                        label={index === 0 ? 'Nom' : ''}
+                                        required={index===0}
+                                        key={key}>
+                                        <Form.Item
+                                            style={{marginBottom: '0.5rem', flexGrow: 1}}
+                                            {...field}
+                                            validateTrigger={['onChange']}
+                                            rules={[
+                                                {
+                                                    required: true,
+                                                    whitespace: true,
+                                                    message: "Champ obligatoire",
+                                                },
+                                            ]}>
+                                            <Input autoFocus placeholder="Nom du l'équipement"/>
+                                        </Form.Item>
+                                        {fields.length > 1 ? (
+                                            <MinusCircleOutlined
+                                                className="dynamic-delete-button ms-2"
+                                                onClick={() => remove(field.name)}
+                                            />
+                                        ) : null}
+                                    </Form.Item>
+                                ))}
+                                <Form.Item className="d-flex w-100 justify-content-center">
+                                    <Button
+                                        type="dashed"
+                                        onClick={() => add()}
+                                        style={{ width: 'auto' }}
+                                        icon={<PlusOutlined />}
+                                    >
+                                        Ajouter un autre équipement
+                                    </Button>
+
+                                    <Form.ErrorList errors={errors} />
+                                </Form.Item>
+                            </>
+                        )}
+                    </Form.List>
+                </Form>
+            </Modal>
         </>
     );
 }

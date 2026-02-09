@@ -32,20 +32,6 @@ export interface IGetVehicleStatusCS {
     plate: string;
 }
 
-// const apiClient = createApiClientBrowser();
-// export const getVehicleStatus = async (field: IGetVehicleStatusCS) => {
-//     try {
-//
-//         const { data } = await apiClient.get<IVehicleStatusCS>(`/v1/vehicle/status`, {
-//             params: field
-//         });
-//         console.log("data : ",data);
-//         return data
-//     } catch (error) {
-//         throw error;
-//     }
-// }
-
 export const useVehiclesWithStatus = (vehicles: IVehicle[]) => {
     return useQueries({
         queries: vehicles.map(vehicle => ({

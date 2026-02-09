@@ -609,3 +609,7 @@ export interface IReservationCustom extends IReservation {
     dateUntil: dayjs.Dayjs
     driverName: string
 }
+export interface Translation {
+    language: 'FR' | 'EN' | 'DE' | 'ES' | 'IT' | 'NL'
+    text: string
+}
