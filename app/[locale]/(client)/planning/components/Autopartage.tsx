@@ -8,7 +8,7 @@ import {IDriver, IVehicle} from "@/lib/hooks/Interfaces";
 import {useQuery as useQueryCS, useQuery as useQueryRest} from "@tanstack/react-query";
 import {fetchCurrentUser} from "@/app/actions/auth";
 import {fetchAllReservationsArchives, fetchReservations} from "@/app/actions/reservations";
-import {IReservation} from "@/app/actions/reservationServices";
+import {IReservation} from "@/app/actions/authorization";
 import dayjs from "dayjs";
 import {useSearchParams} from "next/navigation";
 import {useGetVehicles, useVehiclesWithStatus} from "@/lib/hooks";

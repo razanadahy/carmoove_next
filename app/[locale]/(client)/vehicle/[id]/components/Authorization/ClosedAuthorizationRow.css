@@ -1,0 +1,34 @@
+.closed-authorization-row-box {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 16px;
+    background: #fafafa;
+    border-radius: 8px;
+}
+
+.closed-authorization-head {
+    display: flex;
+    align-items: center;
+}
+
+.closed-authorization-date-picker {
+    font-size: 12px;
+}
+
+.closed-authorization-driver-name {
+    font-weight: 600;
+    color: #666;
+    flex: 1;
+}
+
+@media (max-width: 768px) {
+    .closed-authorization-row-box {
+        flex-wrap: wrap;
+    }
+
+    .closed-authorization-driver-name {
+        width: 100%;
+        margin-top: 8px;
+    }
+}

@@ -1,8 +1,7 @@
 'use client'
 
 
-import {IReservation} from "@/app/actions/reservationServices";
-import {IReservationCustom, IVehicle} from "@/lib/hooks/Interfaces";
+import {IReservation, IReservationCustom, IVehicle} from "@/lib/hooks/Interfaces";
 import {App, Button, DatePicker, Form, Input, Modal, Spin} from "antd";
 import {useQueryClient} from "@tanstack/react-query";
 import dayjs, {Dayjs} from "dayjs";

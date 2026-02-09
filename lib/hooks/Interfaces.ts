@@ -1,5 +1,5 @@
 import { Dispatch, JSX, SetStateAction } from "react";
-import {IReservation} from "@/app/actions/reservationServices";
+import {IReservation} from "@/app/actions/authorization";
 import dayjs from "dayjs";
 export const PAGE_SIZE_DEFAULT = 10;
 export interface IUser {
@@ -625,4 +625,27 @@ export interface IReservationCustom extends IReservation {
 export interface Translation {
     language: 'FR' | 'EN' | 'DE' | 'ES' | 'IT' | 'NL'
     text: string
+}
+export interface IAuthorization {
+    authorizationId: string,
+    userId: string,
+    driverId?: string,
+    from: number,
+    until: number,
+    driverName?: string,
+}
+export interface IReservation {
+    id: string
+    from: number
+    until: number
+    vehicleId: string
+    userId: string
+    authorizationId: string
+    bookingType: string
+    stopDate?: number
+}
+export interface IEditAuthorisation {
+    authorizationId: string;
+    from: number
+    until: number
 }

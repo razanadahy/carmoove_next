@@ -2,7 +2,7 @@
 
 import { Card } from "antd";
 import { IVehicle } from "@/lib/hooks/Interfaces";
-import { IReservation } from "@/app/actions/reservationServices";
+import { IReservation } from "@/app/actions/authorization";
 
 interface VehicleStatusBarProps {
     vehicles: IVehicle[];

@@ -18,7 +18,7 @@ import {
     energyTrueFormat
 } from "@/services/VehiculesService";
 import { fetchReservations } from "@/app/actions/reservations";
-import { IReservation } from "@/app/actions/reservationServices";
+import { IReservation } from "@/app/actions/authorization";
 import ButtonModal from "@/components/Common/ButtonModal";
 import StatusFilterModal from "./StatusFilterModal";
 import VehicleRow from "./VehicleRow";

@@ -1,0 +1,86 @@
+.authorization-detail-header {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 20px;
+    padding: 16px;
+    background: #fff;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+    margin-bottom: 20px;
+}
+
+.authorization-detail-back {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    cursor: pointer;
+    color: #1890ff;
+    font-size: 14px;
+    transition: color 0.2s;
+}
+
+.authorization-detail-back:hover {
+    color: #40a9ff;
+}
+
+.authorization-detail-drivername-box {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.authorization-detail-driver-profile {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 36px;
+    height: 36px;
+    background: #f0f0f0;
+    border-radius: 50%;
+    font-size: 18px;
+    color: #666;
+}
+
+.authorization-detail-drivername {
+    font-weight: 600;
+    font-size: 16px;
+    color: #333;
+}
+
+.authorization-detail-fromto {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.authorization-detail-icon-clock {
+    color: #888;
+    font-size: 16px;
+}
+
+.authorization-detail-date-picker-box {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.authorization-detail-content {
+    background: #fff;
+    border-radius: 8px;
+    padding: 20px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+    margin-bottom: 20px;
+}
+
+.placeholder-text {
+    color: #888;
+    font-style: italic;
+}
+
+@media (max-width: 768px) {
+    .authorization-detail-header {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+}

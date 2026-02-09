@@ -1,0 +1,31 @@
+.select-driver-container {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.search-driver-input {
+    margin-bottom: 8px;
+}
+
+.driver-list {
+    max-height: calc(100vh - 200px);
+    overflow-y: auto;
+}
+
+.driver-list-item {
+    cursor: pointer;
+    padding: 12px;
+    border-radius: 8px;
+    transition: background-color 0.2s;
+}
+
+.driver-list-item:hover {
+    background-color: #f5f5f5;
+}
+
+.error-text {
+    text-align: center;
+    color: #ff4d4f;
+    padding: 20px;
+}

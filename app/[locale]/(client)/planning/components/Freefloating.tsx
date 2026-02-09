@@ -4,7 +4,7 @@ import {useQuery as useQueryCS, useQuery as useQueryRest} from "@tanstack/react-
 import {useGetVehicles, useVehiclesWithStatus} from "@/lib/hooks";
 import {useCallback, useEffect, useMemo, useState} from "react";
 import {IDriver, IVehicle} from "@/lib/hooks/Interfaces";
-import {IReservation} from "@/app/actions/reservationServices";
+import {IReservation} from "@/app/actions/authorization";
 import {useSearchParams} from "next/navigation";
 
 import {useQuery} from "@apollo/client";

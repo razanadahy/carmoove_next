@@ -3,7 +3,7 @@
 import React from 'react';
 import { GoogleMap, useJsApiLoader, Marker } from '@react-google-maps/api';
 import { IVehicle } from '@/lib/hooks/Interfaces';
-import { IReservation } from '@/app/actions/reservationServices';
+import { IReservation } from '@/app/actions/authorization';
 
 interface CarmooveMapProps {
     vehicles: IVehicle[];

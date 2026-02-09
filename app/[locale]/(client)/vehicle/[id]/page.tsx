@@ -69,13 +69,13 @@ export default function Vehicle() {
         }
 
         // Autorisation tab
-        // if (vehicle.device?.carSharing) {
-        //     tabList.push({
-        //         key: "autorisation",
-        //         label: "Autorisation",
-        //         children: <Authorization vehicle={vehicle} />,
-        //     });
-        // }
+        if (vehicle.device?.carSharing) {
+            tabList.push({
+                key: "autorisation",
+                label: "Autorisation",
+                children: <Authorization vehicle={vehicle} />,
+            });
+        }
 
         // Reservation tab
         // if (vehicle.device?.carSharing) {
