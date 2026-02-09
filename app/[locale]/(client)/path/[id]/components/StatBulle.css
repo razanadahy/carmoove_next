@@ -1,0 +1,44 @@
+.stat-bulle {
+    background: #fff;
+    border-radius: 12px;
+    padding: 16px 20px;
+    min-width: 120px;
+    text-align: center;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+}
+
+.stat-header {
+    margin-bottom: 8px;
+}
+
+.stat-title {
+    font-size: 12px;
+    color: #666;
+    text-transform: uppercase;
+    font-weight: 500;
+}
+
+.stat-content {
+    font-size: 24px;
+    font-weight: 700;
+    color: #333;
+    line-height: 1.2;
+}
+
+.stat-footer {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    margin-top: 8px;
+}
+
+.stat-unit {
+    font-size: 14px;
+    color: #999;
+}
+
+.stat-explain {
+    display: flex;
+    align-items: center;
+}

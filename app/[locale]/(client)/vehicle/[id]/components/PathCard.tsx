@@ -3,6 +3,7 @@
 import { Card } from "antd";
 import { format } from "date-fns";
 import { fr } from "date-fns/locale";
+import { useRouter } from "next/navigation";
 import { IPath } from "@/lib/hooks/Interfaces";
 import "./PathCard.css";
 
@@ -24,13 +25,18 @@ const formatDate = (timestamp: number): string => {
 };
 
 export default function PathCard({ path }: PathCardProps) {
+    const router = useRouter();
     const startAddress = path.addressStart?.address || 'Adresse inconnue';
     const endAddress = path.addressEnd?.address || 'Adresse inconnue';
     const startCity = path.addressStart?.city || '';
     const endCity = path.addressEnd?.city || '';
 
+    const handleClick = () => {
+        router.push(`/path/${path.id}`);
+    };
+
     return (
-        <Card className="path-card" hoverable>
+        <Card className="path-card" hoverable onClick={handleClick}>
             <div className="path-card-header">
                 <span className="path-card-date">{formatDate(path.startAt)}</span>
                 <span className="path-card-duration">{formatDuration(path.duration)}</span>

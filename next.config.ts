@@ -70,7 +70,7 @@ const withNextIntl = createNextIntlPlugin('./i18n.ts');
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-    reactStrictMode: true,
+    reactStrictMode: false, // Disabled for Leaflet compatibility
 
     webpack: (config, { isServer, dev }) => {
         // Ignorer spécifiquement les warnings problématiques
