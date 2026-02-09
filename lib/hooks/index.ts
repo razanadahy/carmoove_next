@@ -5,7 +5,7 @@ import { useQuery, useMutation } from "@apollo/client";
 import { App } from "antd";
 import {
     VEHICLES_QUERY, VEHICLE_QUERY, DRIVERS_QUERY, DRIVER_QUERY, DRIVER_STATISTICS_QUERY, DRIVER_PATH_QUERY,
-    NOMENCLATURE_QUERY, PATHS_QUERY, COUNT_PATHS_QUERY
+    NOMENCLATURE_QUERY, PATHS_QUERY, COUNT_PATHS_QUERY, TELLTALESTATUS_QUERY
 } from "../graphql/queries";
 import {TECHNICAL_SUPPORT, REGISTER_DRIVER, REGISTER_ASSISTANCE} from "../graphql/mutation";
 import {IVehicle, IVehicleStatusCS} from "@/lib/hooks/Interfaces";
@@ -275,9 +275,6 @@ export const useGetVehiclePaths = ({
             offset,
             limit,
         },
-        context: {
-            version: "php",
-        },
         pollInterval: 300000,
     });
 
@@ -307,4 +304,15 @@ export const useCountVehiclePaths = ({
     });
 
     return { count: data?.countPaths ?? 0, loading, error };
+};
+
+export const useGetTellTaleStatus = ({id, pollInterval = 0,}: { id: string; pollInterval?: number; }) => {
+    const { data, loading, error } = useQuery(TELLTALESTATUS_QUERY, {
+        variables: {
+            vehicles: [id],
+        },
+        pollInterval,
+    });
+
+    return { data, loading, error };
 };

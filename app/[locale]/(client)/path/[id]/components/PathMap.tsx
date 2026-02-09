@@ -217,7 +217,7 @@ export default function PathMap({ path }: PathMapProps) {
         <MapContainer
             center={departure}
             zoom={12}
-            style={{ height: "500px", width: "100%" }}
+            style={{ height: "800px", width: "100%" }}
             ref={mapRef}
             whenReady={() => {
                 // Map is ready

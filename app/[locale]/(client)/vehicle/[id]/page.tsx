@@ -10,6 +10,7 @@ import Resume from "./components/Resume";
 import DetailV2 from "./components/DetailV2";
 import Stats from "./components/Stats";
 import PathsV2 from "./components/PathsV2";
+import TableDiagV2 from "./components/TableDiagV2";
 import "./Vehicle.css";
 
 export default function Vehicle() {
@@ -49,13 +50,13 @@ export default function Vehicle() {
         ];
 
         // Diag tab
-        // if (vehicle?.dataAvailability?.TellTaleStatus) {
-        //     tabList.push({
-        //         key: "diag",
-        //         label: "Diag",
-        //         children: <TableDiagV2 vehicle={vehicle} />,
-        //     });
-        // }
+        if (vehicle?.dataAvailability?.TellTaleStatus) {
+            tabList.push({
+                key: "diag",
+                label: "Diag",
+                children: <TableDiagV2 vehicle={vehicle} />,
+            });
+        }
 
         // Gestion tab
         // if (vehicle.device?.configuration) {
