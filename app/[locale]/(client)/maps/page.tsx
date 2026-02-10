@@ -89,6 +89,11 @@ export default function Maps() {
         setSelectedVehicle(null);
     };
 
+    // Handle panel toggle
+    const handleTogglePanel = () => {
+        setOpenPanel((prev) => !prev);
+    };
+
     // Get vehicles to display on map
     const getDisplayedVehicles = () => {
         if (vehiclesSelected.length > 0) {
@@ -138,6 +143,7 @@ export default function Maps() {
                     vehicle={selectedVehicle}
                     open={openPanel}
                     onClose={handleClosePanel}
+                    onToggle={handleTogglePanel}
                 />
             </div>
         </motion.div>

@@ -1,126 +1,42 @@
 'use client';
 
-import { Drawer, Descriptions, Tag, Button, Space } from "antd";
-import { CloseOutlined, CarOutlined, EnvironmentOutlined } from "@ant-design/icons";
-import { useRouter } from "next/navigation";
+import Image from "next/image";
 import { IVehicle } from "@/lib/hooks/Interfaces";
-import { format } from "date-fns";
-import { fr } from "date-fns/locale";
+import Resume from "@/app/[locale]/(client)/vehicle/[id]/components/Resume";
+import upOutlined_i from "@/assets/image/up-outlined.svg";
+import "./BottomPanel.css";
 
-interface IBottomPanel {
+interface IBottomPanelProps {
     vehicle: IVehicle | null;
     open: boolean;
     onClose: () => void;
+    onToggle: () => void;
 }
 
-const getVehicleStatusTag = (vehicle: IVehicle) => {
-    if (vehicle.stateCS?.state?.unavailable) {
-        return <Tag color="error">Indisponible</Tag>;
-    }
-    if (vehicle.status?.engine === "ON") {
-        return <Tag color="processing">En mouvement</Tag>;
-    }
-    return <Tag color="success">Disponible</Tag>;
-};
-
-const formatTimestamp = (timestamp: number | undefined): string => {
-    if (!timestamp) return "-";
-    return format(new Date(timestamp), "dd/MM/yyyy HH:mm", { locale: fr });
-};
-
-export default function BottomPanel({ vehicle, open, onClose }: IBottomPanel) {
-    const router = useRouter();
-
-    const handleViewDetails = () => {
-        if (vehicle) {
-            router.push(`/vehicle/${vehicle.id}`);
-        }
-    };
-
+export default function BottomPanel({ vehicle, open, onToggle }: IBottomPanelProps) {
     return (
-        <Drawer
-            title={
-                vehicle ? (
-                    <Space>
-                        <CarOutlined />
-                        <span>{vehicle.information.registration}</span>
-                        {getVehicleStatusTag(vehicle)}
-                    </Space>
-                ) : "Détails du véhicule"
-            }
-            placement="bottom"
-            onClose={onClose}
-            open={open}
-            height={320}
-            extra={
-                <Button
-                    type="text"
-                    icon={<CloseOutlined />}
-                    onClick={onClose}
+        <div className={`panel-bottom-map-box${open ? ' open' : ''}`}>
+            <div
+                className={`handle-btn${open ? ' open' : ''}`}
+                onClick={onToggle}
+            >
+                <Image
+                    src={upOutlined_i}
+                    alt="toggle panel"
+                    className="ico-handle-panel"
+                    width={16}
+                    height={16}
                 />
-            }
-        >
-            {vehicle ? (
-                <div className="bottom-panel-content">
-                    <Descriptions column={{ xs: 1, sm: 2, md: 3 }} size="small">
-                        <Descriptions.Item label="Marque">
-                            {vehicle.information.make}
-                        </Descriptions.Item>
-                        <Descriptions.Item label="Modèle">
-                            {vehicle.information.model}
-                        </Descriptions.Item>
-                        <Descriptions.Item label="Immatriculation">
-                            {vehicle.information.registration}
-                        </Descriptions.Item>
-                        <Descriptions.Item label="Energie">
-                            {vehicle.information.energy || "-"}
-                        </Descriptions.Item>
-                        <Descriptions.Item label="Kilométrage">
-                            {vehicle.status?.mileage
-                                ? `${vehicle.status.mileage.toLocaleString()} km`
-                                : "-"}
-                        </Descriptions.Item>
-                        <Descriptions.Item label="Niveau carburant">
-                            {vehicle.status?.fuelPercent !== undefined
-                                ? `${vehicle.status.fuelPercent}%`
-                                : "-"}
-                        </Descriptions.Item>
-                        <Descriptions.Item label="Conducteur">
-                            {vehicle.driver?.firstName && vehicle.driver?.lastName
-                                ? `${vehicle.driver.firstName} ${vehicle.driver.lastName}`
-                                : "-"}
-                        </Descriptions.Item>
-                        <Descriptions.Item label="Dernière position">
-                            {formatTimestamp(vehicle.location?.timestamp)}
-                        </Descriptions.Item>
-                    </Descriptions>
-
-                    {vehicle.location?.address && (
-                        <div style={{ marginTop: 16 }}>
-                            <Space>
-                                <EnvironmentOutlined />
-                                <span>
-                                    {vehicle.location.address.address}
-                                    {vehicle.location.address.city &&
-                                        `, ${vehicle.location.address.city}`}
-                                    {vehicle.location.address.zipcode &&
-                                        ` ${vehicle.location.address.zipcode}`}
-                                </span>
-                            </Space>
-                        </div>
+            </div>
+            <div className="panel-content">
+                <div className="panel-main">
+                    {vehicle ? (
+                        <Resume vehicle={vehicle} forMap />
+                    ) : (
+                        <div className="no-vehicle-message">Aucun véhicule sélectionné</div>
                     )}
-
-                    <div style={{ marginTop: 16 }}>
-                        <Button type="primary" onClick={handleViewDetails}>
-                            Voir les détails
-                        </Button>
-                    </div>
                 </div>
-            ) : (
-                <div className="no-vehicle-selected">
-                    Sélectionnez un véhicule sur la carte pour voir ses détails
-                </div>
-            )}
-        </Drawer>
+            </div>
+        </div>
     );
 }
