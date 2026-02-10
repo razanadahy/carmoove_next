@@ -1,0 +1,42 @@
+.stat-bulle {
+  background: #ffffff;
+  border-radius: 12px;
+  padding: 20px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  min-width: 200px;
+  flex: 1;
+}
+
+.bulle-header {
+  margin-bottom: 12px;
+}
+
+.bulle-title {
+  font-size: 14px;
+  color: #666;
+  font-weight: 500;
+}
+
+.bulle-content {
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+  margin-bottom: 16px;
+}
+
+.bulle-number {
+  font-size: 32px;
+  font-weight: 700;
+  color: #333;
+}
+
+.bulle-unit {
+  font-size: 18px;
+  color: #999;
+}
+
+.bulle-children {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+}

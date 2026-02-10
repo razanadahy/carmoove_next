@@ -1,6 +1,6 @@
 'use client'
 
-import { IVehicle } from "@/lib/hooks/Interfaces";
+import {IReservation, IVehicle} from "@/lib/hooks/Interfaces";
 import { useEffect, useMemo, useRef, useState } from "react";
 import { useSearchParams } from "next/navigation";
 import { useQuery } from "@tanstack/react-query";
@@ -18,7 +18,6 @@ import {
     energyTrueFormat
 } from "@/services/VehiculesService";
 import { fetchReservations } from "@/app/actions/reservations";
-import { IReservation } from "@/app/actions/authorization";
 import ButtonModal from "@/components/Common/ButtonModal";
 import StatusFilterModal from "./StatusFilterModal";
 import VehicleRow from "./VehicleRow";

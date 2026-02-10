@@ -1,0 +1,21 @@
+.stat-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  margin-bottom: 24px;
+}
+
+.col-bulle {
+  flex: 1;
+  min-width: 280px;
+}
+
+.mr-20 {
+  margin-right: 0;
+}
+
+@media (min-width: 768px) {
+  .col-bulle {
+    flex: 0 0 calc(33.333% - 14px);
+  }
+}

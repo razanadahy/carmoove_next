@@ -1,8 +1,7 @@
 "use client"
 
 import { Card } from "antd";
-import { IVehicle } from "@/lib/hooks/Interfaces";
-import { IReservation } from "@/app/actions/authorization";
+import {IReservation, IVehicle} from "@/lib/hooks/Interfaces";
 
 interface VehicleStatusBarProps {
     vehicles: IVehicle[];

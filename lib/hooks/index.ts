@@ -5,12 +5,14 @@ import { useQuery, useMutation } from "@apollo/client";
 import { App } from "antd";
 import {
     VEHICLES_QUERY, VEHICLE_QUERY, DRIVERS_QUERY, DRIVER_QUERY, DRIVER_STATISTICS_QUERY, DRIVER_PATH_QUERY,
-    NOMENCLATURE_QUERY, PATHS_QUERY, COUNT_PATHS_QUERY, TELLTALESTATUS_QUERY
+    NOMENCLATURE_QUERY, PATHS_QUERY, COUNT_PATHS_QUERY, TELLTALESTATUS_QUERY, DASHBOARD_QUERY, GLOBAL_STATISTIC_QUERY,
+    ALERTS_COUNT_QUERY
 } from "../graphql/queries";
 import {TECHNICAL_SUPPORT, REGISTER_DRIVER, REGISTER_ASSISTANCE} from "../graphql/mutation";
-import {IVehicle, IVehicleStatusCS} from "@/lib/hooks/Interfaces";
+import {IFromTo, IVehicle, IVehicleStatusCS} from "@/lib/hooks/Interfaces";
 import {useQueries} from "@tanstack/react-query";
 import {getVehicleStatus} from "@/app/actions/reservations";
+import {getVehicleAntsTypes, TYPE_FLEET, TYPE_VEHICLE, VehicleType} from "@/lib/utils/VehicleType";
 
 
 export const useGetVehicles = (pollInterval?: number) => {
@@ -315,4 +317,55 @@ export const useGetTellTaleStatus = ({id, pollInterval = 0,}: { id: string; poll
     });
 
     return { data, loading, error };
+};
+export const useGetStats = ({from, to, type, pollInterval, vehicles}: { from: number; to: number; type?: VehicleType | typeof TYPE_FLEET | typeof TYPE_VEHICLE; pollInterval?: number; vehicles?: string[]; }) => {
+    const { data, loading, error } = useQuery(DASHBOARD_QUERY, {
+        variables: {
+            from: from,
+            to: to,
+            type: type ? getVehicleAntsTypes(type) : [],
+            vehicles: vehicles ?? []
+        },
+        pollInterval: pollInterval ?? 0,
+    });
+
+    return { data, loading, error };
+};
+
+export const useGetGlobalStat = ({from, to, type, vehicles,}: { from: number; to: number; type?: VehicleType; vehicles?: string[]; }) => {
+    const { data, loading, error } = useQuery(GLOBAL_STATISTIC_QUERY, {
+        variables: {
+            from,
+            to,
+            type: type ? getVehicleAntsTypes(type) : [],
+            vehicles: vehicles ?? []
+        },
+        context: {
+            version: "php",
+        },
+    });
+
+    return { data, loading, error };
+};
+
+
+interface IArg extends IFromTo {
+    type?: VehicleType;
+    vehicles?: string[];
+}
+
+export const useGetAlertsCount = ({ from, to, type, vehicles }: IArg) => {
+    const { loading, error, data } = useQuery(ALERTS_COUNT_QUERY, {
+        variables: {
+            from,
+            to,
+            vehicleTypes: type ? getVehicleAntsTypes(type) : [],
+            vehicleIds: vehicles ?? [],
+        },
+        context: {
+            version: "php",
+        },
+    });
+
+    return { loading, error, data };
 };

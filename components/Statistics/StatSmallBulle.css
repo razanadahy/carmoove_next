@@ -1,0 +1,24 @@
+.small-bulle {
+  background: #f5f7fa;
+  border-radius: 8px;
+  padding: 12px 16px;
+  min-width: 60px;
+  text-align: center;
+}
+
+.small-bulle-header {
+  margin-bottom: 4px;
+}
+
+.small-bulle-title {
+  font-size: 12px;
+  color: #888;
+  font-weight: 600;
+  text-transform: uppercase;
+}
+
+.small-bulle-content {
+  font-size: 18px;
+  font-weight: 700;
+  color: #333;
+}

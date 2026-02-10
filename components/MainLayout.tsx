@@ -142,6 +142,8 @@ export default function MainLayout({ children }: MainLayoutProps) {
         if (path.includes('/dashboard')) return '/dashboard';
         if (path.includes('/driver')) return '/drivers';
         if (path.includes('/planning')) return '/planning';
+        if (path.includes('/maps')) return '/maps';
+        if (path.includes('/statistics')) return '/statistics';
         if (path.includes('/vehicle') || path.includes('/path')) return '/vehicles';
         return path;
     };
