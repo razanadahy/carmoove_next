@@ -1,78 +1,68 @@
-"use client"
+'use client';
 
 import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
-import { Spin, Drawer } from "antd";
-import { useSearchParams, useRouter } from "next/navigation";
-import { useQuery as useQueryCS } from "@tanstack/react-query";
-
-import {IReservation, IVehicle} from "@/lib/hooks/Interfaces";
-import { useGetVehicles, useVehiclesWithStatus } from "@/lib/hooks";
-import { vehiclesByType, TYPE_FLEET } from "@/lib/utils/VehicleType";
+import { useRouter, useSearchParams } from "next/navigation";
+import { useQuery } from "@tanstack/react-query";
+import { Loading } from "@/components/Common/Loading";
+import { useGetVehicles } from "@/lib/hooks";
+import { IVehicle, IReservation } from "@/lib/hooks/Interfaces";
+import { vehiclesByType } from "@/lib/utils/VehicleType";
 import { fetchReservations } from "@/app/actions/reservations";
-
 import VehicleTypeBar from "./components/VehicleTypeBar";
-// import CarmooveGMapV2 from "./components/CarmooveGMapV2";
-// import LeftPanel from "./components/LeftPanel";
-// import BottomPanel from "./components/BottomPanel";
-
+import CarmooveGMap from "./components/CarmooveGMap";
+import LeftPanel from "./components/LeftPanel";
+import BottomPanel from "./components/BottomPanel";
 import "./Maps.css";
 
-export default function MapsPage() {
+export default function Maps() {
     const router = useRouter();
     const searchParams = useSearchParams();
     const vehicleIdParam = searchParams.get('vehicleid');
 
+    // State
     const [vehicles, setVehicles] = useState<IVehicle[]>([]);
-    const [vehicleTypePill, setVehicleTypePill] = useState(TYPE_FLEET);
+    const [vehicleTypePill, setVehicleTypePill] = useState("FLEET");
     const [selectedVehicle, setSelectedVehicle] = useState<IVehicle | null>(null);
     const [vehiclesSelected, setVehiclesSelected] = useState<IVehicle[]>([]);
-    const [vehicleSelected, setVehicleSelected] = useState<IVehicle | null>(null);
-    const [openPanel, setOpenPanel] = useState(false);
     const [reservations, setReservations] = useState<IReservation[]>([]);
+    const [openPanel, setOpenPanel] = useState(false);
 
-    const qReservations = useQueryCS({
-        queryKey: ['reservations'],
+    // Fetch reservations
+    const qReservations = useQuery({
+        queryKey: ['reservations_maps'],
         queryFn: () => fetchReservations({}),
+        staleTime: 5 * 60 * 1000,
     });
 
+    // Fetch vehicles with polling
     const { vehicles: vehicleData, loading, error } = useGetVehicles(120000);
-    const { vehiclesStatusWithLoading: vehiclesWithStatus } = useVehiclesWithStatus(vehicles);
 
+    // Update reservations when fetched
     useEffect(() => {
         if (qReservations.data) {
             setReservations(qReservations.data);
         }
     }, [qReservations.data]);
 
+    // Update vehicles when fetched
     useEffect(() => {
         if (vehicleData) {
             setVehicles(vehicleData);
         }
     }, [vehicleData]);
 
-    // Update vehicles with status from CS
-    useEffect(() => {
-        if (vehiclesWithStatus.length > 0) {
-            setVehicles(prevVehicles => {
-                return prevVehicles.map(v => {
-                    const updatedVehicle = vehiclesWithStatus.find(vws => vws.id === v.id);
-                    return updatedVehicle || v;
-                });
-            });
-        }
-    }, [vehiclesWithStatus]);
-
-    // Reset selections on type change
+    // Reset selected vehicles when type changes
     useEffect(() => {
         setVehiclesSelected([]);
     }, [vehicleTypePill, selectedVehicle]);
 
+    // Reset selected vehicle when type changes
     useEffect(() => {
         setSelectedVehicle(null);
     }, [vehicleTypePill]);
 
-    // Handle vehicleIdParam from URL
+    // Handle vehicleId from URL param
     useEffect(() => {
         if (selectedVehicle && vehicleIdParam) {
             router.push('/maps');
@@ -80,37 +70,42 @@ export default function MapsPage() {
             const vehicle = vehicles.find(v => v.id === vehicleIdParam);
             if (vehicle) {
                 setSelectedVehicle(vehicle);
-                setVehicleSelected(vehicle);
                 setOpenPanel(true);
             }
         }
     }, [vehicles, vehicleIdParam, selectedVehicle, router]);
 
+    // Handle vehicle selection
+    const handleSelectVehicle = (vehicle: IVehicle | null) => {
+        setSelectedVehicle(vehicle);
+        if (vehicle) {
+            setOpenPanel(true);
+        }
+    };
+
+    // Handle panel close
+    const handleClosePanel = () => {
+        setOpenPanel(false);
+        setSelectedVehicle(null);
+    };
+
+    // Get vehicles to display on map
+    const getDisplayedVehicles = () => {
+        if (vehiclesSelected.length > 0) {
+            return vehiclesSelected;
+        }
+        if (selectedVehicle) {
+            return [selectedVehicle];
+        }
+        return vehiclesByType(vehicles, vehicleTypePill, selectedVehicle);
+    };
+
     if (loading || qReservations.isLoading) {
-        return (
-            <div style={{ textAlign: 'center', padding: '100px' }}>
-                <Spin size="large" tip="Chargement de la carte...">
-                    <div style={{ height: '200px' }} />
-                </Spin>
-            </div>
-        );
+        return <Loading msg="Chargement de la carte..." />;
     }
-
     if (error || qReservations.error) {
-        return (
-            <div style={{ padding: '50px', textAlign: 'center' }}>
-                <p style={{ color: 'red' }}>Erreur lors du chargement</p>
-            </div>
-        );
+        return <p>Error :(</p>;
     }
-
-    const displayedVehicles = vehiclesSelected.length > 0
-        ? vehiclesSelected
-        : selectedVehicle
-            ? [selectedVehicle]
-            : vehiclesByType(vehicles, vehicleTypePill, selectedVehicle);
-
-    const filteredVehicles = vehiclesByType(vehicles, vehicleTypePill, selectedVehicle);
 
     return (
         <motion.div
@@ -124,36 +119,28 @@ export default function MapsPage() {
                 vehicleTypePill={vehicleTypePill}
                 setVehicleTypePill={setVehicleTypePill}
                 vehicles={vehicles}
-                selectedVehicle={selectedVehicle}
-                setSelectedVehicle={setSelectedVehicle}
+                onSelectVehicle={handleSelectVehicle}
             />
-
             <div className="map-full">
-                {/*<CarmooveGMapV2*/}
-                {/*    vehicles={displayedVehicles}*/}
-                {/*    reservations={reservations}*/}
-                {/*    onSelectedVehicle={(vehicle) => {*/}
-                {/*        setVehicleSelected(vehicle);*/}
-                {/*        setOpenPanel(true);*/}
-                {/*    }}*/}
-                {/*/>*/}
-
-                {/*<LeftPanel*/}
-                {/*    vehicles={filteredVehicles}*/}
-                {/*    reservations={reservations}*/}
-                {/*    setVehiclesSelected={setVehiclesSelected}*/}
-                {/*/>*/}
-
-                <Drawer
-                    title={vehicleSelected ? `${vehicleSelected.information.registration} - ${vehicleSelected.information.make} ${vehicleSelected.information.model}` : "Détails du véhicule"}
-                    placement="bottom"
-                    onClose={() => setOpenPanel(false)}
+                <CarmooveGMap
+                    vehicles={getDisplayedVehicles()}
+                    reservations={reservations}
+                    selectedVehicle={selectedVehicle}
+                    onSelectVehicle={handleSelectVehicle}
+                />
+                <LeftPanel
+                    vehicles={vehiclesByType(vehicles, vehicleTypePill, selectedVehicle)}
+                    reservations={reservations}
+                    selectedVehicle={selectedVehicle}
+                    onSelectVehicle={handleSelectVehicle}
+                    vehiclesSelected={vehiclesSelected}
+                    setVehiclesSelected={setVehiclesSelected}
+                />
+                <BottomPanel
+                    vehicle={selectedVehicle}
                     open={openPanel}
-                    height="auto"
-                    styles={{ body: { padding: '16px' } }}
-                >
-                    {/*<BottomPanel vehicle={vehicleSelected} />*/}
-                </Drawer>
+                    onClose={handleClosePanel}
+                />
             </div>
         </motion.div>
     );

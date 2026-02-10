@@ -1,21 +1,20 @@
 "use client"
 
 import { Dispatch, SetStateAction, useState } from "react";
-import { Button, Space } from "antd";
-import { ReloadOutlined } from "@ant-design/icons";
+import { Button, Drawer, Space } from "antd";
+import { ReloadOutlined, CarOutlined } from "@ant-design/icons";
 import { format } from "date-fns";
-import Image from "next/image";
 
 import { IVehicle } from "@/lib/hooks/Interfaces";
 import { GetVehicleCarmooveType, TYPE_FLEET, TYPE_VP, TYPE_VUL, TYPE_PL, TYPE_VL, TYPE_VEHICLE } from "@/lib/utils/VehicleType";
+import VehicleSelector from "./VehicleSelector";
 
 interface IVehicleTypeBar {
     showReloadButton?: boolean;
     vehicleTypePill: string;
     setVehicleTypePill: Dispatch<SetStateAction<string>>;
     vehicles: IVehicle[];
-    selectedVehicle: IVehicle | null;
-    setSelectedVehicle: Dispatch<SetStateAction<IVehicle | null>>;
+    onSelectVehicle?: (vehicle: IVehicle | null) => void;
 }
 
 export default function VehicleTypeBar({
@@ -23,8 +22,9 @@ export default function VehicleTypeBar({
     vehicleTypePill,
     setVehicleTypePill,
     vehicles,
-    setSelectedVehicle
+    onSelectVehicle
 }: IVehicleTypeBar) {
+    const [drawerOpen, setDrawerOpen] = useState(false);
 
     const getCurrentDate = () => format(new Date(), "dd/MM/yyyy à HH:mm");
 
@@ -63,13 +63,17 @@ export default function VehicleTypeBar({
         if (typeof window !== 'undefined') {
             localStorage.setItem("last_reloading_time", currentDate);
         }
-        // Trigger page reload or refetch
         window.location.reload();
     };
 
     const handleTypeChange = (type: string) => {
         setVehicleTypePill(type);
-        setSelectedVehicle(null);
+    };
+
+    const handleVehicleSelect = (vehicle: IVehicle) => {
+        setVehicleTypePill(TYPE_VEHICLE);
+        onSelectVehicle?.(vehicle);
+        setDrawerOpen(false);
     };
 
     return (
@@ -77,7 +81,7 @@ export default function VehicleTypeBar({
             <div className="vehicle-bar">
                 <Space wrap>
                     <Button
-                        type={vehicleTypePill === TYPE_FLEET ? "primary" : "default"}
+                        className={vehicleTypePill === TYPE_FLEET ? "active" : ""}
                         onClick={() => handleTypeChange(TYPE_FLEET)}
                     >
                         FLOTTE
@@ -85,7 +89,7 @@ export default function VehicleTypeBar({
 
                     {hasVL && (
                         <Button
-                            type={vehicleTypePill === TYPE_VL ? "primary" : "default"}
+                            className={vehicleTypePill === TYPE_VL ? "active" : ""}
                             onClick={() => handleTypeChange(TYPE_VL)}
                         >
                             VELI
@@ -94,7 +98,7 @@ export default function VehicleTypeBar({
 
                     {hasVP && (
                         <Button
-                            type={vehicleTypePill === TYPE_VP ? "primary" : "default"}
+                            className={vehicleTypePill === TYPE_VP ? "active" : ""}
                             onClick={() => handleTypeChange(TYPE_VP)}
                         >
                             VP
@@ -103,7 +107,7 @@ export default function VehicleTypeBar({
 
                     {hasVUL && (
                         <Button
-                            type={vehicleTypePill === TYPE_VUL ? "primary" : "default"}
+                            className={vehicleTypePill === TYPE_VUL ? "active" : ""}
                             onClick={() => handleTypeChange(TYPE_VUL)}
                         >
                             VUL
@@ -112,12 +116,18 @@ export default function VehicleTypeBar({
 
                     {hasPL && (
                         <Button
-                            type={vehicleTypePill === TYPE_PL ? "primary" : "default"}
+                            className={vehicleTypePill === TYPE_PL ? "active" : ""}
                             onClick={() => handleTypeChange(TYPE_PL)}
                         >
                             PL
                         </Button>
                     )}
+
+                    <Button
+                        className={vehicleTypePill === TYPE_VEHICLE ? "active" : ""}
+                        icon={<CarOutlined />}
+                        onClick={() => setDrawerOpen(true)}
+                    />
                 </Space>
             </div>
 
@@ -136,6 +146,19 @@ export default function VehicleTypeBar({
                     </>
                 )}
             </div>
+
+            <Drawer
+                title="Sélectionner un véhicule"
+                placement="right"
+                onClose={() => setDrawerOpen(false)}
+                open={drawerOpen}
+                width={400}
+            >
+                <VehicleSelector
+                    vehicles={vehicles}
+                    onSelect={handleVehicleSelect}
+                />
+            </Drawer>
         </>
     );
 }
