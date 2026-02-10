@@ -1,0 +1,43 @@
+.status-badge {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 12px;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+}
+
+.status-badge:hover {
+    background-color: rgba(57, 161, 216, 0.1);
+}
+
+.status-badge.linked {
+    cursor: pointer;
+}
+
+.status-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.status-icon img {
+    width: 24px;
+    height: 24px;
+}
+
+.status-number {
+    font-weight: 600;
+    font-size: 14px;
+    color: #333;
+}
+
+.tooltip-text {
+    color: #333;
+    font-size: 12px;
+}
+
+.position-relative {
+    position: relative;
+}

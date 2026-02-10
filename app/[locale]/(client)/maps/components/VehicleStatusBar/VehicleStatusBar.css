@@ -1,0 +1,19 @@
+.vehicle-status-bar-map {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.reload-btn-status {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 8px;
+    cursor: pointer;
+    border-radius: 8px;
+    transition: background-color 0.2s ease;
+}
+
+.reload-btn-status:hover {
+    background-color: rgba(57, 161, 216, 0.1);
+}

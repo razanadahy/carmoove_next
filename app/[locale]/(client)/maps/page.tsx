@@ -11,7 +11,7 @@ import { vehiclesByType } from "@/lib/utils/VehicleType";
 import { fetchReservations } from "@/app/actions/reservations";
 import VehicleTypeBar from "./components/VehicleTypeBar";
 import CarmooveGMap from "./components/CarmooveGMap";
-import LeftPanel from "./components/LeftPanel";
+import RightPanel from "./components/RightPanel";
 import BottomPanel from "./components/BottomPanel";
 import "./Maps.css";
 
@@ -128,11 +128,9 @@ export default function Maps() {
                     selectedVehicle={selectedVehicle}
                     onSelectVehicle={handleSelectVehicle}
                 />
-                <LeftPanel
+                <RightPanel
                     vehicles={vehiclesByType(vehicles, vehicleTypePill, selectedVehicle)}
                     reservations={reservations}
-                    selectedVehicle={selectedVehicle}
-                    onSelectVehicle={handleSelectVehicle}
                     vehiclesSelected={vehiclesSelected}
                     setVehiclesSelected={setVehiclesSelected}
                 />
