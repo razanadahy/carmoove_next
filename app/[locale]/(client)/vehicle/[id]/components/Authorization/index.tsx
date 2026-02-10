@@ -170,11 +170,12 @@ export default function Authorization({ vehicle }: AuthorizationProps) {
                         }}
                     >
                         <Tabs
-                            className="tabs-authorization"
+                            className="tabs-reservation"
                             tabPosition="top"
                             items={tabs}
                             defaultActiveKey={sPanelSelected}
                             onChange={handleTabChange}
+                            type={"line"}
                         />
                     </ConfigProvider>
 
@@ -223,9 +224,10 @@ export default function Authorization({ vehicle }: AuthorizationProps) {
                         ]}
                     >
                         <Form.Item
+                            rootClassName="mt-2"
                             className="input-driver-authorization-form"
                             layout="vertical"
-                            label="Nom de l'utilisateur"
+                            label="Nom du conducteur"
                             rules={[{ required: true }]}
                         >
                             <Input

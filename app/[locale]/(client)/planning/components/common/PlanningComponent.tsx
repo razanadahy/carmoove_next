@@ -60,7 +60,7 @@ const PlanningComponent = (props: Iplanning) => {
                    type={"line"}
                />
            </ConfigProvider>
-{/*}*/}
+        {/*}*/}
        </>
     )
 }

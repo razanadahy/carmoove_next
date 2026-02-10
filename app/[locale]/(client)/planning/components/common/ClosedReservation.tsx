@@ -1,6 +1,5 @@
 'use client'
-import {IReservation} from "@/app/actions/authorization";
-import {IDriver, IReservationCustom, IVehicle, PAGE_SIZE_DEFAULT} from "@/lib/hooks/Interfaces";
+import {IDriver, IReservation, IReservationCustom, IVehicle, PAGE_SIZE_DEFAULT} from "@/lib/hooks/Interfaces";
 import {IUserCS} from "@/app/actions/auth";
 import {useCallback, useMemo, useState} from "react";
 import dayjs from "dayjs";

@@ -13,6 +13,8 @@ import PathsV2 from "./components/PathsV2";
 import TableDiagV2 from "./components/TableDiagV2";
 import Gestion from "./components/Gestion";
 import "./Vehicle.css";
+import Authorization from "@/app/[locale]/(client)/vehicle/[id]/components/Authorization";
+import Reservation from "@/app/[locale]/(client)/vehicle/[id]/components/Reservation/Reservation";
 
 export default function Vehicle() {
     const params = useParams<{ id: string }>();
@@ -78,22 +80,22 @@ export default function Vehicle() {
         }
 
         // Reservation tab
-        // if (vehicle.device?.carSharing) {
-        //     tabList.push({
-        //         key: "reservation",
-        //         label: "Réservation",
-        //         children: <Reservation vehicle={vehicle} />,
-        //     });
-        // }
+        if (vehicle.device?.carSharing) {
+            tabList.push({
+                key: "reservation",
+                label: "Réservation",
+                children: <Reservation vehicle={vehicle} />,
+            });
+        }
 
         // Free floating tab
-        // if (vehicle.device?.carSharing) {
-        //     tabList.push({
-        //         key: "floating",
-        //         label: "Free floating",
-        //         children: <Reservation vehicle={vehicle} freeFloating />,
-        //     });
-        // }
+        if (vehicle.device?.carSharing) {
+            tabList.push({
+                key: "floating",
+                label: "Free floating",
+                children: <Reservation vehicle={vehicle} freeFloating />,
+            });
+        }
 
         return tabList;
     }, [data]);

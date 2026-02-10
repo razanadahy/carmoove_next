@@ -1,8 +1,7 @@
 'use client'
 import {Pagination} from "antd";
 import {useCallback, useMemo, useState} from "react";
-import {IReservation} from "@/app/actions/authorization";
-import {IDriver, IReservationCustom, IVehicle, PAGE_SIZE_DEFAULT} from "@/lib/hooks/Interfaces";
+import {IDriver, IReservation, IReservationCustom, IVehicle, PAGE_SIZE_DEFAULT} from "@/lib/hooks/Interfaces";
 import dayjs from "dayjs";
 import {Loading} from "@/components/Common/Loading";
 import {IUserCS} from "@/app/actions/auth";
