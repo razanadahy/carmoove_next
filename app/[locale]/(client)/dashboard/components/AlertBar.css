@@ -1,0 +1,78 @@
+.alert-bar {
+    width: 100%;
+}
+
+.alert-content {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 16px;
+    justify-content: space-between;
+}
+
+.alert-item-alertes,
+.alert-item-avertissements,
+.alert-item-informations {
+    flex: 1;
+    min-width: 180px;
+    padding: 12px 16px;
+    border-radius: 8px;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.alert-item-alertes {
+    background-color: #fff1f0;
+    border-left: 4px solid #ff4d4f;
+}
+
+.alert-item-avertissements {
+    background-color: #fff7e6;
+    border-left: 4px solid #faad14;
+}
+
+.alert-item-informations {
+    background-color: #e6f7ff;
+    border-left: 4px solid #1890ff;
+}
+
+.no-read-alert {
+    font-size: 16px;
+    font-weight: 600;
+    color: #262626;
+}
+
+.alert-item-alertes .no-read-alert {
+    color: #cf1322;
+}
+
+.alert-item-avertissements .no-read-alert {
+    color: #d46b08;
+}
+
+.alert-item-informations .no-read-alert {
+    color: #096dd9;
+}
+
+.total-alert {
+    font-size: 13px;
+    color: #8c8c8c;
+}
+
+.loading-txt {
+    text-align: center;
+    color: #8c8c8c;
+    padding: 16px;
+}
+
+@media (max-width: 768px) {
+    .alert-content {
+        flex-direction: column;
+    }
+
+    .alert-item-alertes,
+    .alert-item-avertissements,
+    .alert-item-informations {
+        min-width: 100%;
+    }
+}

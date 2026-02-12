@@ -10,18 +10,18 @@
     padding: 0 !important;
 }
 
-.row {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 24px;
-    margin-top: 24px;
-}
+/*.row {*/
+/*    display: grid;*/
+/*    grid-template-columns: 1fr 1fr;*/
+/*    gap: 24px;*/
+/*    margin-top: 24px;*/
+/*}*/
 
-.col {
-    display: flex;
-    flex-direction: column;
-    gap: 24px;
-}
+/*.col {*/
+/*    display: flex;*/
+/*    flex-direction: column;*/
+/*    gap: 24px;*/
+/*}*/
 
 .mr-25 {
     margin-right: 0;

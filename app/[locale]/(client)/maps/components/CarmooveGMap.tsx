@@ -35,15 +35,28 @@ const getMarkerColor = (vehicle: IVehicle): string => {
     return "#1890ff";
 };
 
-const getMarkerIcon = (vehicle: IVehicle, isSelected: boolean): google.maps.Symbol => {
-    const color = getMarkerColor(vehicle);
+const getOutlineColor = (isSelected: boolean): string => {
+    return isSelected ? "#000000" : "#ffffff";
+};
+
+const createVehicleIcon = (fill: string, outline: string): string => {
+    const svgMarker = `
+      <svg xmlns="http://www.w3.org/2000/svg" width="40" height="48">
+        <path fill="${fill}" stroke="${outline}" stroke-width="2" d="M20 0C9 0 0 9 0 20c0 11 20 28 20 28s20-17 20-28C40 9 31 0 20 0z"/>
+        <path fill="white" transform="translate(8, 12)" d="M24 8l-2-6H10L8 8H2v10h2l1 2h2l1-2h12l1 2h2l1-2h2V8h-6zM10 4h12l1.5 4h-15L10 4zM7 14c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2zm18 0c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2z"/>
+      </svg>
+    `;
+    return `data:image/svg+xml;charset=UTF-8,${encodeURIComponent(svgMarker)}`;
+};
+
+const getMarkerIcon = (vehicle: IVehicle, isSelected: boolean): google.maps.Icon => {
+    const fillColor = getMarkerColor(vehicle);
+    const outlineColor = getOutlineColor(isSelected);
+
     return {
-        path: google.maps.SymbolPath.CIRCLE,
-        fillColor: color,
-        fillOpacity: 1,
-        strokeColor: isSelected ? "#000" : "#fff",
-        strokeWeight: isSelected ? 3 : 2,
-        scale: isSelected ? 12 : 8,
+        url: createVehicleIcon(fillColor, outlineColor),
+        scaledSize: new google.maps.Size(isSelected ? 50 : 40, isSelected ? 60 : 48),
+        anchor: new google.maps.Point(isSelected ? 25 : 20, isSelected ? 60 : 48),
     };
 };
 

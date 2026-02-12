@@ -100,10 +100,10 @@ export default function Dashboard() {
             <div className="bg-white rounded-3 p-3 w-100 mb-2 d-flex justify-content-between align-items-center">
                 <div className="px-2">
                     <div className="align-items-center">
-                        <h5 style={{ margin: 0 }}>
+                        <span className="fw-bold" style={{ margin: 0, fontSize: '0.85rem' }}>
                             <CalendarOutlined /> Année Fiscale
                             <Tag className="ms-2 px-3" color={'#1773b4'}>{MONTHS[user.company.fiscal_year.month -1]}</Tag>
-                        </h5>
+                        </span>
                     </div>
                 </div>
 
