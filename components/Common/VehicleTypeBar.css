@@ -1,0 +1,82 @@
+.map-full {
+    position: relative;
+    width: 100%;
+    height: calc(100vh - 180px);
+    min-height: 500px;
+}
+
+.vehicle-bar {
+    display: flex;
+    gap: 8px;
+    padding: 16px;
+    background: transparent;
+    border-radius: 8px;
+    margin-bottom: 16px;
+    flex-wrap: wrap;
+    align-items: center;
+}
+
+.vehicle-bar button {
+    /*border-radius: 20px;*/
+    font-size: 16px;
+    font-weight: bold;
+    padding: 4px 16px;
+}
+
+.vehicle-bar button.active {
+    background-color: #39A1D8;
+    color: white;
+    border-color: #39A1D8;
+}
+
+.data-last-use {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 8px 16px;
+    font-size: 14px;
+    color: #666;
+}
+
+.real-time-data {
+    color: #888;
+}
+
+.reload-button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 4px 8px;
+    border: none;
+    background: transparent;
+    cursor: pointer;
+}
+
+.reload-icon {
+    width: 20px;
+    height: 20px;
+}
+
+
+/* Bottom Panel */
+.bottom-panel-content {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.no-vehicle-selected {
+    text-align: center;
+    padding: 24px;
+    color: #888;
+}
+
+/* Info Window */
+.info-window-content {
+    padding: 8px;
+    font-size: 14px;
+}
+
+.info-window-content span {
+    font-weight: 500;
+}

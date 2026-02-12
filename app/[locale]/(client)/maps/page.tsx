@@ -9,7 +9,7 @@ import { useGetVehicles } from "@/lib/hooks";
 import { IVehicle, IReservation } from "@/lib/hooks/Interfaces";
 import { vehiclesByType } from "@/lib/utils/VehicleType";
 import { fetchReservations } from "@/app/actions/reservations";
-import VehicleTypeBar from "./components/VehicleTypeBar";
+import VehicleTypeBar from "@/components/Common/VehicleTypeBar";
 import CarmooveGMap from "./components/CarmooveGMap";
 import RightPanel from "./components/RightPanel";
 import BottomPanel from "./components/BottomPanel";

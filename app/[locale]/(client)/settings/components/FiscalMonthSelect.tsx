@@ -1,11 +1,12 @@
 "use client"
 
-import { Select } from 'antd';
+import {App, Select} from 'antd';
 import { useState } from 'react';
 import { useMutation } from '@apollo/client';
 import { USER_MUTATION } from '@/lib/graphql/mutation';
 import { IUser } from '@/lib/hooks/Interfaces';
 import { MONTHS } from '@/lib/constants';
+import {ME_QUERY} from "@/lib/graphql/queries";
 
 const { Option } = Select;
 
@@ -15,14 +16,17 @@ interface FiscalMonthSelectProps {
 
 export function FiscalMonthSelect(props: FiscalMonthSelectProps) {
     const [loading, setLoading] = useState(false);
+    const {notification} = App.useApp()
 
     const [fiscalYearMutate] = useMutation(USER_MUTATION, {
-        refetchQueries: ['Me', 'Dashboard'],
+        refetchQueries: [{ query: ME_QUERY }],
         onCompleted: () => {
             setLoading(false);
+            notification.success({message: "Modification année fiscale terminée"})
         },
         onError: (error) => {
             console.error('Error updating fiscal year:', error);
+            notification.error({message: "Erreur lors de modification d' année fiscale"})
             setLoading(false);
         }
     });

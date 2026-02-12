@@ -32,7 +32,7 @@ export default function BigBox({ id, title, link, children }: BigBoxProps) {
                 )
             }
             style={{ height: '100%' }}
-            bodyStyle={{ height: 'calc(100% - 57px)', padding: 0 }}
+            styles={{ body: {height: 'calc(100% - 54px)', padding: 0} }}
         >
             {children}
         </Card>

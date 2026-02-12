@@ -7,6 +7,7 @@ import { STAT_QUERY } from '@/lib/graphql/queries';
 import { Loading } from '@/components/Common/Loading';
 import StatShowBox from '@/app/[locale]/(client)/vehicle/[id]/components/StatShowBox';
 import './StatsVehicle.css';
+import {Spin} from "antd";
 
 interface StatsVehicleProps {
     from: number;
@@ -33,7 +34,7 @@ const StatsVehicle: React.FC<StatsVehicleProps> = (props) => {
     });
 
     if (loading) {
-        return <Loading msg="Chargement des statistiques..." />;
+        return <Spin size="large" className="w-100" ></Spin>
     }
 
     if (error) {

@@ -3,7 +3,7 @@
 import { useState } from "react";
 import Image from "next/image";
 import { IVehicle, IReservation } from "@/lib/hooks/Interfaces";
-import VehicleStatusBar from "./VehicleStatusBar/VehicleStatusBar";
+import VehicleStatusBar from "@/components/VehicleStatusBar/VehicleStatusBar";
 import upOutlined_i from "@/assets/image/up-outlined.svg";
 import "./RightPanel.css";
 

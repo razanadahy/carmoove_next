@@ -51,7 +51,7 @@ export default function CarmooveGMap({vehicles, reservations, selectedVehicle, o
     const [infoWindowVehicle, setInfoWindowVehicle] = useState<IVehicle | null>(null);
     const mapRef = useRef<google.maps.Map | null>(null);
 
-    const { isLoaded, loadError } = useJsApiLoader({
+    const { isLoaded, loadError } = useLoadScript({
         googleMapsApiKey: process.env.REACT_APP_GMAP_KEY!,
         id: 'google-map-script',
     });

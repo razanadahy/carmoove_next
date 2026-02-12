@@ -15,9 +15,6 @@ export default function GlobalSetting() {
     const [loading, setLoading] = useState(false);
 
     const { data: dataMe, loading: loadingMe, error } = useQuery(ME_QUERY, {
-        context: {
-            version: "php",
-        },
     });
 
     // Charger les paramètres depuis localStorage

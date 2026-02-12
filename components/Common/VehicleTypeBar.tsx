@@ -4,7 +4,7 @@ import { Dispatch, SetStateAction, useState } from "react";
 import { Button, Drawer, Space } from "antd";
 import { ReloadOutlined, CarOutlined } from "@ant-design/icons";
 import { format } from "date-fns";
-
+import './VehicleTypeBar.css'
 import { IVehicle } from "@/lib/hooks/Interfaces";
 import { GetVehicleCarmooveType, TYPE_FLEET, TYPE_VP, TYPE_VUL, TYPE_PL, TYPE_VL, TYPE_VEHICLE } from "@/lib/utils/VehicleType";
 import VehicleSelector from "./VehicleSelector";
@@ -124,22 +124,19 @@ export default function VehicleTypeBar({showReloadButton = false, vehicleTypePil
                     />
                 </Space>
             </div>
-
-            <div className="data-last-use">
-                {showReloadButton && (
-                    <>
-                        <span className="real-time-data">
-                            Dernière actualisation: {lastReloadingTime}
-                        </span>
-                        <Button
-                            type="text"
-                            icon={<ReloadOutlined />}
-                            onClick={onReload}
-                            title="Actualiser"
-                        />
-                    </>
-                )}
-            </div>
+            {showReloadButton && (
+                <div className="data-last-use">
+                    <span className="real-time-data">
+                        Dernière actualisation: {lastReloadingTime}
+                    </span>
+                    <Button
+                        type="text"
+                        icon={<ReloadOutlined/>}
+                        onClick={onReload}
+                        title="Actualiser"
+                    />
+                </div>
+            )}
 
             <Drawer
                 title="Sélectionner un véhicule"

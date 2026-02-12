@@ -1,6 +1,6 @@
 .vehicle-status-bar-map {
     display: flex;
-    flex-direction: column;
+    /*flex-direction: column;*/
     gap: 4px;
 }
 

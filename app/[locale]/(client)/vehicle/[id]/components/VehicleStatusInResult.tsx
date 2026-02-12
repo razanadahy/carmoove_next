@@ -20,7 +20,7 @@ const VehicleStatusInResult = ({ icon, tooltip, link, other_class, onClick }: IV
         if (onClick) onClick();
     }
     return (
-        <Tooltip placement="top" arrow={false} color="blue" title={<span className="tooltip-text">{tooltip}</span>}>
+        <Tooltip placement="top" arrow={false} color="white" title={<span className="tooltip-text">{tooltip}</span>}>
             <div className={`vehicle-icon-box ${(link || onClick) ? "link" : ""} ${other_class ? other_class : ''}`} onClick={() => onClickParam()}>
                 {icon ? <Image alt={""} src={icon} /> : <Spin indicator={<LoadingOutlined spin />} size="small" />}
             </div>

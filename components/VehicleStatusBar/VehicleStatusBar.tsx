@@ -4,10 +4,10 @@ import { useEffect, useMemo, useState } from "react";
 import { RedoOutlined } from "@ant-design/icons";
 import { IVehicle, IReservation, IVehicleStatusCS } from "@/lib/hooks/Interfaces";
 import { useVehiclesWithStatus } from "@/lib/hooks";
-import VehicleStatus from "../VehicleStatus/VehicleStatus";
+import VehicleStatus from "@/components/Common/VehicleStatus/VehicleStatus";
 
 // Icons
-import icon_no_privacy from "@/assets/image/statut/new2/location-off-ionic.svg";
+import icon_no_privacy from "@/assets/image/statut/new2/location-ionic.svg";
 import icon_engine_on from "@/assets/image/statut/new/running-car.svg";
 import icon_inCharge from "@/assets/image/statut/new/charging.svg";
 import icon_fault from "@/assets/image/statut/new/warning.svg";
@@ -26,13 +26,10 @@ interface IPropsVehicleStatusBar {
     vehicles: IVehicle[];
     reservations: IReservation[];
     onSelectVehicles: (vehicles: IVehicle[]) => void;
+    flexCol?: boolean
 }
 
-export default function VehicleStatusBar({
-    vehicles: propsVehicles,
-    reservations,
-    onSelectVehicles
-}: IPropsVehicleStatusBar) {
+export default function VehicleStatusBar({vehicles: propsVehicles, reservations, onSelectVehicles, flexCol = true}: IPropsVehicleStatusBar) {
     const [vehicleData, setVehicleData] = useState<IVehicle[]>(propsVehicles);
 
     useEffect(() => {
@@ -175,7 +172,7 @@ export default function VehicleStatusBar({
     }, [vehicles, propsVehicles]);
 
     return (
-        <div className="vehicle-status-bar-map">
+        <div className="vehicle-status-bar-map" style={{display: 'flex', flexDirection: flexCol ? 'column' : 'row'}}>
             <div className="reload-btn-status" onClick={loadData}>
                 <RedoOutlined
                     spin={isLoadingQmStatusCS}
