@@ -30,6 +30,7 @@ export function GetVehicleCarmooveType(type: string): string | null {
             return "VP";
         case "CTTE":
         case "VASP":
+        case "VTSU":
         case "Deriv-VP":
             return "VUL";
         case "CAM":
@@ -40,6 +41,8 @@ export function GetVehicleCarmooveType(type: string): string | null {
             return "PL";
         case "TM":
         case "QM":
+        case "voiturette":
+        case "CYCL":
             return "VL";
     }
 

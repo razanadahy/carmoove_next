@@ -43,18 +43,21 @@ export default function RightPanel({
                     height={16}
                 />
             </div>
-            <div className="d-flex bg-white flex-column justify-content-center px-1 rounded-3 pb-1">
-                <VehicleStatusBar
-                    vehicles={vehicles}
-                    reservations={reservations}
-                    onSelectVehicles={handleSelectVehicles}
-                />
-                {vehiclesSelected.length > 0 && (
-                    <a className="reinit-filter-status-map text-center" onClick={handleReinitFilterMap}>
-                        Réinitialiser
-                    </a>
-                )}
-            </div>
+            {isOpen && (
+                <div className="d-flex bg-white flex-column justify-content-center px-1 rounded-3 pb-1">
+                    <VehicleStatusBar
+                        vehicles={vehicles}
+                        reservations={reservations}
+                        onSelectVehicles={handleSelectVehicles}
+                    />
+                    {vehiclesSelected.length > 0 && (
+                        <a className="reinit-filter-status-map text-center" onClick={handleReinitFilterMap}>
+                            Réinitialiser
+                        </a>
+                    )}
+                </div>
+            )}
+
         </div>
     );
 }

@@ -83,25 +83,22 @@ export default function Maps() {
         }
     };
 
-    // Handle panel close
     const handleClosePanel = () => {
         setOpenPanel(false);
         setSelectedVehicle(null);
     };
 
-    // Handle panel toggle
     const handleTogglePanel = () => {
         setOpenPanel((prev) => !prev);
     };
 
-    // Get vehicles to display on map
     const getDisplayedVehicles = () => {
         if (vehiclesSelected.length > 0) {
             return vehiclesSelected;
         }
-        if (selectedVehicle) {
-            return [selectedVehicle];
-        }
+        // if (selectedVehicle) {
+        //     return [selectedVehicle];
+        // }
         return vehiclesByType(vehicles, vehicleTypePill, selectedVehicle);
     };
 

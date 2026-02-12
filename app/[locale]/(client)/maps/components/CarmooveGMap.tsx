@@ -1,7 +1,7 @@
 'use client';
 
 import { useCallback, useState, useRef } from "react";
-import { GoogleMap, useLoadScript, Marker, InfoWindow } from "@react-google-maps/api";
+import {GoogleMap, useLoadScript, Marker, InfoWindow, useJsApiLoader} from "@react-google-maps/api";
 import { IVehicle, IReservation } from "@/lib/hooks/Interfaces";
 
 interface ICarmooveGMap {
@@ -17,8 +17,8 @@ const mapContainerStyle = {
 };
 
 const defaultCenter = {
-    lat: 48.8566,
-    lng: 2.3522,
+    lat: 47.260833,
+    lng:  2.418889,
 };
 
 const mapOptions: google.maps.MapOptions = {
@@ -47,17 +47,13 @@ const getMarkerIcon = (vehicle: IVehicle, isSelected: boolean): google.maps.Symb
     };
 };
 
-export default function CarmooveGMap({
-    vehicles,
-    reservations,
-    selectedVehicle,
-    onSelectVehicle
-}: ICarmooveGMap) {
+export default function CarmooveGMap({vehicles, reservations, selectedVehicle, onSelectVehicle}: ICarmooveGMap) {
     const [infoWindowVehicle, setInfoWindowVehicle] = useState<IVehicle | null>(null);
     const mapRef = useRef<google.maps.Map | null>(null);
 
-    const { isLoaded, loadError } = useLoadScript({
-        googleMapsApiKey: process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY || "",
+    const { isLoaded, loadError } = useJsApiLoader({
+        googleMapsApiKey: process.env.REACT_APP_GMAP_KEY!,
+        id: 'google-map-script',
     });
 
     const onMapLoad = useCallback((map: google.maps.Map) => {
@@ -118,8 +114,9 @@ export default function CarmooveGMap({
                 lat: selectedVehicle.location.latitude,
                 lng: selectedVehicle.location.longitude
             } : defaultCenter}
-            zoom={selectedVehicle ? 15 : 10}
+            zoom={10}
             options={mapOptions}
+            mapTypeId='roadmap'
             onLoad={onMapLoad}
             onClick={() => setInfoWindowVehicle(null)}
         >
