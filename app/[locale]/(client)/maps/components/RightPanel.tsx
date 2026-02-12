@@ -43,14 +43,14 @@ export default function RightPanel({
                     height={16}
                 />
             </div>
-            <div className="status">
+            <div className="d-flex bg-white flex-column justify-content-center px-1 rounded-3 pb-1">
                 <VehicleStatusBar
                     vehicles={vehicles}
                     reservations={reservations}
                     onSelectVehicles={handleSelectVehicles}
                 />
                 {vehiclesSelected.length > 0 && (
-                    <a className="reinit-filter-status-map" onClick={handleReinitFilterMap}>
+                    <a className="reinit-filter-status-map text-center" onClick={handleReinitFilterMap}>
                         Réinitialiser
                     </a>
                 )}

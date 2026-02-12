@@ -9,7 +9,7 @@
     display: flex;
     gap: 8px;
     padding: 16px;
-    background: #fff;
+    background: transparent;
     border-radius: 8px;
     margin-bottom: 16px;
     flex-wrap: wrap;
@@ -17,7 +17,7 @@
 }
 
 .vehicle-bar button {
-    border-radius: 20px;
+    /*border-radius: 20px;*/
     padding: 4px 16px;
 }
 

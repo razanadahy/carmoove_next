@@ -1,11 +1,13 @@
 .status-badge {
     display: flex;
     align-items: center;
-    gap: 8px;
-    padding: 8px 12px;
-    border-radius: 8px;
+    /*gap: 8px;*/
+    /*padding: 8px 12px;*/
+    border-radius: 10px;
     cursor: pointer;
     transition: background-color 0.2s ease;
+    width: 74px;
+    height: 40px;
 }
 
 .status-badge:hover {
@@ -23,14 +25,14 @@
 }
 
 .status-icon img {
-    width: 24px;
+    width: auto;
     height: 24px;
 }
 
 .status-number {
-    font-weight: 600;
-    font-size: 14px;
-    color: #333;
+    font-weight: 700;
+    font-size: 15px;
+    color: #ffffff;
 }
 
 .tooltip-text {

@@ -17,13 +17,7 @@ interface IVehicleTypeBar {
     onSelectVehicle?: (vehicle: IVehicle | null) => void;
 }
 
-export default function VehicleTypeBar({
-    showReloadButton = false,
-    vehicleTypePill,
-    setVehicleTypePill,
-    vehicles,
-    onSelectVehicle
-}: IVehicleTypeBar) {
+export default function VehicleTypeBar({showReloadButton = false, vehicleTypePill, setVehicleTypePill, vehicles, onSelectVehicle}: IVehicleTypeBar) {
     const [drawerOpen, setDrawerOpen] = useState(false);
 
     const getCurrentDate = () => format(new Date(), "dd/MM/yyyy à HH:mm");
@@ -124,7 +118,7 @@ export default function VehicleTypeBar({
                     )}
 
                     <Button
-                        className={vehicleTypePill === TYPE_VEHICLE ? "active" : ""}
+                        className={vehicleTypePill === TYPE_VEHICLE ? "active rounded-circle" : "rounded-circle"}
                         icon={<CarOutlined />}
                         onClick={() => setDrawerOpen(true)}
                     />

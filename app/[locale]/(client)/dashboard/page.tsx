@@ -30,9 +30,7 @@ export default function Dashboard() {
     const [reservations, setReservations] = useState<IReservation[]>([]);
 
     const me = useQuery(ME_QUERY, {
-        context: {
-            version: "php",
-        },
+
     });
 
     const qReservations = useQueryCS({

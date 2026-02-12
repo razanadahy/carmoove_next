@@ -43,13 +43,14 @@ export default function VehicleStatus({
             title={<span className="tooltip-text">{tooltip}</span>}
         >
             <div
-                className={`status-badge${link ? ' linked' : ''} position-relative`}
+                className={`status-badge${link ? ' linked' : ''}`}
                 onClick={handleOnClick}
+                style={{border: '1px solid #39a1d8', backgroundColor: '#39a1d8'}}
             >
-                <span className="status-icon">
+                <span className="status-icon bg-white w-50 h-100 rounded-start-3" >
                     <Image src={icon} alt={tooltip || ''} width={24} height={24} />
                 </span>
-                <span className="status-number">{count}</span>
+                <span className="status-number w-50 h-100 d-flex justify-content-center align-items-center">{count}</span>
             </div>
         </Tooltip>
     );
