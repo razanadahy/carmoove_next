@@ -14,7 +14,6 @@ import BigBox from "./components/BigBox";
 import AlertBar from "./components/AlertBar";
 import StatBarFleet from "./components/StatBarFleet";
 import FiscalYearStats from "./components/Statistics/FiscalYearStats";
-import CarmooveGMapV2 from "./components/CarmooveGMapV2";
 
 import "./Dashboard.css";
 import {fetchReservations} from "@/app/actions/reservations";
@@ -24,6 +23,7 @@ import VehicleInformationBox from "@/app/[locale]/(client)/vehicle/[id]/componen
 import {CalendarOutlined, EditOutlined} from "@ant-design/icons";
 import {FiscalMonthSelect} from "@/app/[locale]/(client)/settings/components/FiscalMonthSelect";
 import {MONTHS} from "@/lib/constants";
+import CarmooveGMap from "@/app/[locale]/(client)/maps/components/CarmooveGMap";
 
 
 export default function Dashboard() {
@@ -138,10 +138,11 @@ export default function Dashboard() {
                         title="Localisation de vos véhicules"
                         link={{ link: "/maps", label: "Voir la carte" }}
                     >
-                        <CarmooveGMapV2
+                        <CarmooveGMap
                             vehicles={vehicles}
                             reservations={reservations}
-                            forDashboard
+                            selectedVehicle={selectedVehicle}
+                            onSelectVehicle={()=>{}}
                         />
                     </BigBox>
                 </div>

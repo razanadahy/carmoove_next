@@ -45,15 +45,6 @@ export default function VehicleStatusBar(props: VehicleStatusBarProps) {
     const [countLowFuel, setCountLowFuel] = useState<number>(0);
     const [countLowCharge, setCountLowCharge] = useState<number>(0);
 
-    const [vehiclesConnected, setVehiclesConnected] = useState<IVehicle[]>([]);
-    const [vehiclesNotConnected, setVehiclesNotConnected] = useState<IVehicle[]>([]);
-    const [vehiclesPrivacy, setVehiclesPrivacy] = useState<IVehicle[]>([]);
-    const [vehiclesNoPrivacy, setVehiclesNoPrivacy] = useState<IVehicle[]>([]);
-    const [vehiclesInCharge, setVehiclesInCharge] = useState<IVehicle[]>([]);
-    const [vehiclesParked, setVehiclesParked] = useState<IVehicle[]>([]);
-    const [vehiclesEnginOn, setVehiclesEnginOn] = useState<IVehicle[]>([]);
-    const [vehiclesLowBattery, setVehiclesLowBattery] = useState<IVehicle[]>([]);
-
 
     const [countUnavailable, setCountUnavailable] = useState<number>(0)
     const [countAvailable, setCountAvailable] = useState<number>(0)
@@ -66,15 +57,7 @@ export default function VehicleStatusBar(props: VehicleStatusBarProps) {
     const [countReserved, setCountReserved] = useState<number>(0)
     const [countUnreserved, setCountUnreserved] = useState<number>(0)
 
-    const [vehiclesUnavailable, setVehiclesUnavailable] = useState<IVehicle[]>([])
-    const [vehiclesAvailable, setVehiclesAvailable] = useState<IVehicle[]>([])
-    const [vehiclesTowage, setVehiclesTowage] = useState<IVehicle[]>([])
-    const [vehiclesAccident, setVehiclesAccident] = useState<IVehicle[]>([])
-    const [vehiclesStolen, setVehiclesStolen] = useState<IVehicle[]>([])
-    const [vehiclesFault, setVehiclesFault] = useState<IVehicle[]>([])
-    const [vehiclesMaintenance, setVehiclesMaintenance] = useState<IVehicle[]>([])
-    const [vehiclesRas, setVehiclesRas] = useState<IVehicle[]>([])
-    const [vehiclesReserved, setVehiclesReserved] = useState<IVehicle[]>([])
+
 
     const [vehicleData, setVehicleData] = useState<IVehicle[]>(props.vehicles)
     useEffect(() => {
@@ -119,26 +102,11 @@ export default function VehicleStatusBar(props: VehicleStatusBarProps) {
             !status.state.maintenance
         ).length)
 
-        setVehiclesUnavailable(vehicles.filter(v => v.stateCS?.state.unavailable))
-        setVehiclesAvailable(vehicles.filter(v => !v.stateCS?.state.unavailable))
-        setVehiclesTowage(vehicles.filter(v => v.stateCS?.state.towing))
-        setVehiclesAccident(vehicles.filter(v => v.stateCS?.state.accident))
-        setVehiclesStolen(vehicles.filter(v => v.stateCS?.state.stolen))
-        setVehiclesFault(vehicles.filter(v => v.stateCS?.state.breakdown))
-        setVehiclesMaintenance(vehicles.filter(v => v.stateCS?.state.maintenance))
-        setVehiclesRas(vehicles.filter(v =>
-            !v.stateCS?.state.towing &&
-            !v.stateCS?.state.accident &&
-            !v.stateCS?.state.stolen &&
-            !v.stateCS?.state.breakdown &&
-            !v.stateCS?.state.maintenance
-        ))
     }, [ vehiclesConnected_, vehicles])
 
     useEffect(() => {
         const reservations = props.reservations
         setCountReserved(props.reservations.length)
-        setVehiclesReserved(vehicles.filter(v => reservations.map(r => r.vehicleId).includes(v.id)))
     }, [props.reservations, vehicles])
 
     useEffect(() => {
@@ -227,20 +195,12 @@ export default function VehicleStatusBar(props: VehicleStatusBarProps) {
         setCountLowFuel(tempCountLowFuel);
         setCountLowCharge(tempCountLowCharge);
 
-        setVehiclesConnected(tempVehiclesConnected);
-        setVehiclesNotConnected(tempVehiclesNotConnected);
-        setVehiclesPrivacy(tempVehiclesPrivacy);
-        setVehiclesNoPrivacy(tempVehiclesNoPrivacy);
-        setVehiclesInCharge(tempVehiclesInCharge);
-        setVehiclesParked(tempVehiclesParked);
-        setVehiclesEnginOn(tempVehiclesEnginOn);
-        setVehiclesLowBattery(tempVehiclesLowBattery);
     }, [vehicles, props.vehicles]);
 
     return (
         <Card
             title="Statut des véhicules"
-            extra={<div id="reload-btn-status" onClick={loadData}><RedoOutlined spin={isLoadingQmStatusCS} style={{color: '#39A1D8', fontWeight: 'bold', fontSize: '1.45rem'}} /></div>}
+            extra={<div style={{cursor: 'pointer'}}  onClick={loadData}><RedoOutlined spin={isLoadingQmStatusCS} style={{color: '#39A1D8', fontWeight: 'bold', fontSize: '1.45rem'}} /></div>}
         >
             <div className="w-100 d-flex flex-column gap-2">
                 <div className="d-flex flex-row gap-2">

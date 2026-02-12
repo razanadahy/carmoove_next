@@ -24,7 +24,7 @@ export function getVehicleAntsTypes(type: string): string[] {
     return [];
 }
 
-export function GetVehicleCarmooveType(type: string): string | null {
+export function GetVehicleCarmooveType(type: string): string  {
     switch (type) {
         case "VP":
             return "VP";
@@ -46,7 +46,7 @@ export function GetVehicleCarmooveType(type: string): string | null {
             return "VL";
     }
 
-    return null;
+    return type;
 }
 
 export function IsVehicleOfCarmooveType(

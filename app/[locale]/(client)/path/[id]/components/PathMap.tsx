@@ -164,7 +164,7 @@ const fetchRoute = async (routeProps: ILocationV3Props): Promise<IGeoJsonORS | n
         const response = await fetch(url, {
             method: 'POST',
             headers: {
-                'Authorization': process.env.NEXT_PUBLIC_ORS_API_KEY || '',
+                'Authorization': process.env.REACT_APP_ORS_KEY || '',
                 'Content-Type': 'application/json',
                 'Accept': 'application/json, application/geo+json, application/gpx+xml, img/png; charset=utf-8'
             },

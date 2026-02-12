@@ -29,9 +29,55 @@ interface IVehiclesBoxProps {
     allVehicles: IVehicle[];
 }
 
+const useVehicleFilters = () => {
+    const searchParams = useSearchParams();
+
+    return useMemo(() => {
+        const parseBool = (key: string) => searchParams.get(key) === 'yes';
+        const filters = {
+            available: parseBool('available'),
+            unavailable: parseBool('unavailable'),
+            connected: parseBool('connected'),
+            noPrivacy: parseBool('noprivacy'),
+            privacy: parseBool('privacy'),
+            inCharge: parseBool('incharge'),
+            parked: parseBool('parked'),
+            engineOn: parseBool('engineon'),
+            ras: parseBool('ras'),
+            fault: parseBool('fault'),
+            maintenance: parseBool('maintenance'),
+            accident: parseBool('accident'),
+            towage: parseBool('towage'),
+            stolen: parseBool('stolen'),
+            lowBatt: parseBool('lowbatt'),
+            reserved: parseBool('reserved'),
+            unreserved: parseBool('unreserved'),
+            lowCharge: parseBool('lowcharge'),
+            lowFuel: parseBool('lowfuel'),
+        };
+
+        const hasStateFilter =
+            filters.noPrivacy || filters.privacy || filters.inCharge ||
+            filters.parked || filters.engineOn || filters.lowBatt ||
+            filters.ras || filters.available || filters.unavailable ||
+            filters.reserved || filters.unreserved || filters.lowFuel ||
+            filters.lowCharge;
+
+        const hasReservationFilter = filters.reserved || filters.unreserved;
+
+        return {
+            ...filters,
+            isConnectedFilter: filters.connected || hasStateFilter,
+            isNotConnectedFilter: !filters.connected && parseBool('notconnected'),
+            isPrivacyFilter: !filters.noPrivacy && filters.privacy,
+            isAvailableFilter: filters.available || hasReservationFilter,
+        };
+    }, [location.search]);
+};
 const VehiclesBox = ({ loading, allVehicles }: IVehiclesBoxProps) => {
     const searchParams = useSearchParams();
 
+    const filters = useVehicleFilters();
     // Search state
     const [searchText, setSearchText] = useState("");
 
@@ -52,26 +98,26 @@ const VehiclesBox = ({ loading, allVehicles }: IVehiclesBoxProps) => {
 
     // Status filter states
     const [statusFilters, setStatusFilters] = useState({
-        connected: false,
-        notConnected: false,
-        noPrivacy: false,
-        privacy: false,
-        inCharge: false,
-        parked: false,
-        engineOn: false,
-        ras: false,
-        fault: false,
-        maintenance: false,
-        accident: false,
-        towage: false,
-        stolen: false,
-        lowBatt: false,
-        unavailable: false,
-        available: false,
-        unreserved: false,
-        reserved: false,
-        lowCharge: false,
-        lowFuel: false,
+        connected: filters.isConnectedFilter,
+        notConnected: filters.isNotConnectedFilter,
+        noPrivacy: filters.noPrivacy,
+        privacy: filters.isPrivacyFilter,
+        inCharge: filters.inCharge,
+        parked: filters.parked,
+        engineOn: filters.engineOn,
+        ras: filters.ras,
+        fault: filters.fault,
+        maintenance: filters.maintenance,
+        accident: filters.accident,
+        towage: filters.towage,
+        stolen: filters.stolen,
+        lowBatt: filters.lowBatt,
+        unavailable: filters.unavailable,
+        available: filters.isAvailableFilter,
+        unreserved: filters.unreserved,
+        reserved: filters.reserved,
+        lowCharge: filters.lowCharge,
+        lowFuel: filters.lowFuel,
     });
 
     // Available options for filters
